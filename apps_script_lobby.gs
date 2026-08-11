@@ -10,18 +10,12 @@
 // 3) 배포 → 배포 관리 → 연필(수정) → 버전 "새 버전" → 배포 (URL 유지)
 //
 // ※ 시트 탭(로비_분반/로비_신청)은 처음 호출될 때 자동 생성됩니다.
-// ※ SMS는 프로젝트에 이미 있는 SOLAPI_API_KEY/SECRET/SENDER 상수를 자동으로
-//    사용합니다. 없으면 아래 LOBBY_SOLAPI_* 에 직접 채워주세요.
+// ※ SMS는 이 프로젝트의 기존 sendSolapiLMS_() 함수(스크립트 속성 인증)를 재사용합니다.
 // ================================================================
 
 const LOBBY_ADMIN_KEY = 'love101-admin';   // make.html의 관리 키와 동일해야 함 (원하면 바꾸고 make.html도 같이)
 const LOBBY_SHEET_LOBBIES = '로비_분반';
 const LOBBY_SHEET_JOINS = '로비_신청';
-
-// 프로젝트에 SOLAPI 상수가 없을 때만 사용되는 예비 설정
-const LOBBY_SOLAPI_KEY = '';
-const LOBBY_SOLAPI_SECRET = '';
-const LOBBY_SOLAPI_SENDER = '';
 
 // ---------------- 라우터 ----------------
 function lobbyRouter_(e) {
@@ -49,6 +43,17 @@ function lobbyRouter_(e) {
   }
   return ContentService.createTextOutput(JSON.stringify(out))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+// ---------------- 전화번호 헬퍼 ----------------
+// 시트가 숫자로 저장해 앞 0이 사라진 경우 복원 (10~11자리 한국 휴대폰 가정)
+function lobbyFixPhone_(v) {
+  var p = String(v == null ? '' : v).replace(/[^0-9]/g, '');
+  if (p && p.charAt(0) !== '0') p = '0' + p;
+  return p;
+}
+function lobbyNormPhone_(v) {
+  return lobbyFixPhone_(v);
 }
 
 // ---------------- 시트 헬퍼 ----------------
@@ -88,7 +93,7 @@ function lobbyList_(withMembers) {
       if (withMembers) {
         members.push({
           row: ji + 2, name: j[2], gender: j[3], school: j[4], age: j[5],
-          phone: String(j[6]), kakao: j[7], insta: j[8], payment: j[9]
+          phone: lobbyFixPhone_(j[6]), kakao: j[7], insta: j[8], payment: j[9]
         });
       }
     });
@@ -124,7 +129,7 @@ function lobbyJoin_(d) {
     for (var i = 0; i < joins.length; i++) {
       var j = joins[i];
       if (String(j[1]) !== String(d.lobbyId) || String(j[10]) !== 'active') continue;
-      if (String(j[6]).replace(/[^0-9]/g, '') === phone) return { error: 'dup' };
+      if (lobbyNormPhone_(j[6]) === lobbyNormPhone_(phone)) return { error: 'dup' };
       if (String(j[3]) === '남자') m++; else if (String(j[3]) === '여자') f++;
     }
     var isMale = d.gender === '남자';
@@ -133,7 +138,7 @@ function lobbyJoin_(d) {
 
     jsh.appendRow([
       new Date(), String(d.lobbyId), d.name, d.gender, d.school || '', d.age || '',
-      phone, d.kakao || '', d.insta || '', d.payment || '', 'active'
+      "'" + phone, d.kakao || '', d.insta || '', d.payment || '', 'active'
     ]);
     if (isMale) m++; else f++;
     if (m >= capM && f >= capF) lsh.getRange(idx + 2, 7).setValue('full');
@@ -206,39 +211,11 @@ function lobbyClose_(d) {
 }
 
 // ---------------- SMS (솔라피) ----------------
-function lobbyCreds_() {
-  try {
-    if (typeof SOLAPI_API_KEY !== 'undefined' && SOLAPI_API_KEY) {
-      return { key: SOLAPI_API_KEY, secret: SOLAPI_API_SECRET, sender: SOLAPI_SENDER };
-    }
-  } catch (e) {}
-  return { key: LOBBY_SOLAPI_KEY, secret: LOBBY_SOLAPI_SECRET, sender: LOBBY_SOLAPI_SENDER };
-}
-
+// 이 프로젝트의 기존 sendSolapiLMS_() (스크립트 속성 인증)를 그대로 재사용
 function lobbySms_(to, text) {
-  var c = lobbyCreds_();
-  if (!c.key || !c.secret || !c.sender) return false;
   try {
-    var date = new Date().toISOString();
-    var salt = Utilities.getUuid();
-    var sig = Utilities.computeHmacSha256Signature(date + salt, c.secret)
-      .map(function (b) { var v = (b < 0 ? b + 256 : b).toString(16); return v.length === 1 ? '0' + v : v; })
-      .join('');
-    var msg = {
-      to: String(to).replace(/[^0-9]/g, ''),
-      from: String(c.sender).replace(/[^0-9]/g, ''),
-      text: text,
-      type: text.length > 45 ? 'LMS' : 'SMS'
-    };
-    if (msg.type === 'LMS') msg.subject = '연애학개론';
-    var res = UrlFetchApp.fetch('https://api.solapi.com/messages/v4/send', {
-      method: 'post',
-      contentType: 'application/json',
-      headers: { Authorization: 'HMAC-SHA256 apiKey=' + c.key + ', date=' + date + ', salt=' + salt + ', signature=' + sig },
-      payload: JSON.stringify({ message: msg }),
-      muteHttpExceptions: true
-    });
-    return res.getResponseCode() === 200;
+    sendSolapiLMS_(to, text);
+    return true;
   } catch (e) {
     return false;
   }
