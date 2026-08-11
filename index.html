@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>연애학개론 — 연애는 교양필수 🎓</title>
+<meta name="description" content="LOVE101 연애학개론 수강신청 — 이번 학기, 연애는 교양필수입니다.">
+<meta name="theme-color" content="#23408e">
+<meta property="og:type" content="website">
+<meta property="og:title" content="연애학개론 🎓 수강신청">
+<meta property="og:description" content="이번 학기 교양필수, 연애학개론. 지금 수강신청 하세요.">
+<meta property="og:locale" content="ko_KR">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='80' font-size='80'%3E%F0%9F%8E%93%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@600;900&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #23408e;
+  --navy-dark: #182e68;
+  --navy-light: #eaf0fb;
+  --pink: #ff5d9e;
+  --pink-strong: #ff4dd2;
+  --bg: #eef1f6;
+  --card: #ffffff;
+  --line: #d8dee9;
+  --text: #23272f;
+  --muted: #767e8c;
+  --gold: #c9962c;
+  --green: #2e9e5b;
+  --red: #d64545;
+  --shadow: 0 2px 10px rgba(20, 35, 80, 0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ===== falling items ===== */
+.hearts-rain { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; }
+.heart-drop {
+  position: absolute; top: -30px;
+  animation: heartFall linear forwards;
+}
+@keyframes heartFall {
+  0%   { transform: translate(0, -30px) rotate(0); }
+  100% { transform: translate(var(--drift, 0), 110vh) rotate(var(--rot, 360deg)); }
+}
+
+/* ===== closed overlay ===== */
+.closed-overlay {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: rgba(24, 33, 58, 0.82); backdrop-filter: blur(4px);
+  align-items: center; justify-content: center; padding: 24px;
+}
+.closed-overlay.active { display: flex; }
+.closed-card {
+  background: var(--card); border-radius: 14px; border-top: 6px solid var(--navy);
+  max-width: 380px; width: 100%; padding: 36px 28px; text-align: center;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+}
+.closed-card .ico { font-size: 48px; margin-bottom: 10px; }
+.closed-card h2 { font-size: 21px; color: var(--navy); margin-bottom: 12px; }
+.closed-card p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+.closed-card .next-link {
+  display: inline-block; margin-top: 18px; text-decoration: none;
+  background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
+  color: #fff; font-weight: 700; font-size: 14px; padding: 12px 22px; border-radius: 100px;
+}
+
+/* ===== portal topbar ===== */
+.topbar {
+  background: var(--navy); color: #fff;
+  padding: 10px 16px; position: relative; z-index: 3;
+}
+.topbar-in {
+  max-width: 860px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.topbar .logo {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 15px; letter-spacing: 0.5px;
+}
+.topbar .logo .emblem { font-size: 18px; }
+.topbar .sysname { opacity: 0.75; font-size: 11px; font-weight: 400; margin-left: 4px; }
+.topbar .login-state { font-size: 11px; opacity: 0.85; white-space: nowrap; }
+.topbar .login-state b { color: #ffd9ea; }
+
+.notice-strip {
+  background: #fff8e6; border-bottom: 1px solid #f0e2b6;
+  font-size: 12px; color: #7a5c12; text-align: center; padding: 7px 14px;
+  position: relative; z-index: 3;
+}
+
+.container { max-width: 860px; margin: 0 auto; padding: 26px 16px 70px; position: relative; z-index: 2; }
+
+/* ===== hero: 강의계획서 ===== */
+.hero {
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  box-shadow: var(--shadow); overflow: hidden; margin-bottom: 22px;
+}
+.hero-head {
+  background: linear-gradient(135deg, var(--navy), var(--navy-dark));
+  color: #fff; padding: 20px 22px 18px; position: relative;
+}
+.hero-head .crumb { font-size: 11px; opacity: 0.75; margin-bottom: 10px; }
+.hero-head .course-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+.tag {
+  font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 100px;
+  background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.25);
+}
+.tag.req { background: var(--pink); border-color: var(--pink); }
+.hero-head .course-name {
+  font-family: 'Noto Serif KR', serif; font-weight: 900;
+  font-size: clamp(34px, 9vw, 46px); line-height: 1.15; letter-spacing: -1px;
+}
+.hero-head .course-sub {
+  font-family: 'Gaegu', cursive; font-size: 19px; color: #ffd9ea; margin-top: 6px;
+}
+.hero-head .stamp {
+  position: absolute; right: 18px; top: 16px;
+  border: 2px solid rgba(255, 209, 232, 0.85); color: #ffd1e8;
+  font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 12px;
+  padding: 6px 8px; border-radius: 6px; transform: rotate(8deg); opacity: 0.9;
+  letter-spacing: 1px;
+}
+
+.syllabus { padding: 16px 20px 20px; }
+.syllabus-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.syllabus-table th, .syllabus-table td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; }
+.syllabus-table th { background: var(--navy-light); color: var(--navy); font-weight: 700; width: 88px; white-space: nowrap; }
+.syllabus-table td b.pink { color: var(--pink); }
+
+.dday-banner {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  background: var(--navy-light); border: 1px solid #c6d4ef; color: var(--navy);
+  border-radius: 10px; padding: 10px 14px; font-size: 14px; font-weight: 700; margin-top: 14px;
+}
+.dday-banner .dd-count { background: var(--navy); color: #fff; padding: 2px 12px; border-radius: 100px; }
+.dday-banner.urgent { background: #fdeaea; border-color: #f3c1c1; color: var(--red); }
+.dday-banner.urgent .dd-count { background: var(--red); }
+.dday-banner.closed { background: #f0f0f0; border-color: #ddd; color: #888; }
+.dday-banner.closed .dd-count { background: #888; }
+
+.live-counter {
+  display: flex; align-items: center; justify-content: center; gap: 7px; flex-wrap: wrap;
+  font-size: 13px; color: var(--muted); margin-top: 10px;
+}
+.live-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: blink 1.4s infinite; }
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+.live-count { font-size: 17px; font-weight: 900; color: var(--navy); }
+.live-split { font-size: 12px; }
+.live-split.recruit { color: var(--pink); font-weight: 700; }
+
+/* hero referral */
+.hero-referral {
+  margin-top: 16px; background: #fff6fa; border: 1.5px dashed #ffb3d9; border-radius: 12px; padding: 14px;
+}
+.hr-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.hr-icon { font-size: 26px; }
+.hr-title { font-weight: 900; font-size: 14px; color: var(--pink); }
+.hr-desc { font-size: 12px; color: var(--muted); }
+.hr-code-area { display: flex; gap: 8px; }
+.hr-code-display {
+  flex: 1; background: #fff; border: 1.5px solid #ffd1e8; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: monospace; font-weight: 700; font-size: 16px; letter-spacing: 2px; color: var(--pink);
+  min-height: 42px;
+}
+.hr-code-display.empty { color: #c9a5b8; font-family: 'Noto Sans KR'; font-size: 12px; letter-spacing: 0; font-weight: 500; }
+.hr-btn {
+  border: none; background: var(--pink); color: #fff; font-weight: 700; font-size: 13px;
+  border-radius: 9px; padding: 0 16px; cursor: pointer; white-space: nowrap;
+}
+.hr-btn:active { transform: scale(0.97); }
+.hr-msg { font-size: 12px; color: var(--green); margin-top: 8px; opacity: 0; transition: opacity 0.2s; }
+.hr-msg.show { opacity: 1; }
+
+.benefit-banner { margin-top: 12px; display: grid; gap: 6px; }
+.benefit-row {
+  display: flex; align-items: center; gap: 8px; font-size: 13px;
+  background: var(--navy-light); border-radius: 9px; padding: 9px 12px; color: var(--navy);
+}
+.benefit-row.featured { background: #fff1f7; color: #b0356e; }
+.benefit-row strong { font-weight: 900; }
+
+.prompt {
+  text-align: center; font-size: 15px; font-weight: 700; color: var(--navy);
+  margin: 26px 0 14px;
+}
+
+/* ===== course wall (개설강좌) ===== */
+.wall-head {
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--navy); color: #fff; border-radius: 10px 10px 0 0;
+  padding: 10px 14px; font-size: 13px; font-weight: 700;
+}
+.wall-head .small { font-size: 11px; font-weight: 400; opacity: 0.8; }
+.postit-wall {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;
+  background: var(--card); border: 1px solid var(--line); border-top: none;
+  border-radius: 0 0 10px 10px; padding: 14px; box-shadow: var(--shadow);
+}
+.postit-slot { perspective: 900px; }
+.postit {
+  position: relative; width: 100%; aspect-ratio: 1 / 0.92; cursor: pointer;
+}
+.postit-inner {
+  position: absolute; inset: 0;
+  transform-style: preserve-3d; transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+.postit.flipped .postit-inner { transform: rotateY(180deg); }
+.postit-front, .postit-back {
+  position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  border-radius: 10px; padding: 10px; display: flex; flex-direction: column;
+}
+.postit-front {
+  background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--navy);
+  justify-content: space-between;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.postit:hover .postit-front { box-shadow: 0 6px 16px rgba(20,35,80,0.13); }
+.postit.picking .postit-front { animation: pickPulse 0.45s ease; }
+@keyframes pickPulse { 50% { transform: scale(0.95); } }
+.pf-code {
+  font-family: monospace; font-size: 10px; color: var(--muted);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.pf-seat {
+  font-size: 10px; font-weight: 700; color: var(--red);
+  background: #fdeaea; padding: 1px 7px; border-radius: 100px;
+}
+.pf-seat.ok { color: var(--green); background: #e8f6ee; }
+.pf-main {
+  font-weight: 900; font-size: 16px; line-height: 1.35; color: var(--text);
+  flex: 1; display: flex; align-items: center;
+}
+.pf-foot { font-size: 10px; color: var(--muted); display: flex; justify-content: space-between; align-items: center; }
+.pf-foot .credits { color: var(--gold); font-weight: 700; }
+.postit-back {
+  background: linear-gradient(160deg, #fff6fa, #ffeef6);
+  border: 1px solid #ffd1e8;
+  transform: rotateY(180deg);
+  align-items: center; justify-content: center; gap: 8px; text-align: center;
+}
+.back-intro {
+  font-family: 'Gaegu', cursive; font-size: 14.5px; color: #6b4757; line-height: 1.35;
+  word-break: keep-all;
+}
+.back-apply-btn {
+  border: none; background: var(--pink); color: #fff; font-weight: 700; font-size: 12.5px;
+  border-radius: 100px; padding: 7px 14px; cursor: pointer; font-family: 'Noto Sans KR';
+}
+.back-apply-btn:active { transform: scale(0.96); }
+
+.footer-note { text-align: center; font-size: 12px; color: var(--muted); margin-top: 12px; }
+
+.sparkle {
+  position: fixed; pointer-events: none; z-index: 60; font-size: 14px;
+  animation: sparklePop 1s ease forwards;
+}
+@keyframes sparklePop {
+  0% { opacity: 0; transform: scale(0.4) translateY(0); }
+  30% { opacity: 1; transform: scale(1.1) translateY(-6px); }
+  100% { opacity: 0; transform: scale(0.8) translateY(-22px); }
+}
+
+/* ===== reviews (강의평) ===== */
+.reviews { margin-top: 44px; }
+.reviews-title { text-align: center; font-size: 21px; color: var(--navy); }
+.reviews-sub { text-align: center; font-size: 13px; color: var(--muted); margin-top: 6px; }
+.reviews-score {
+  text-align: center; margin-top: 10px; font-size: 14px; color: var(--gold); font-weight: 900;
+}
+.reviews-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px; margin-top: 16px;
+}
+.review-card {
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  padding: 16px; box-shadow: var(--shadow); position: relative;
+}
+.review-stars { color: var(--gold); font-size: 13px; letter-spacing: 2px; margin-bottom: 6px; }
+.review-tag {
+  display: inline-block; font-size: 11px; font-weight: 700; color: var(--navy);
+  background: var(--navy-light); padding: 2px 9px; border-radius: 100px; margin-bottom: 8px;
+}
+.review-text { font-size: 13.5px; line-height: 1.65; color: #3b414d; }
+.review-author { font-size: 11.5px; color: var(--muted); margin-top: 10px; text-align: right; }
+.reviews-cta {
+  margin-top: 16px; text-align: center; font-size: 13px; color: #7a5c12;
+  background: #fff8e6; border: 1px solid #f0e2b6; border-radius: 10px; padding: 12px 14px; line-height: 1.6;
+}
+
+/* ===== FAQ ===== */
+.faq { margin-top: 44px; }
+.faq-title { text-align: center; font-size: 21px; color: var(--navy); margin-bottom: 14px; }
+.faq-item {
+  background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+  margin-bottom: 8px; overflow: hidden;
+}
+.faq-item summary {
+  cursor: pointer; list-style: none; padding: 14px 16px; font-size: 14px; font-weight: 700;
+  display: flex; align-items: center; gap: 8px;
+}
+.faq-item summary::before { content: 'Q.'; color: var(--pink); font-weight: 900; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item .answer { padding: 0 16px 14px 42px; font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+.operator-credit { text-align: center; font-size: 12px; color: var(--muted); margin-top: 40px; }
+.operator-credit a { color: var(--pink); font-weight: 700; text-decoration: none; }
+
+/* ===== modal: 수강신청서 ===== */
+.modal-backdrop {
+  display: none; position: fixed; inset: 0; z-index: 100;
+  background: rgba(24, 33, 58, 0.6); backdrop-filter: blur(3px);
+  align-items: flex-start; justify-content: center; overflow-y: auto; padding: 30px 14px;
+}
+.modal-backdrop.active { display: flex; }
+.form-postit {
+  background: var(--card); border-radius: 14px; border-top: 6px solid var(--navy);
+  width: 100%; max-width: 460px; padding: 26px 22px 24px; position: relative;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.35);
+}
+.close-btn {
+  position: absolute; right: 12px; top: 10px; border: none; background: none;
+  font-size: 26px; color: #aab; cursor: pointer; line-height: 1;
+}
+.form-title { font-size: 22px; color: var(--navy); text-align: center; }
+.form-subtitle { text-align: center; font-size: 12.5px; color: var(--muted); margin-top: 4px; margin-bottom: 14px; }
+
+.form-progress {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
+  background: var(--navy-light); border-radius: 100px; padding: 4px 10px 4px 4px;
+}
+.form-progress-bar {
+  height: 8px; width: 0%; border-radius: 100px;
+  background: linear-gradient(90deg, var(--pink), var(--pink-strong));
+  transition: width 0.3s ease; flex: none; max-width: calc(100% - 44px);
+}
+.form-progress { position: relative; }
+.form-progress-bar { position: absolute; left: 4px; top: 50%; transform: translateY(-50%); }
+.form-progress-text { margin-left: auto; font-size: 11px; font-weight: 700; color: var(--navy); position: relative; }
+
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #333a47; }
+.field input[type="text"], .field input[type="tel"], .field textarea, .field select {
+  width: 100%; border: 1.5px solid var(--line); border-radius: 9px;
+  padding: 11px 12px; font-size: 14px; font-family: 'Noto Sans KR'; outline: none;
+  background: #fbfcfe; transition: border-color 0.15s;
+}
+.field input:focus, .field textarea:focus, .field select:focus { border-color: var(--navy); background: #fff; }
+.field textarea { resize: vertical; min-height: 64px; }
+.radio-group { display: flex; gap: 14px; flex-wrap: wrap; }
+.radio-group.vertical { flex-direction: column; gap: 8px; }
+.radio-group label { font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 6px; margin: 0; }
+.radio-group input { accent-color: var(--pink); width: 16px; height: 16px; }
+.hint { font-size: 11.5px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+.hint-warn { color: #a3661a; background: #fff8e6; border-radius: 7px; padding: 7px 9px; }
+.hint-bonus { color: var(--pink); }
+.char-counter { float: right; font-weight: 400; font-size: 11px; color: var(--muted); }
+.char-counter.warn { color: var(--red); }
+
+.referrer-field { background: #fff6fa; border: 1.5px dashed #ffb3d9; border-radius: 10px; padding: 12px; }
+.referrer-field label { color: var(--pink); }
+
+/* 장바구니 옵션 */
+.card-options-field label { color: var(--navy); }
+.card-options { display: grid; gap: 8px; margin-top: 8px; }
+.card-option { display: block; cursor: pointer; }
+.card-option input { display: none; }
+.card-option-inner {
+  border: 1.5px solid var(--line); border-radius: 10px; padding: 12px 14px;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  position: relative; background: #fbfcfe; transition: all 0.15s;
+}
+.card-option input:checked + .card-option-inner {
+  border-color: var(--navy); background: var(--navy-light);
+  box-shadow: 0 0 0 1.5px var(--navy) inset;
+}
+.card-option.featured input:checked + .card-option-inner,
+.card-option.premium input:checked + .card-option-inner {
+  border-color: var(--pink); background: #fff1f7; box-shadow: 0 0 0 1.5px var(--pink) inset;
+}
+.card-option-badge {
+  position: absolute; top: -9px; left: 12px; font-size: 10px; font-weight: 900;
+  background: var(--pink); color: #fff; padding: 2px 9px; border-radius: 100px;
+}
+.card-option.premium .card-option-badge { background: var(--gold); }
+.card-option-title { font-size: 14px; font-weight: 900; }
+.card-option-desc { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+.card-option-price { font-size: 13px; font-weight: 900; color: var(--navy); white-space: nowrap; }
+
+/* 팀플 조원 */
+.friends-section {
+  background: #f4fbf6; border: 1.5px dashed #a9d9bb; border-radius: 12px;
+  padding: 14px; margin-bottom: 14px;
+}
+.friends-title { font-size: 15px; color: var(--green); }
+.friends-sub { font-size: 12px; color: var(--muted); margin: 4px 0 12px; }
+.friend-card {
+  background: #fff; border: 1px solid #d5eadd; border-radius: 10px;
+  padding: 12px; margin-bottom: 10px; position: relative;
+}
+.friend-badge {
+  display: inline-block; font-size: 11px; font-weight: 900; color: #fff;
+  background: var(--green); border-radius: 100px; padding: 2px 10px; margin-bottom: 8px;
+}
+
+/* 수강료 안내 */
+.payment-info {
+  background: var(--navy-light); border: 1px solid #c6d4ef; border-radius: 12px;
+  padding: 16px; margin: 18px 0 14px;
+}
+.payment-info h3 { font-size: 15px; color: var(--navy); text-align: center; margin-bottom: 12px; }
+.payment-info .block { background: #fff; border-radius: 9px; padding: 10px 12px; margin-bottom: 8px; }
+.payment-info .block-title { font-size: 12.5px; font-weight: 900; color: var(--navy); margin-bottom: 6px; }
+.payment-info .row { display: flex; justify-content: space-between; font-size: 13px; padding: 2px 0; }
+.payment-info .row strong { color: var(--pink); }
+.payment-info .account { background: #fff; border: 1.5px dashed var(--navy); border-radius: 9px; padding: 10px 12px; text-align: center; }
+.payment-info .account-num { font-size: 15px; font-weight: 900; color: var(--navy); margin: 4px 0; }
+.payment-info .account p { font-size: 12px; color: var(--muted); }
+.payment-info .notice { text-align: center; font-size: 12px; color: var(--pink); font-weight: 700; margin-top: 10px; }
+
+.submit-btn {
+  width: 100%; border: none; border-radius: 100px; padding: 15px;
+  background: linear-gradient(135deg, var(--navy), #3557b8);
+  color: #fff; font-size: 16px; font-weight: 900; font-family: 'Noto Sans KR'; cursor: pointer;
+  box-shadow: 0 6px 16px rgba(35, 64, 142, 0.35); transition: transform 0.15s;
+}
+.submit-btn:active { transform: scale(0.98); }
+.submit-btn:disabled { opacity: 0.6; }
+
+/* ===== success modal (수강신청 확인서) ===== */
+.share-card {
+  text-align: center; border-top: 6px solid var(--gold); max-width: 400px; margin: 0 auto;
+  background:
+    linear-gradient(#fff, #fff) padding-box;
+}
+.card-brand { font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 14px; color: var(--navy); letter-spacing: 2px; }
+.heart-pop { font-size: 52px; margin: 8px 0 2px; animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+@keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
+.done-label { font-size: 21px; font-weight: 900; color: var(--navy); }
+.done-sublabel { font-size: 12px; color: var(--gold); font-weight: 900; margin-top: 2px; letter-spacing: 1px; }
+.user-name { font-size: 24px; font-weight: 900; color: var(--pink); margin-top: 10px; }
+.user-meta { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+.enroll-table {
+  width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 14px;
+}
+.enroll-table th, .enroll-table td { border: 1px solid var(--line); padding: 6px 8px; }
+.enroll-table th { background: var(--navy-light); color: var(--navy); font-weight: 700; }
+.enroll-table td.ok { color: var(--green); font-weight: 900; }
+.quote { font-size: 13px; color: var(--muted); line-height: 1.7; margin-top: 14px; }
+.url-stamp { margin-top: 14px; font-family: 'Gaegu', cursive; font-size: 15px; color: var(--pink); }
+.follow-stamp { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+.next-steps {
+  background: var(--card); border-radius: 14px; border: 1.5px solid #f0e2b6;
+  max-width: 400px; margin: 14px auto 0; padding: 18px;
+}
+.next-title { font-size: 15px; font-weight: 900; color: #7a5c12; margin-bottom: 10px; }
+.next-list { padding-left: 20px; font-size: 13.5px; line-height: 1.8; color: #3b414d; }
+.next-list ul { padding-left: 16px; font-size: 12.5px; color: var(--muted); }
+.kakao-cta {
+  display: block; text-align: center; text-decoration: none; margin-top: 12px;
+  background: #fee500; color: #191919; font-weight: 900; font-size: 14.5px;
+  border-radius: 100px; padding: 13px;
+}
+.next-warn { text-align: center; font-size: 12px; color: var(--red); font-weight: 700; margin-top: 10px; }
+
+.referral-box {
+  background: var(--card); border: 1.5px dashed #ffb3d9; border-radius: 14px;
+  max-width: 400px; margin: 14px auto 0; padding: 18px; text-align: center;
+}
+.referral-box-title { font-size: 15px; font-weight: 900; color: var(--pink); }
+.referral-box-desc { font-size: 12.5px; color: var(--muted); line-height: 1.7; margin-top: 6px; }
+.referral-code-display {
+  margin-top: 12px; background: #fff6fa; border: 1.5px solid #ffd1e8; border-radius: 9px;
+  padding: 12px; font-family: monospace; font-weight: 700; font-size: 18px; letter-spacing: 2px; color: var(--pink);
+}
+.referral-code-display.empty { color: #c9a5b8; font-family: 'Noto Sans KR'; font-size: 12px; letter-spacing: 0; font-weight: 500; }
+.referral-btn {
+  margin-top: 10px; border: none; background: var(--pink); color: #fff;
+  font-weight: 700; font-size: 13.5px; border-radius: 100px; padding: 11px 22px; cursor: pointer;
+}
+.referral-copy-msg { font-size: 12px; color: var(--green); margin-top: 8px; opacity: 0; transition: opacity 0.2s; }
+.referral-copy-msg.show { opacity: 1; }
+
+.share-actions { display: flex; gap: 8px; max-width: 400px; margin: 14px auto 0; }
+.save-btn, .close-share-btn {
+  flex: 1; border: none; border-radius: 100px; padding: 13px; font-size: 14px; font-weight: 700; cursor: pointer;
+  font-family: 'Noto Sans KR';
+}
+.save-btn { background: var(--navy); color: #fff; }
+.close-share-btn { background: #e3e7ee; color: #555; }
+
+@media (max-width: 560px) {
+  .postit-wall { grid-template-columns: repeat(2, 1fr); }
+  .topbar .login-state { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="hearts-rain" id="heartsRain"></div>
+
+<div class="closed-overlay" id="closedOverlay">
+  <div class="closed-card">
+    <div class="ico">🎓</div>
+    <h2>수강신청 기간이 종료됐어요</h2>
+    <p>
+      연애학개론과 함께해줘서 고마워요 ♡<br><br>
+      다음 학기 개강(다음 회차) 알림을 받고 싶으면<br>
+      운영진 인스타를 팔로우해주세요!
+    </p>
+    <a href="https://instagram.com/_posting2" target="_blank" rel="noopener" class="next-link">
+      📷 @_posting2 팔로우
+    </a>
+  </div>
+</div>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="logo"><span class="emblem">🎓</span> LOVE UNIV. <span class="sysname">종합연애정보시스템</span></div>
+    <div class="login-state"><b>게스트</b> 님 · 상태: 휴학중인 솔로 🥲</div>
+  </div>
+</div>
+<div class="notice-strip">📢 2026-2학기 교양필수 「연애학개론」 수강신청이 진행중입니다. 정원 마감 전에 신청하세요!</div>
+
+<div class="container">
+
+  <div class="hero">
+    <div class="hero-head">
+      <div class="stamp">수강신청<br>OPEN</div>
+      <div class="crumb">수강신청 &gt; 개설강좌 조회 &gt; 교양필수</div>
+      <div class="course-tags">
+        <span class="tag">학수번호 LOVE101</span>
+        <span class="tag req">이수구분 교양필수</span>
+        <span class="tag">3학점</span>
+      </div>
+      <h1 class="title course-name">연애학개론</h1>
+      <div class="course-sub">"연애는 교양필수니까" ♡</div>
+    </div>
+    <div class="syllabus">
+      <table class="syllabus-table">
+        <tr><th>담당교수</th><td>Prof. 큐피드 (운영진 정성 매칭)</td></tr>
+        <tr><th>강의시간</th><td>매칭 후 협의 <b class="pink">(주 1회 데이트 권장)</b></td></tr>
+        <tr><th>강의실</th><td>캠퍼스 밖 어딘가 — 카페, 한강, 놀이공원 등</td></tr>
+        <tr><th>성적평가</th><td>절대평가 · <b class="pink">목표: 올 A+ 커플</b></td></tr>
+      </table>
+
+      <div class="dday-banner" id="ddayBanner">
+        <span class="dd-icon">⏰</span>
+        <span>수강신청 마감까지</span>
+        <span class="dd-count" id="ddayCount">D-?</span>
+      </div>
+      <div class="live-counter" id="liveCounter">
+        <span class="live-dot"></span>
+        <span>현재 수강신청 인원</span>
+        <span class="live-count" id="liveCount">―</span>
+        <span>명</span>
+        <span class="live-split" id="liveSplit"></span>
+      </div>
+
+      <div class="hero-referral">
+        <div class="hr-head">
+          <span class="hr-icon">🎁</span>
+          <div>
+            <div class="hr-title">장학 코드 생성 (추천인 코드)</div>
+            <div class="hr-desc">친구 초대 시 <strong>커피쿠폰 증정 ☕</strong></div>
+          </div>
+        </div>
+        <div class="hr-code-area">
+          <div class="hr-code-display empty" id="heroReferralDisplay">↓ 버튼을 눌러줘 ↓</div>
+          <button class="hr-btn" id="heroReferralBtn" onclick="generateHeroRefCode()">✨ 코드 받기</button>
+        </div>
+        <p class="hr-msg" id="heroReferralMsg"></p>
+      </div>
+      <div class="benefit-banner">
+        <div class="benefit-row featured">
+          <span class="b-ico">☕</span>
+          <span>친구 초대 시 <strong>커피쿠폰 증정!</strong></span>
+        </div>
+        <div class="benefit-row">
+          <span class="b-ico">🎓</span>
+          <span>장학 코드 입력 시 <strong>수강료 3,000원 감면</strong></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="prompt">📖 개설강좌(분반) 확인하고 마음에 드는 강의 수강신청!</div>
+
+  <div class="wall-head">
+    <span>개설강좌 목록 — 교양필수</span>
+    <span class="small">카드를 누르면 강의소개가 보여요</span>
+  </div>
+  <div class="postit-wall" id="postitWall">
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-01</span><span class="pf-seat">여석 1</span></div><div class="pf-main">연대<br>박서준</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">주말엔 카페 투어가 취미</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-02</span><span class="pf-seat ok">여석 3</span></div><div class="pf-main">건대 미대<br>지젤</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">그림 그리고 노래 듣는 게 좋아요</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-03</span><span class="pf-seat">여석 2</span></div><div class="pf-main">세종대<br>전지현</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">고양이 집사, 영화 보러 다녀요</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-04</span><span class="pf-seat ok">여석 4</span></div><div class="pf-main">예술디자인<br>대학</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">축제 같이 즐길 사람 찾아요</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-05</span><span class="pf-seat">여석 1</span></div><div class="pf-main">홍대<br>카리나</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">밤 산책 좋아하는 평범한 사람</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-06</span><span class="pf-seat ok">여석 5</span></div><div class="pf-main">한양대<br>안유진</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">운동 좋아하고 활발해요</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-07</span><span class="pf-seat">여석 1</span></div><div class="pf-main">고대<br>차은우</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">조용하지만 친구 사귀는 건 좋아함</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-08</span><span class="pf-seat ok">여석 3</span></div><div class="pf-main">이대<br>수지</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">노래 듣고 베이킹 좋아해요</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-09</span><span class="pf-seat">여석 2</span></div><div class="pf-main">서강대<br>박보검</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">농구 좋아하는 평범한 학생</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-10</span><span class="pf-seat ok">여석 4</span></div><div class="pf-main">중대<br>장원영</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">여행이랑 사진 찍는 거 좋아함</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-11</span><span class="pf-seat">여석 1</span></div><div class="pf-main">성대<br>정해인</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">책 좋아하고 가끔 글도 써요</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-12</span><span class="pf-seat ok">여석 3</span></div><div class="pf-main">숙대 미대<br>김혜윤</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">꽃 사진 찍는 게 취미</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-13</span><span class="pf-seat">여석 2</span></div><div class="pf-main">인하대<br>송강</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">게임이랑 운동 좋아해요</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-14</span><span class="pf-seat ok">여석 5</span></div><div class="pf-main">경희대<br>민지</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">음악 좋아하고 친구랑 노는 거</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-15</span><span class="pf-seat">여석 1</span></div><div class="pf-main">동대<br>남주혁</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">축구 좋아하는 활발한 성격</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-16</span><span class="pf-seat ok">여석 3</span></div><div class="pf-main">외대<br>정채연</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">여행 좋아하고 새 친구 사귀는 거</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-17</span><span class="pf-seat">여석 2</span></div><div class="pf-main">카이스트<br>이도현</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">공부 외엔 영화랑 게임</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-18</span><span class="pf-seat ok">여석 4</span></div><div class="pf-main">시립대<br>안소희</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">맛집 탐방이 진짜 취미</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-19</span><span class="pf-seat">여석 1</span></div><div class="pf-main">서울대<br>김수현</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">음악 좋아하고 가볍게 운동해요</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-20</span><span class="pf-seat ok">여석 3</span></div><div class="pf-main">국민대<br>혜리</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">강아지 좋아하고 카페 투어</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-21</span><span class="pf-seat">여석 2</span></div><div class="pf-main">단국대<br>변우석</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">여행이랑 드라이브 좋아함</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-22</span><span class="pf-seat ok">여석 5</span></div><div class="pf-main">상명대<br>한지민</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">그림 그리는 거 좋아해요</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-23</span><span class="pf-seat">여석 1</span></div><div class="pf-main">아주대<br>박형식</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">스포츠랑 친구들이랑 한 잔</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
+      <div class="postit-front"><div class="pf-code"><span>LOVE101-24</span><span class="pf-seat ok">여석 3</span></div><div class="pf-main">서울예대<br>예지</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
+      <div class="postit-back"><p class="back-intro">춤추고 노래 듣는 게 행복</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
+    </div></div></div>
+  </div>
+
+  <p class="footer-note">어떤 분반을 골라도 같은 수강신청서로 연결돼요 ♡</p>
+
+  <section class="reviews">
+    <h2 class="reviews-title">📝 강의평</h2>
+    <p class="reviews-sub">연애학개론 수강생들의 진짜 강의평 ♡</p>
+    <p class="reviews-score">★★★★★ 4.9 / 5.0 &nbsp;·&nbsp; 재수강 의사 100%</p>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <span class="review-tag">🎓 A+ 이수 완료</span>
+        <p class="review-text">매칭된 오빠랑 벌써 100일째예요 💕 처음엔 반신반의했는데, 진짜 잘 맞는 사람 소개해주셨어요</p>
+        <p class="review-author">— H대 · 21세 여</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <span class="review-tag">✨ 이번 학기 인연</span>
+        <p class="review-text">MBTI랑 이상형 이렇게 잘 반영해줄 줄 몰랐어요. 카톡 30분 만에 밥 약속 잡았어요 ㅋㅋ</p>
+        <p class="review-author">— K대 · 23세 남</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <span class="review-tag">🛒 장바구니 3과목</span>
+        <p class="review-text">3과목 담기 옵션으로 신청했는데 다 마음에 들어서 진짜 고민됐어요. 결국 골라서 만났는데 대성공!</p>
+        <p class="review-author">— Y대 · 22세 남</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <span class="review-tag">🌸 첫 수강</span>
+        <p class="review-text">고백하자면 소개팅 처음이었는데, 운영진분이 정성 매칭해주셔서 편하게 만났어요. 곧 두 번째 만남 ♡</p>
+        <p class="review-author">— S여대 · 20세 여</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★☆</div>
+        <span class="review-tag">👥 팀플(미팅) 수강</span>
+        <p class="review-text">친구랑 미팅 신청했는데 상대 팀 진짜 재밌었어요. 4명 다 인스타 팔로우한 상태 ㅎㅎ</p>
+        <p class="review-author">— C대 · 22세 여</p>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <span class="review-tag">💖 F 없는 강의</span>
+        <p class="review-text">에타에서 광고 보고 반신반의했는데 진짜였음. 지금 만나는 사람이랑 벌써 두 달째예요</p>
+        <p class="review-author">— K대 · 24세 남</p>
+      </div>
+    </div>
+    <p class="reviews-cta">✨ 매칭 후 <strong>강의평(후기) 인증</strong>하면 다음 학기 <strong>5,000원 장학금!</strong> 인스타 <strong>@_posting2</strong> DM으로 남겨줘</p>
+  </section>
+
+  <section class="faq">
+    <h2 class="faq-title">❓ 수강 문의 (FAQ)</h2>
+
+    <details class="faq-item">
+      <summary>매칭(분반 배정)은 어떻게 진행돼요?</summary>
+      <div class="answer">운영진이 수강신청서 내용(MBTI, 이상형 등)을 보고 정성껏 매칭한 후, 인스타 DM으로 배정 결과를 보내드려요. 결과 링크를 열면 상대방 정보 공개 ♡</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>배정 결과는 언제 나와요?</summary>
+      <div class="answer">수강신청 마감 후 3~5일 이내로 매칭이 완료되고 인스타 DM으로 결과를 안내드릴게요.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>수강료는 어떻게 입금해요?</summary>
+      <div class="answer">수강신청서 안에 입금 계좌 안내가 있어요. 입금하신 후 '입금자명 / 시간 / 금액'을 신청서에 적어주시면 됩니다.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>환불도 되나요?</summary>
+      <div class="answer">매칭이 성사되지 않을 경우, 신청서에 적어주신 환불 계좌로 전액 환불해드려요.</div>
+    </details>
+
+    <details class="faq-item">
+      <summary>인스타가 비공개인데 어떡해요?</summary>
+      <div class="answer">매칭 전후로 운영진 팔로우 요청을 보내드릴 거예요. 수락만 해주시면 돼요 ♡</div>
+    </details>
+  </section>
+
+  <p class="operator-credit">
+    문의 / 신고는 <a href="https://instagram.com/_posting2" target="_blank" rel="noopener">@_posting2</a> ♡
+  </p>
+</div>
+
+<div class="modal-backdrop" id="modal">
+  <div class="form-postit">
+    <button class="close-btn" onclick="closeForm()" aria-label="닫기">×</button>
+    <h2 class="form-title">수강신청서</h2>
+    <p class="form-subtitle">LOVE101 연애학개론 · 2026-2학기 ♡</p>
+
+    <div class="form-progress">
+      <div class="form-progress-bar" id="formProgressBar"></div>
+      <span class="form-progress-text" id="formProgressText">0%</span>
+    </div>
+
+    <form id="applyForm">
+      <div class="field">
+        <label>성명</label>
+        <input type="text" name="name" required placeholder="이름을 적어줘">
+      </div>
+      <div class="field">
+        <label>재학중인 학교</label>
+        <input type="text" name="school" placeholder="예: 한국대학교">
+      </div>
+      <div class="field">
+        <label>강좌 유형</label>
+        <div class="radio-group vertical">
+          <label><input type="radio" name="event_type" value="소개팅" required> 1:1 소개팅 (개인 수강)</label>
+          <label><input type="radio" name="event_type" value="미팅 (2대2)" required> 2:2 미팅 (팀플)</label>
+          <label><input type="radio" name="event_type" value="미팅 (3대3)" required> 3:3 미팅 (조별과제)</label>
+        </div>
+        <p class="hint hint-warn">⚠️ 미팅(팀플)은 <strong>1인 신청 불가</strong> — 친구와 함께, 대표자가 조원 정보까지 작성해주세요</p>
+      </div>
+      <div class="field">
+        <label>학과 / 학년</label>
+        <input type="text" name="major" required placeholder="예: 컴퓨터공학과 2학년">
+      </div>
+      <div class="field">
+        <label>성별</label>
+        <div class="radio-group">
+          <label><input type="radio" name="gender" value="남자" required> 남자</label>
+          <label><input type="radio" name="gender" value="여자" required> 여자</label>
+        </div>
+      </div>
+      <div class="field">
+        <label>나이</label>
+        <input type="text" name="age" required placeholder="예: 22" inputmode="numeric" maxlength="3">
+      </div>
+      <div class="field">
+        <label>인스타 ID</label>
+        <input type="text" name="instagram" required placeholder="@를 빼고 적어줘">
+        <p class="hint">* 비공개 계정이면 운영진 팔로우 요청 수락해줘 ♡</p>
+      </div>
+      <div class="field referrer-field">
+        <label>🎓 장학 코드 (선택)</label>
+        <input type="text" name="referrer" placeholder="예: LV-A3K9" style="text-transform:uppercase;">
+        <p class="hint hint-bonus">장학 코드 입력 시 <strong>수강료 3,000원 감면</strong> ♡</p>
+      </div>
+      <div class="field">
+        <label>전화번호</label>
+        <input type="tel" name="phone" required placeholder="010-0000-0000" inputmode="numeric">
+      </div>
+      <div class="field">
+        <label>카톡 ID</label>
+        <input type="text" name="kakao" required placeholder="카카오톡 아이디">
+      </div>
+      <div class="field">
+        <label>MBTI</label>
+        <select name="mbti" required class="mbti-select">
+          <option value="">선택해줘</option>
+          <option>INTJ</option><option>INTP</option><option>ENTJ</option><option>ENTP</option>
+          <option>INFJ</option><option>INFP</option><option>ENFJ</option><option>ENFP</option>
+          <option>ISTJ</option><option>ISFJ</option><option>ESTJ</option><option>ESFJ</option>
+          <option>ISTP</option><option>ISFP</option><option>ESTP</option><option>ESFP</option>
+          <option value="모름">잘 모르겠어</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>한 줄 자기소개 <span class="char-counter" data-target="intro">0/60</span></label>
+        <textarea name="intro" placeholder="너를 알려줘! (선택)" maxlength="60"></textarea>
+      </div>
+      <div class="field">
+        <label>이상형 한 줄 (원하는 팀메이트) <span class="char-counter" data-target="ideal">0/60</span></label>
+        <textarea name="ideal" required placeholder="어떤 사람을 만나고 싶어?" maxlength="60"></textarea>
+      </div>
+
+      <div class="field card-options-field">
+        <label>🛒 장바구니 옵션 (선택)</label>
+        <p class="hint">장바구니에 여러 과목 담고 그 중 <b>마음에 드는 한 과목 골라잡기</b> ♡</p>
+        <div class="card-options">
+          <label class="card-option">
+            <input type="radio" name="card_option" value="기본 (1장)" checked>
+            <div class="card-option-inner">
+              <div class="card-option-body">
+                <div class="card-option-title">기본 수강신청</div>
+                <div class="card-option-desc">운영진이 큐레이션한 1과목</div>
+              </div>
+              <div class="card-option-price">+0원</div>
+            </div>
+          </label>
+          <label class="card-option featured">
+            <input type="radio" name="card_option" value="2장 추가 (3장 중 선택)">
+            <div class="card-option-inner">
+              <span class="card-option-badge">💫 인기</span>
+              <div class="card-option-body">
+                <div class="card-option-title">장바구니 3과목</div>
+                <div class="card-option-desc">3과목 중 1과목 선택</div>
+              </div>
+              <div class="card-option-price">+10,000원</div>
+            </div>
+          </label>
+          <label class="card-option premium">
+            <input type="radio" name="card_option" value="5장 추가 (6장 중 선택)">
+            <div class="card-option-inner">
+              <span class="card-option-badge">👑 VVIP</span>
+              <div class="card-option-body">
+                <div class="card-option-title">장바구니 6과목</div>
+                <div class="card-option-desc">6과목 중 1과목 선택</div>
+              </div>
+              <div class="card-option-price">+20,000원</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="friends-section" id="friendsSection" style="display:none">
+        <h3 class="friends-title">👥 팀플 조원 정보 (같이 신청할 친구)</h3>
+        <p class="friends-sub">친구는 따로 신청 안 해도 돼요. 대표자가 한 번에 작성 ♡</p>
+
+        <div class="friend-card" data-idx="1">
+          <div class="friend-badge">조원 1</div>
+          <div class="field"><label>이름</label><input type="text" name="friend1_name" placeholder="친구 이름"></div>
+          <div class="field"><label>인스타 ID</label><input type="text" name="friend1_instagram" placeholder="@를 빼고"></div>
+          <div class="field"><label>카톡 ID</label><input type="text" name="friend1_kakao" placeholder="카톡 아이디"></div>
+        </div>
+
+        <div class="friend-card" data-idx="2" id="friend2Card" style="display:none">
+          <div class="friend-badge">조원 2</div>
+          <div class="field"><label>이름</label><input type="text" name="friend2_name" placeholder="친구 이름"></div>
+          <div class="field"><label>인스타 ID</label><input type="text" name="friend2_instagram" placeholder="@를 빼고"></div>
+          <div class="field"><label>카톡 ID</label><input type="text" name="friend2_kakao" placeholder="카톡 아이디"></div>
+        </div>
+      </div>
+
+      <div class="payment-info">
+        <h3>💳 수강료 납부 안내 💳</h3>
+        <div class="block">
+          <p class="block-title">1:1 소개팅 (개인 수강)</p>
+          <p class="row"><span>남학우</span><strong>18,000원</strong></p>
+          <p class="row"><span>여학우</span><strong>무료 🎁</strong></p>
+        </div>
+        <div class="block">
+          <p class="block-title">👥 미팅 (2대2 / 3대3 팀플)</p>
+          <p class="row"><span>남성</span><strong>1인 6,000원</strong></p>
+          <p class="row"><span>여성</span><strong>1인 2,000원</strong></p>
+        </div>
+        <div class="block">
+          <p class="block-title">🛒 장바구니 옵션</p>
+          <p class="row"><span>3과목 중 선택</span><strong>+10,000원</strong></p>
+          <p class="row"><span>6과목 중 선택</span><strong>+20,000원</strong></p>
+        </div>
+        <div class="account">
+          <p class="block-title">📩 입금 계좌 (등록금 고지서)</p>
+          <p class="account-num">카카오뱅크 3333-24-1809842</p>
+          <p>예금주: 박*일</p>
+        </div>
+        <p class="notice">입금 확인 후 매칭(분반 배정)이 진행돼요 ♡</p>
+      </div>
+      <div class="field">
+        <label>입금자명 / 시간 / 금액</label>
+        <input type="text" name="payment" required placeholder="예: 홍길동 / 8월15일 14:30 / 18000">
+      </div>
+      <div class="field">
+        <label>환불받을 은행 / 계좌번호</label>
+        <input type="text" name="refund" required placeholder="예: 카카오뱅크 3333-12-3456789">
+      </div>
+
+      <button type="submit" class="submit-btn">수강신청 완료하기 🎓</button>
+    </form>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="successModal">
+  <div>
+    <div class="form-postit share-card" id="shareCard">
+      <div class="card-brand">LOVE UNIV. 🎓 연애학개론</div>
+      <div class="heart-pop">🎉</div>
+      <div class="done-label">수강신청 완료!</div>
+      <div class="done-sublabel">— 올클 성공 —</div>
+      <div class="user-name" id="shareUserName">친구</div>
+      <div class="user-meta" id="shareUserMeta"></div>
+      <table class="enroll-table">
+        <tr><th>학수번호</th><th>교과목명</th><th>이수구분</th><th>상태</th></tr>
+        <tr><td>LOVE101</td><td>연애학개론</td><td>교양필수</td><td class="ok">신청완료</td></tr>
+      </table>
+      <p class="quote">
+        수강신청이 정상 처리됐어!<br>
+        분반 배정(매칭) 결과는 곧 인스타 DM으로 ♡
+      </p>
+      <div class="url-stamp">연애는 교양필수 ♡</div>
+      <div class="follow-stamp">📷 @_posting2</div>
+    </div>
+    <div class="next-steps">
+      <div class="next-title">📌 수강신청 마무리하기 (필수)</div>
+      <ol class="next-list">
+        <li>아래 <b>오픈카톡방</b> 입장 (<b>기본프로필</b>로 입장)</li>
+        <li>방에 사진 보내기
+          <ul>
+            <li>입금내역 사진 (입금자명 기재)</li>
+            <li>본인 사진 1장 (필수)</li>
+          </ul>
+        </li>
+      </ol>
+      <a href="https://open.kakao.com/o/sn90otGi" target="_blank" rel="noopener" class="kakao-cta">
+        💬 오픈카톡방 입장하기
+      </a>
+      <p class="next-warn">⚠️ 사진 확인 후 매칭 진행됩니다</p>
+    </div>
+    <div class="referral-box">
+      <div class="referral-box-title">☕ 친구 초대 = 커피쿠폰 증정!</div>
+      <div class="referral-box-desc">
+        에타에 코드 올려서 <b>친구</b>가 수강신청하면<br>
+        친구는 <strong>-3,000원 감면</strong>, 나는 <strong>커피쿠폰 증정</strong> ♡
+      </div>
+      <div class="referral-code-display empty" id="referralCodeDisplay">↓ 코드 받기 버튼을 눌러줘 ↓</div>
+      <button class="referral-btn" id="referralBtn" onclick="generateReferralCode()">✨ 장학 코드 받기</button>
+      <p class="referral-copy-msg" id="referralCopyMsg">코드 복사됨! ✓</p>
+    </div>
+    <div class="share-actions">
+      <button class="save-btn" onclick="saveShareCard()">📸 이미지 저장</button>
+      <button class="close-share-btn" onclick="closeSuccess()">닫기</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+<iframe name="hiddenFrame" style="display:none"></iframe>
+
+<script>
+// ====== 구글폼 연결 설정 ======
+// 쪽지팅과 같은 구글폼/시트를 그대로 사용 (새 회차용 폼 만들면 여기만 교체)
+const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeyvrrxfZ-lhl0IlMqyvFfc2NXgVsp4tjEuBzQYh3ZX43S19A/formResponse';
+const FIELD_IDS = {
+  name: 'entry.553539159',
+  school: 'entry.270231493',
+  event_type: 'entry.664976439',
+  major: 'entry.2115899897',
+  gender: 'entry.1385767725',
+  age: 'entry.213374843',
+  phone: 'entry.1423910806',
+  kakao: 'entry.2032933019',
+  instagram: 'entry.182511457',
+  referrer: 'entry.1718973660',
+  mbti: 'entry.833869921',
+  intro: 'entry.922392339',
+  ideal: 'entry.502467816',
+  card_option: '',
+  payment: 'entry.278115013',
+  refund: 'entry.1944630219'
+};
+// =============================
+
+function openForm(el) {
+  if (el && el.classList) {
+    el.classList.add('picking');
+    setTimeout(() => el.classList.remove('picking'), 450);
+  }
+  document.getElementById('modal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function flipPostit(el) {
+  document.querySelectorAll('.postit.flipped').forEach(p => {
+    if (p !== el) p.classList.remove('flipped');
+  });
+  el.classList.toggle('flipped');
+}
+
+function applyFromPostit(btn) {
+  const postit = btn.closest('.postit');
+  openForm(postit);
+}
+
+document.addEventListener('click', (e) => {
+  if (e.target.closest('.postit')) return;
+  if (e.target.closest('.modal-backdrop')) return;
+  document.querySelectorAll('.postit.flipped').forEach(p => p.classList.remove('flipped'));
+});
+
+function closeForm() {
+  document.getElementById('modal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function closeSuccess() {
+  document.getElementById('successModal').classList.remove('active');
+  document.body.style.overflow = '';
+  resetReferralCode();
+}
+
+// ====== 장학(추천인) 코드 생성기 ======
+function generateReferralCode() {
+  const chars = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+  let code = '';
+  for (let i = 0; i < 4; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  const full = 'LV-' + code;
+  const display = document.getElementById('referralCodeDisplay');
+  display.textContent = full;
+  display.classList.remove('empty');
+  const btn = document.getElementById('referralBtn');
+  btn.textContent = '📋 코드 복사하기';
+  btn.onclick = function() { copyReferralCode(full); };
+}
+
+function copyReferralCode(code) {
+  const showMsg = () => {
+    const msg = document.getElementById('referralCopyMsg');
+    msg.textContent = '코드 복사됨! 친구에게 공유해줘 ♡';
+    msg.classList.add('show');
+    setTimeout(() => msg.classList.remove('show'), 2200);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(code).then(showMsg).catch(() => fallbackCopy(code, showMsg));
+  } else {
+    fallbackCopy(code, showMsg);
+  }
+}
+
+function fallbackCopy(code, onDone) {
+  const ta = document.createElement('textarea');
+  ta.value = code;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); } catch (e) {}
+  document.body.removeChild(ta);
+  onDone();
+}
+
+function resetReferralCode() {
+  const display = document.getElementById('referralCodeDisplay');
+  if (!display) return;
+  display.textContent = '↓ 코드 받기 버튼을 눌러줘 ↓';
+  display.classList.add('empty');
+  const btn = document.getElementById('referralBtn');
+  btn.textContent = '✨ 장학 코드 받기';
+  btn.onclick = generateReferralCode;
+  const msg = document.getElementById('referralCopyMsg');
+  if (msg) msg.classList.remove('show');
+}
+
+function generateHeroRefCode() {
+  const chars = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+  let c = '';
+  for (let i = 0; i < 4; i++) c += chars.charAt(Math.floor(Math.random() * chars.length));
+  const code = 'LV-' + c;
+  const display = document.getElementById('heroReferralDisplay');
+  display.textContent = code;
+  display.classList.remove('empty');
+  const btn = document.getElementById('heroReferralBtn');
+  btn.textContent = '📋 복사';
+  btn.onclick = function() { copyHeroRefCode(code); };
+}
+
+function copyHeroRefCode(code) {
+  const onDone = () => {
+    const msg = document.getElementById('heroReferralMsg');
+    msg.textContent = '복사됨! 친구에게 공유해줘 ♡';
+    msg.classList.add('show');
+    setTimeout(() => msg.classList.remove('show'), 2200);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(code).then(onDone).catch(() => fallbackCopy(code, onDone));
+  } else {
+    fallbackCopy(code, onDone);
+  }
+}
+
+document.getElementById('applyForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const btn = this.querySelector('.submit-btn');
+  btn.disabled = true;
+  btn.textContent = '신청 처리 중...';
+
+  // 조원(친구) 정보를 자기소개 끝에 합쳐서 제출 (구글폼에 친구 칸 따로 만들 필요 X)
+  const _eventType = (this.querySelector('input[name="event_type"]:checked') || {}).value || '';
+  const _isMeeting = _eventType && _eventType !== '소개팅';
+  const _introField = this.querySelector('textarea[name="intro"]');
+  let _originalIntro = _introField ? _introField.value : '';
+  if (_isMeeting && _introField) {
+    const buildFriend = (idx) => {
+      const n = (this.querySelector(`input[name="friend${idx}_name"]`) || {}).value || '';
+      const i = (this.querySelector(`input[name="friend${idx}_instagram"]`) || {}).value || '';
+      const k = (this.querySelector(`input[name="friend${idx}_kakao"]`) || {}).value || '';
+      if (!n && !i && !k) return '';
+      const parts = [];
+      if (n) parts.push(`이름:${n.trim()}`);
+      if (i) parts.push(`인스타:@${i.trim().replace(/^@/, '')}`);
+      if (k) parts.push(`카톡:${k.trim()}`);
+      return `[친구${idx}] ` + parts.join(' / ');
+    };
+    const friend1 = buildFriend(1);
+    const friend2 = _eventType.includes('3대3') ? buildFriend(2) : '';
+    const friendsBlock = [friend1, friend2].filter(Boolean).join('\n');
+    if (friendsBlock) {
+      _introField.removeAttribute('maxlength');
+      _introField.value = (_originalIntro ? _originalIntro.trim() + '\n\n' : '') + friendsBlock;
+    }
+  }
+
+  if (GOOGLE_FORM_URL) {
+    const formData = new FormData(this);
+    const hiddenForm = document.createElement('form');
+    hiddenForm.action = GOOGLE_FORM_URL;
+    hiddenForm.method = 'POST';
+    hiddenForm.target = 'hiddenFrame';
+
+    for (const [key, value] of formData.entries()) {
+      if (FIELD_IDS[key]) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = FIELD_IDS[key];
+        input.value = value;
+        hiddenForm.appendChild(input);
+      }
+    }
+    document.body.appendChild(hiddenForm);
+    hiddenForm.submit();
+    document.body.removeChild(hiddenForm);
+  }
+
+  if (_introField && _isMeeting) {
+    _introField.setAttribute('maxlength', '60');
+    _introField.value = _originalIntro;
+  }
+
+  const userName = (this.querySelector('input[name="name"]').value || '').trim() || '친구';
+  const userSchool = (this.querySelector('input[name="school"]').value || '').trim();
+  const userEvent = (this.querySelector('input[name="event_type"]:checked') || {}).value || '';
+  const metaParts = [userSchool, userEvent].filter(Boolean);
+  const userMeta = metaParts.length ? metaParts.join(' · ') : '';
+
+  setTimeout(() => {
+    closeForm();
+    document.getElementById('shareUserName').textContent = userName;
+    document.getElementById('shareUserMeta').textContent = userMeta;
+    document.getElementById('successModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    this.reset();
+    try { localStorage.removeItem('love101_draft_v1'); } catch (e) {}
+    btn.disabled = false;
+    btn.textContent = '수강신청 완료하기 🎓';
+  }, 700);
+});
+
+// ====== Form autosave (localStorage) ======
+const AUTOSAVE_KEY = 'love101_draft_v1';
+const FORM_EL = document.getElementById('applyForm');
+
+function saveDraft() {
+  const data = {};
+  FORM_EL.querySelectorAll('input, textarea').forEach(el => {
+    if (el.type === 'radio') {
+      if (el.checked) data[el.name] = el.value;
+    } else if (el.value) {
+      data[el.name] = el.value;
+    }
+  });
+  try { localStorage.setItem(AUTOSAVE_KEY, JSON.stringify(data)); } catch (e) {}
+}
+function loadDraft() {
+  try {
+    const raw = localStorage.getItem(AUTOSAVE_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    Object.entries(data).forEach(([key, value]) => {
+      const els = FORM_EL.querySelectorAll(`[name="${key}"]`);
+      if (els.length === 1) {
+        els[0].value = value;
+      } else {
+        els.forEach(el => {
+          if (el.type === 'radio' && el.value === value) el.checked = true;
+        });
+      }
+    });
+  } catch (e) {}
+}
+function clearDraft() {
+  try { localStorage.removeItem(AUTOSAVE_KEY); } catch (e) {}
+}
+FORM_EL.addEventListener('input', saveDraft);
+FORM_EL.addEventListener('change', saveDraft);
+loadDraft();
+
+// ====== Progress bar + Char counters ======
+function updateFormProgress() {
+  const required = FORM_EL.querySelectorAll('[required]');
+  let filled = 0;
+  const counted = new Set();
+  required.forEach(el => {
+    if (el.type === 'radio') {
+      if (counted.has(el.name)) return;
+      counted.add(el.name);
+      if (FORM_EL.querySelector(`[name="${el.name}"]:checked`)) filled++;
+    } else if ((el.value || '').trim()) {
+      filled++;
+    }
+  });
+  const totalUnique = Array.from(required).reduce((acc, el) => {
+    if (el.type === 'radio') {
+      if (!acc._radios.has(el.name)) { acc._radios.add(el.name); acc.count++; }
+    } else { acc.count++; }
+    return acc;
+  }, { count: 0, _radios: new Set() }).count;
+
+  const pct = Math.round((filled / totalUnique) * 100);
+  const bar = document.getElementById('formProgressBar');
+  const txt = document.getElementById('formProgressText');
+  if (bar) bar.style.width = pct + '%';
+  if (txt) txt.textContent = pct + '%';
+}
+FORM_EL.addEventListener('input', updateFormProgress);
+FORM_EL.addEventListener('change', updateFormProgress);
+
+// Character counters
+document.querySelectorAll('.char-counter').forEach(counter => {
+  const target = FORM_EL.querySelector(`[name="${counter.dataset.target}"]`);
+  if (!target) return;
+  const max = parseInt(target.getAttribute('maxlength')) || 60;
+  const update = () => {
+    const len = (target.value || '').length;
+    counter.textContent = `${len}/${max}`;
+    counter.classList.toggle('warn', len >= max * 0.85);
+  };
+  target.addEventListener('input', update);
+  update();
+});
+
+updateFormProgress();
+
+// ====== Event type → friends section toggle ======
+const FRIEND_REQUIRED_FIELDS = ['name', 'instagram', 'kakao'];
+
+function applyEventTypeUI() {
+  const checked = FORM_EL.querySelector('input[name="event_type"]:checked');
+  const val = checked ? checked.value : '';
+  const section = document.getElementById('friendsSection');
+  const friend2 = document.getElementById('friend2Card');
+
+  ['1', '2'].forEach(i => {
+    FRIEND_REQUIRED_FIELDS.forEach(k => {
+      const el = FORM_EL.querySelector(`[name="friend${i}_${k}"]`);
+      if (el) el.required = false;
+    });
+  });
+
+  if (!val || val === '소개팅') {
+    if (section) section.style.display = 'none';
+    updateFormProgress();
+    return;
+  }
+
+  if (section) section.style.display = 'block';
+  FRIEND_REQUIRED_FIELDS.forEach(k => {
+    const el = FORM_EL.querySelector(`[name="friend1_${k}"]`);
+    if (el) el.required = true;
+  });
+
+  if (val.includes('3대3')) {
+    if (friend2) friend2.style.display = 'block';
+    FRIEND_REQUIRED_FIELDS.forEach(k => {
+      const el = FORM_EL.querySelector(`[name="friend2_${k}"]`);
+      if (el) el.required = true;
+    });
+  } else {
+    if (friend2) friend2.style.display = 'none';
+  }
+  updateFormProgress();
+}
+
+FORM_EL.querySelectorAll('input[name="event_type"]').forEach(r => {
+  r.addEventListener('change', applyEventTypeUI);
+});
+applyEventTypeUI();
+
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeForm();
+});
+document.getElementById('successModal').addEventListener('click', function(e) {
+  if (e.target === this) closeSuccess();
+});
+
+// ====== D-day countdown ======
+// 수강신청 마감일 — 바꾸려면 아래 날짜만 수정
+const APPLICATION_DEADLINE = new Date('2026-08-31T00:00:00+09:00');
+// 마감일 지나도 활성화 유지하고 싶으면 true로
+const FORCE_OPEN = false;
+
+function updateDday() {
+  const banner = document.getElementById('ddayBanner');
+  const el = document.getElementById('ddayCount');
+  const closedOverlay = document.getElementById('closedOverlay');
+  const now = new Date();
+  const todayDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const deadlineDate = new Date(APPLICATION_DEADLINE.getFullYear(), APPLICATION_DEADLINE.getMonth(), APPLICATION_DEADLINE.getDate());
+  const days = Math.round((deadlineDate - todayDate) / (1000 * 60 * 60 * 24));
+  const isExpired = now > APPLICATION_DEADLINE;
+
+  banner.classList.remove('urgent', 'closed');
+
+  if (days > 3) {
+    el.textContent = 'D-' + days;
+  } else if (days > 1) {
+    el.textContent = 'D-' + days + ' ⚡';
+    banner.classList.add('urgent');
+  } else if (days === 1) {
+    el.textContent = '내일 마감!';
+    banner.classList.add('urgent');
+  } else if (days === 0) {
+    el.textContent = '오늘 마감 ⚠️';
+    banner.classList.add('urgent');
+  } else {
+    el.textContent = '신청 마감';
+    banner.classList.add('closed');
+  }
+
+  if (closedOverlay) {
+    if (isExpired && !FORCE_OPEN) {
+      closedOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    } else {
+      closedOverlay.classList.remove('active');
+    }
+  }
+}
+updateDday();
+setInterval(updateDday, 60000);
+
+// ====== Live counter (실제 시트 데이터 fetch) ======
+const COUNTER_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbzM8IYXCT9NeD9K-L0Dval98J46dcnbkR2ElzgPN7fRvvchcuMfEfzC_HX89o8U4GXI/exec';
+const COUNTER_LAUNCH = new Date('2026-08-12T00:00:00+09:00');
+const COUNTER_BASE = 1096;
+const COUNTER_PER_HOUR = 0.5;
+
+let _liveCacheCount = null;
+let _liveCacheAt = 0;
+
+async function updateLiveCounter() {
+  const el = document.getElementById('liveCount');
+  const split = document.getElementById('liveSplit');
+  if (!el) return;
+
+  try {
+    const res = await fetch(COUNTER_APPS_SCRIPT + '?action=postitListApplicants', { cache: 'no-store' });
+    const data = await res.json();
+    const apps = data.applicants || [];
+    const total = apps.length;
+    const males = apps.filter(a => a.gender === '남자').length;
+    const females = apps.filter(a => a.gender === '여자').length;
+
+    el.textContent = total;
+    _liveCacheCount = total;
+    _liveCacheAt = Date.now();
+
+    if (split) {
+      const needFemales = males - females > 8;
+      split.textContent = needFemales
+        ? `남 ${males} · 여 ${females} — 여학우 추가 모집 ♡`
+        : `남 ${males} · 여 ${females}`;
+      split.classList.toggle('recruit', needFemales);
+    }
+    return;
+  } catch (e) {
+    console.warn('Live counter fetch failed, using sim:', e);
+  }
+
+  if (_liveCacheCount != null) {
+    el.textContent = _liveCacheCount;
+    return;
+  }
+  const elapsedHours = (new Date() - COUNTER_LAUNCH) / 3600000;
+  const count = Math.max(COUNTER_BASE, Math.floor(COUNTER_BASE + elapsedHours * COUNTER_PER_HOUR));
+  el.textContent = count;
+  if (split) {
+    const males = Math.floor(count * 0.55);
+    const females = count - males;
+    split.textContent = `남 ${males} · 여 ${females}`;
+  }
+}
+updateLiveCounter();
+setInterval(updateLiveCounter, 60000);
+
+// ====== Real applicants on course wall ======
+// 구글시트를 CSV로 게시하면 URL을 아래에 넣어주세요. 비워두면 가상 명단 그대로.
+const APPLICANTS_CSV_URL = '';
+
+function _maskName(name) {
+  name = (name || '').trim();
+  if (name.length <= 1) return name;
+  if (name.length === 2) return name[0] + '*';
+  return name[0] + '*' + name.slice(-1);
+}
+
+function _shortenSchool(school) {
+  return (school || '').trim()
+    .replace(/여자대학교$/, '여대')
+    .replace(/대학교$/, '대')
+    .replace(/\s+/g, '');
+}
+
+function _parseCsvRow(row) {
+  const result = [];
+  let cur = '';
+  let q = false;
+  for (let i = 0; i < row.length; i++) {
+    const c = row[i];
+    if (c === '"') {
+      if (q && row[i + 1] === '"') { cur += '"'; i++; }
+      else { q = !q; }
+    } else if (c === ',' && !q) {
+      result.push(cur); cur = '';
+    } else { cur += c; }
+  }
+  result.push(cur);
+  return result;
+}
+
+function _shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+async function injectRealApplicants() {
+  if (!APPLICANTS_CSV_URL) return;
+  let applicants;
+  try {
+    const csv = await (await fetch(APPLICANTS_CSV_URL, { cache: 'no-store' })).text();
+    const rows = csv.split(/\r?\n/).filter(r => r.trim());
+    if (rows.length < 2) return;
+    const header = _parseCsvRow(rows[0]);
+    const find = kw => header.findIndex(h => h.includes(kw));
+    const idx = {
+      school: find('학교'),
+      mbti: find('MBTI'),
+      intro: find('자기소개')
+    };
+    applicants = rows.slice(1).map(r => {
+      const c = _parseCsvRow(r);
+      return {
+        school: c[idx.school],
+        mbti: (c[idx.mbti] || '').trim().toUpperCase(),
+        intro: c[idx.intro]
+      };
+    }).filter(r => r.school && r.intro && r.intro.trim().length > 0);
+  } catch (e) { console.warn('[love101] csv fetch failed', e); return; }
+  if (!applicants.length) return;
+
+  const slots = Array.from(document.querySelectorAll('.postit'));
+  const order = _shuffle([...slots.keys()]);
+  const apps = _shuffle(applicants);
+  const n = Math.min(apps.length, slots.length);
+
+  for (let i = 0; i < n; i++) {
+    const slot = slots[order[i]];
+    const app = apps[i];
+    const front = slot.querySelector('.pf-main');
+    const introEl = slot.querySelector('.back-intro');
+    if (front) {
+      const line2 = (app.mbti && /^[EI][SN][TF][JP]$/.test(app.mbti)) ? app.mbti : '';
+      front.innerHTML = line2
+        ? `${_shortenSchool(app.school)}<br>${line2}`
+        : `${_shortenSchool(app.school)}`;
+    }
+    if (introEl) {
+      const t = (app.intro || '').trim().replace(/\s+/g, ' ');
+      introEl.textContent = t.length > 28 ? t.slice(0, 28) + '…' : t;
+    }
+  }
+}
+injectRealApplicants();
+
+// ====== Falling items (캠퍼스 감성) ======
+const HEART_EMOJIS = ['💗', '📚', '✏️', '💌', '🎓', '💯'];
+function spawnHeart() {
+  const rain = document.getElementById('heartsRain');
+  if (!rain) return;
+  const h = document.createElement('div');
+  h.className = 'heart-drop';
+  h.textContent = HEART_EMOJIS[Math.floor(Math.random() * HEART_EMOJIS.length)];
+  h.style.left = (Math.random() * 100) + 'vw';
+  h.style.fontSize = (12 + Math.random() * 14) + 'px';
+  h.style.opacity = 0.2 + Math.random() * 0.35;
+  const dur = 11 + Math.random() * 12;
+  h.style.animationDuration = dur + 's';
+  h.style.setProperty('--drift', ((Math.random() * 50) - 25) + 'vw');
+  h.style.setProperty('--rot', ((Math.random() * 720) - 360) + 'deg');
+  rain.appendChild(h);
+  setTimeout(() => h.remove(), dur * 1000 + 500);
+}
+for (let i = 0; i < 8; i++) setTimeout(spawnHeart, i * 200);
+setInterval(spawnHeart, 900);
+
+// ====== Course card hover glitter ======
+const SPARKLE_EMOJIS = ['✨', '⭐', '💫', '🌟'];
+function spawnSparkles(target) {
+  const rect = target.getBoundingClientRect();
+  const count = 5 + Math.floor(Math.random() * 3);
+  for (let i = 0; i < count; i++) {
+    const s = document.createElement('span');
+    s.className = 'sparkle';
+    s.textContent = SPARKLE_EMOJIS[Math.floor(Math.random() * SPARKLE_EMOJIS.length)];
+    s.style.left = (rect.left + Math.random() * rect.width) + 'px';
+    s.style.top  = (rect.top  + Math.random() * rect.height) + 'px';
+    s.style.animationDelay = (Math.random() * 0.2) + 's';
+    document.body.appendChild(s);
+    setTimeout(() => s.remove(), 1100);
+  }
+}
+document.querySelectorAll('.postit').forEach(el => {
+  let lastTime = 0;
+  el.addEventListener('mouseenter', () => {
+    const now = Date.now();
+    if (now - lastTime < 600) return;
+    lastTime = now;
+    spawnSparkles(el);
+  });
+});
+
+// ====== Share card image save ======
+async function saveShareCard() {
+  const card = document.getElementById('shareCard');
+  const btn = document.querySelector('.save-btn');
+  if (!card || !window.html2canvas) {
+    alert('이미지 저장 기능을 불러오는 중이에요. 잠시 후 다시 시도해주세요.');
+    return;
+  }
+  const orig = btn.textContent;
+  btn.textContent = '만드는 중...';
+  btn.disabled = true;
+  try {
+    const canvas = await html2canvas(card, {
+      backgroundColor: null,
+      scale: 2,
+      useCORS: true
+    });
+    const link = document.createElement('a');
+    link.download = '연애학개론_수강신청완료_' + Date.now() + '.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    btn.textContent = '저장됨 ✓';
+    setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 1500);
+  } catch (err) {
+    console.error(err);
+    alert('이미지 저장에 실패했어요. 스크린샷으로 저장해주세요!');
+    btn.textContent = orig;
+    btn.disabled = false;
+  }
+}
+</script>
+
+</body>
+</html>

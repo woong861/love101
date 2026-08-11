@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>연애학개론 교무처 — 분반 배정 (운영진용)</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='80' font-size='80'%3E%F0%9F%9B%A0%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pink: #23408e;
+  --pink-strong: #182e68;
+  --bg: #f7f5f2;
+  --card: #ffffff;
+  --line: #e6e2dc;
+  --text: #1f1d1b;
+  --muted: #7d7770;
+  --green: #4caf50;
+  --blue: #4285f4;
+  --warn: #ff9800;
+  --shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  padding: 16px 18px 80px;
+  min-height: 100vh;
+}
+
+.container { max-width: 1400px; margin: 0 auto; }
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.header h1 {
+  font-family: 'Jua', sans-serif;
+  font-size: 24px;
+  color: var(--pink);
+}
+
+.header-meta {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.warn-bar {
+  background: #fff3cd;
+  border: 1px solid #ffe69c;
+  color: #664d03;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+/* ---- two-pane layout ---- */
+.layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+}
+
+/* ---- left: applicant list ---- */
+.panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
+
+.panel-title {
+  font-family: 'Jua', sans-serif;
+  font-size: 15px;
+  color: var(--pink);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.toolbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.toolbar input[type="text"] {
+  flex: 1;
+  min-width: 140px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+}
+.toolbar input[type="text"]:focus { border-color: var(--pink); }
+
+.filter-chip {
+  padding: 6px 11px;
+  border-radius: 100px;
+  border: 1px solid var(--line);
+  background: white;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+  color: var(--text);
+}
+.filter-chip.active {
+  background: var(--pink);
+  color: white;
+  border-color: var(--pink);
+}
+
+.applicant-list {
+  max-height: calc(100vh - 360px);
+  min-height: 380px;
+  overflow-y: auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fafafa;
+}
+
+.applicant-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  font-size: 13px;
+  align-items: start;
+  transition: background 0.1s;
+}
+.applicant-row:hover { background: #fff5fa; }
+.applicant-row.matched { opacity: 0.45; }
+.applicant-row.selected-a { background: rgba(255, 93, 158, 0.12); border-left: 4px solid var(--pink); padding-left: 8px; }
+.applicant-row.selected-b { background: rgba(76, 175, 80, 0.12); border-left: 4px solid var(--green); padding-left: 8px; }
+
+.applicant-row .meta { color: var(--muted); font-size: 11px; }
+.applicant-row .name {
+  font-weight: 700;
+  font-size: 14px;
+}
+.applicant-row .name .gender-tag {
+  display: inline-block;
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 100px;
+  margin-left: 4px;
+  vertical-align: middle;
+  font-weight: 500;
+}
+.applicant-row .name .gender-tag.male   { background: #e3f2fd; color: #1565c0; }
+.applicant-row .name .gender-tag.female { background: #fce4ec; color: #c2185b; }
+.applicant-row .intro {
+  color: #555;
+  font-size: 12px;
+  margin-top: 3px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.applicant-row .pickers {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.applicant-row .pick-btn {
+  padding: 3px 9px;
+  font-size: 11px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: white;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.applicant-row .pick-btn:hover { background: #f0f0f0; }
+.applicant-row .pick-btn.a-btn { color: var(--pink); border-color: var(--pink); }
+.applicant-row .pick-btn.b-btn { color: var(--green); border-color: var(--green); }
+.applicant-row .pick-btn.picker-btn { color: #b04bd6; border-color: #b04bd6; }
+.applicant-row .pick-btn.card-btn { color: #ff9a1f; border-color: #ff9a1f; }
+.candidate-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  background: #fff5e6;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+.candidate-item .cand-idx {
+  width: 20px;
+  height: 20px;
+  background: #ff9a1f;
+  color: white;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+.candidate-item .cand-info { flex: 1; }
+.candidate-item .cand-remove {
+  background: none;
+  border: none;
+  color: #c00;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0 4px;
+}
+
+.status-pill {
+  display: inline-block;
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 100px;
+  margin-left: 4px;
+  background: #eee;
+  color: var(--muted);
+}
+.status-pill.matched { background: #e8f5e9; color: var(--green); }
+
+.list-empty {
+  padding: 30px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* ---- right: match builder ---- */
+.slot {
+  border: 2px dashed var(--line);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 12px;
+  background: #fafafa;
+  position: relative;
+}
+.slot.filled-a { border-color: var(--pink); background: rgba(255, 93, 158, 0.05); }
+.slot.filled-b { border-color: var(--green); background: rgba(76, 175, 80, 0.05); }
+
+.slot-label {
+  font-family: 'Jua', sans-serif;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.slot.filled-a .slot-label { color: var(--pink); }
+.slot.filled-b .slot-label { color: var(--green); }
+
+.slot-content { font-size: 13px; }
+.slot-content .empty-hint { color: var(--muted); font-style: italic; }
+
+.slot-content .name-line {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+.slot-content .info-line {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 2px;
+}
+.slot-content .clear-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  color: var(--muted);
+  cursor: pointer;
+  line-height: 1;
+}
+.slot-content .clear-btn:hover { color: #d32f2f; }
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Jua', sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--pink), var(--pink-strong));
+  color: white;
+  box-shadow: 0 4px 10px rgba(255, 93, 158, 0.3);
+  flex: 1;
+}
+.btn-secondary {
+  background: white;
+  color: var(--text);
+  border: 1px solid var(--line);
+}
+.btn-success {
+  background: #2e7d32;
+  color: white;
+  flex: 1;
+}
+.btn-warn {
+  background: var(--warn);
+  color: white;
+}
+.btn.copied { background: #6dcc7a !important; }
+
+.result-box {
+  background: #f9f9f9;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-top: 10px;
+  font-size: 12px;
+}
+.result-box.hidden { display: none; }
+.result-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+.result-row:last-child { margin-bottom: 0; }
+.result-row .label {
+  font-weight: 700;
+  width: 32px;
+  color: var(--pink);
+}
+.result-row.b-row .label { color: var(--green); }
+.result-row input {
+  flex: 1;
+  padding: 5px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 11px;
+  background: white;
+}
+.result-row .mini-btn {
+  padding: 4px 8px;
+  border: 1px solid var(--line);
+  background: white;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+}
+.result-row .mini-btn:hover { background: #f0f0f0; }
+
+.sms-preview {
+  background: #f0f8ff;
+  border: 1px solid #c8e0fa;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-top: 10px;
+  font-size: 11px;
+  white-space: pre-wrap;
+  line-height: 1.5;
+  color: #333;
+  max-height: 160px;
+  overflow-y: auto;
+}
+
+.status-line {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.status-line.ok { color: var(--green); }
+.status-line.err { color: #c62828; }
+
+.config-bar {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.config-bar label { font-weight: 700; color: var(--muted); }
+.config-bar input {
+  flex: 1;
+  min-width: 200px;
+  padding: 5px 8px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 11px;
+  font-family: monospace;
+}
+
+.scroll-cue {
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+  padding: 6px;
+  background: #f5f5f5;
+  border-top: 1px solid var(--line);
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>🎓 연애학개론 교무처 — 분반 배정 (운영진용)</h1>
+    <div class="header-meta">
+      <span id="loadedCount">0명 로드</span> ·
+      <span id="lastRefresh">로딩 안 함</span>
+    </div>
+  </div>
+
+  <div class="warn-bar">
+    ⚠️ <strong>운영진 전용.</strong> 절대 신청자에게 공유하지 마세요. 매칭 결과 SMS는 신청자 휴대폰으로 즉시 발송되니 신중하게.<br>
+    ℹ️ 실제 SMS 문구는 <strong>Apps Script 서버 템플릿</strong>에서 만들어져요 — 아직 "[쪽지팅]" 문구라면 Apps Script 쪽 템플릿도 "[연애학개론]"으로 바꿔주세요.
+  </div>
+
+  <div class="config-bar">
+    <label>Apps Script URL:</label>
+    <input type="text" id="apiUrl" value="https://script.google.com/macros/s/AKfycbzM8IYXCT9NeD9K-L0Dval98J46dcnbkR2ElzgPN7fRvvchcuMfEfzC_HX89o8U4GXI/exec" />
+    <label>사이트 주소:</label>
+    <input type="text" id="baseUrl" value="https://postitt.cloud" title="match.html / pick.html이 배포된 도메인 (새 도메인으로 배포하면 자동 감지됨)" />
+    <button class="btn btn-secondary" onclick="loadApplicants()">🔄 신청자 새로고침</button>
+  </div>
+
+  <div class="layout">
+
+    <!-- LEFT: Applicant list -->
+    <div class="panel">
+      <div class="panel-title">
+        <span>📋 신청자 목록</span>
+        <span style="font-size:11px;color:var(--muted)" id="filteredCount">전체 0명</span>
+      </div>
+
+      <div class="toolbar">
+        <input type="text" id="searchInput" placeholder="이름·학교·인스타·MBTI 검색..." oninput="renderList()">
+        <button class="filter-chip active" data-gender="all">전체</button>
+        <button class="filter-chip" data-gender="남자">남자</button>
+        <button class="filter-chip" data-gender="여자">여자</button>
+        <button class="filter-chip" data-event="all">모든 타입</button>
+        <button class="filter-chip" data-event="소개팅">소개팅</button>
+        <button class="filter-chip" data-event="미팅 (2대2)">2대2</button>
+        <button class="filter-chip" data-event="미팅 (3대3)">3대3</button>
+        <button class="filter-chip active" data-hide-matched="0">매칭완료 포함</button>
+      </div>
+
+      <div class="applicant-list" id="applicantList">
+        <div class="list-empty">아직 로드 안 됨. "신청자 새로고침" 눌러주세요.</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Match builder -->
+    <div class="panel">
+      <div class="panel-title">🎯 분반 배정 (1:1 매칭)</div>
+
+      <div class="slot" id="slotA">
+        <button class="clear-btn" onclick="clearSlot('a')" style="display:none">×</button>
+        <div class="slot-label">🌸 사람 A (왼쪽 목록에서 'A로' 눌러서 추가)</div>
+        <div class="slot-content"><span class="empty-hint">비어있음</span></div>
+      </div>
+
+      <div class="slot" id="slotB">
+        <button class="clear-btn" onclick="clearSlot('b')" style="display:none">×</button>
+        <div class="slot-label">💚 사람 B</div>
+        <div class="slot-content"><span class="empty-hint">비어있음</span></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-secondary" onclick="swapSlots()" title="A ↔ B">🔁 교환</button>
+        <button class="btn btn-secondary" onclick="clearAll()">🗑 비우기</button>
+        <button class="btn btn-primary" onclick="generateUrls()" id="genBtn" disabled>🔗 URL 생성</button>
+      </div>
+
+      <div class="result-box hidden" id="resultBox">
+        <div class="result-row">
+          <span class="label">A→</span>
+          <input type="text" id="urlA" readonly>
+          <button class="mini-btn" onclick="copyValue('urlA', this)">복사</button>
+        </div>
+        <div class="result-row b-row">
+          <span class="label">B→</span>
+          <input type="text" id="urlB" readonly>
+          <button class="mini-btn" onclick="copyValue('urlB', this)">복사</button>
+        </div>
+
+        <div style="margin-top:10px;font-weight:700;font-size:11px;color:var(--muted)">📱 SMS 미리보기 (LMS, 양쪽 동시 발송)</div>
+        <div class="sms-preview" id="smsPreview">URL 생성하면 여기 표시됩니다.</div>
+
+        <div class="actions" style="margin-top:10px">
+          <button class="btn btn-success" onclick="sendSms()" id="sendBtn">📱 SMS 양쪽 발송</button>
+        </div>
+        <div class="status-line" id="sendStatus"></div>
+      </div>
+
+      <!-- ============ 카드 매칭 모드 ============ -->
+      <div class="panel-title" style="margin-top:32px;border-top:1px dashed #ddd;padding-top:22px">🛒 장바구니 매칭 모드 (여러 과목 담기)</div>
+      <p style="font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:12px">
+        장바구니 옵션(3과목 / 6과목) 구매자용. <b>픽커 1명 + 후보 여러 명</b> 선택 → pick.html URL 발송 → 픽커가 수강확정하면 서로 매칭 완료.
+      </p>
+
+      <div class="slot" id="slotPicker">
+        <button class="clear-btn" onclick="clearPicker()" style="display:none">×</button>
+        <div class="slot-label">🛒 픽커 (고르는 사람 — 왼쪽 목록에서 '픽커' 눌러서 추가)</div>
+        <div class="slot-content"><span class="empty-hint">비어있음</span></div>
+      </div>
+
+      <div class="slot" id="slotCandidates">
+        <div class="slot-label">💌 후보 <span id="candidateCount">(0명)</span> — 왼쪽 목록에서 '＋ 후보' 눌러서 추가</div>
+        <div class="slot-content" id="candidatesList"><span class="empty-hint">비어있음</span></div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-secondary" onclick="clearCards()">🗑 카드 비우기</button>
+        <button class="btn btn-primary" onclick="generatePickUrl()" id="genPickBtn" disabled>🔗 pick URL 생성</button>
+      </div>
+
+      <div class="result-box hidden" id="pickResultBox">
+        <div class="result-row">
+          <span class="label">픽커→</span>
+          <input type="text" id="pickUrl" readonly>
+          <button class="mini-btn" onclick="copyValue('pickUrl', this)">복사</button>
+        </div>
+
+        <div style="margin-top:10px;font-weight:700;font-size:11px;color:var(--muted)">📱 SMS 미리보기 (픽커에게만 발송)</div>
+        <div class="sms-preview" id="pickSmsPreview">URL 생성하면 여기 표시됩니다.</div>
+
+        <div class="actions" style="margin-top:10px">
+          <button class="btn btn-success" onclick="sendPickSms()" id="sendPickBtn">📱 픽커에게 SMS 발송</button>
+        </div>
+        <div class="status-line" id="pickSendStatus"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ============ STATE ============
+let APPLICANTS = [];
+let slotA = null, slotB = null;
+let filterGender = 'all';
+let filterEvent  = 'all';
+let hideMatched = false;
+
+// ============ URL ENCODING (match.html과 동일 방식) ============
+function encodeMatchData(obj) {
+  const clean = {};
+  if (obj.s) clean.s = obj.s;   // 학교 (이름 자리 표시)
+  if (obj.a) clean.a = obj.a;   // 나이
+  if (obj.i) clean.i = obj.i;
+  if (obj.k) clean.k = obj.k;
+  if (obj.m) clean.m = obj.m;
+  if (obj.b) clean.b = obj.b;
+  const json = JSON.stringify(clean);
+  const bytes = new TextEncoder().encode(json);
+  let binary = '';
+  bytes.forEach(b => binary += String.fromCharCode(b));
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+// 카드 매칭용 — 전체 payload 그대로 base64 encode (me/cs 구조 유지)
+function encodePickData(obj) {
+  const json = JSON.stringify(obj);
+  const bytes = new TextEncoder().encode(json);
+  let binary = '';
+  bytes.forEach(b => binary += String.fromCharCode(b));
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+// ============ FILTER CHIPS ============
+document.querySelectorAll('.filter-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    if (chip.dataset.gender !== undefined) {
+      document.querySelectorAll('.filter-chip[data-gender]').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      filterGender = chip.dataset.gender;
+    } else if (chip.dataset.event !== undefined) {
+      document.querySelectorAll('.filter-chip[data-event]').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      filterEvent = chip.dataset.event;
+    } else if (chip.dataset.hideMatched !== undefined) {
+      hideMatched = !hideMatched;
+      chip.classList.toggle('active');
+      chip.textContent = hideMatched ? '매칭완료 숨김' : '매칭완료 포함';
+    }
+    renderList();
+  });
+});
+
+// ============ DATA LOAD ============
+async function loadApplicants() {
+  const url = document.getElementById('apiUrl').value.trim();
+  if (!url) { alert('Apps Script URL을 먼저 입력하세요'); return; }
+  const listEl = document.getElementById('applicantList');
+  listEl.innerHTML = '<div class="list-empty">⏳ 로드 중...</div>';
+  try {
+    const res = await fetch(url + '?action=postitListApplicants&t=' + Date.now());
+    const data = await res.json();
+    APPLICANTS = data.applicants || [];
+    document.getElementById('loadedCount').textContent = `${APPLICANTS.length}명 로드`;
+    document.getElementById('lastRefresh').textContent = '갱신 ' + new Date().toLocaleTimeString('ko-KR');
+    renderList();
+  } catch (e) {
+    listEl.innerHTML = '<div class="list-empty">❌ 로드 실패: ' + (e.message || e) + '</div>';
+  }
+}
+
+// ============ RENDER LIST ============
+function isMatched(a) {
+  const s = (a.status || '').toLowerCase();
+  return s.includes('매칭') || s.includes('완료') || s.includes('done');
+}
+
+function renderList() {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  const filtered = APPLICANTS.filter(a => {
+    if (filterGender !== 'all' && a.gender !== filterGender) return false;
+    if (filterEvent !== 'all' && (a.eventType || '').indexOf(filterEvent) === -1) return false;
+    if (hideMatched && isMatched(a)) return false;
+    if (q) {
+      const hay = [a.name, a.school, a.instagram, a.mbti, a.kakao, a.intro].join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  document.getElementById('filteredCount').textContent = `필터 ${filtered.length}명 / 전체 ${APPLICANTS.length}명`;
+
+  const listEl = document.getElementById('applicantList');
+  if (filtered.length === 0) {
+    listEl.innerHTML = '<div class="list-empty">조건에 맞는 신청자가 없습니다.</div>';
+    return;
+  }
+  listEl.innerHTML = filtered.map(a => {
+    const matched = isMatched(a);
+    const isA = slotA && slotA.row === a.row;
+    const isB = slotB && slotB.row === a.row;
+    const cls = [
+      'applicant-row',
+      matched ? 'matched' : '',
+      isA ? 'selected-a' : '',
+      isB ? 'selected-b' : ''
+    ].filter(Boolean).join(' ');
+    const genderTag = a.gender === '남자'
+      ? '<span class="gender-tag male">남</span>'
+      : a.gender === '여자' ? '<span class="gender-tag female">여</span>' : '';
+    const statusPill = matched
+      ? `<span class="status-pill matched">${esc(a.status)}</span>` : '';
+    const sub = [a.school, a.age + '살', a.mbti, a.eventType].filter(Boolean).join(' · ');
+    const contact = [a.instagram ? '@' + a.instagram : '', a.phone, a.kakao].filter(Boolean).join(' · ');
+    return `
+      <div class="${cls}" data-row="${a.row}">
+        <div class="row-idx" style="font-size:11px;color:var(--muted);padding-top:2px">#${a.row}</div>
+        <div onclick="setSlot('a', ${a.row})" style="cursor:pointer">
+          <div class="name">${esc(a.name)}${genderTag}${statusPill}</div>
+          <div class="meta">${esc(sub)}</div>
+          <div class="meta">${esc(contact)}</div>
+          ${a.intro ? `<div class="intro">"${esc(a.intro)}"</div>` : ''}
+        </div>
+        <div class="pickers">
+          <button class="pick-btn a-btn" onclick="setSlot('a', ${a.row})">A로</button>
+          <button class="pick-btn b-btn" onclick="setSlot('b', ${a.row})">B로</button>
+          <button class="pick-btn picker-btn" onclick="setPicker(${a.row})" title="카드 매칭 — 뽑는 사람">🎴 픽커</button>
+          <button class="pick-btn card-btn" onclick="addCandidate(${a.row})" title="카드 매칭 — 후보 추가">＋ 후보</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function esc(s) {
+  return String(s || '').replace(/[&<>"']/g, c => ({
+    '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+  }[c]));
+}
+
+// ============ SLOT MANAGEMENT ============
+function setSlot(which, row) {
+  const a = APPLICANTS.find(x => x.row === row);
+  if (!a) return;
+  if (which === 'a') {
+    if (slotB && slotB.row === row) slotB = null;
+    slotA = a;
+  } else {
+    if (slotA && slotA.row === row) slotA = null;
+    slotB = a;
+  }
+  renderSlots();
+  renderList();
+  hideResults();
+}
+
+function clearSlot(which) {
+  if (which === 'a') slotA = null; else slotB = null;
+  renderSlots();
+  renderList();
+  hideResults();
+}
+
+function swapSlots() {
+  [slotA, slotB] = [slotB, slotA];
+  renderSlots();
+  renderList();
+  hideResults();
+}
+
+function clearAll() {
+  slotA = null; slotB = null;
+  renderSlots();
+  renderList();
+  hideResults();
+}
+
+function renderSlots() {
+  const slotEl = (which, slot) => {
+    const el = document.getElementById('slot' + which.toUpperCase());
+    const clearBtn = el.querySelector('.clear-btn');
+    const content = el.querySelector('.slot-content');
+    el.classList.remove('filled-a', 'filled-b');
+    if (!slot) {
+      clearBtn.style.display = 'none';
+      content.innerHTML = '<span class="empty-hint">비어있음</span>';
+      return;
+    }
+    el.classList.add('filled-' + which);
+    clearBtn.style.display = '';
+    const label = which === 'a' ? '🌸 사람 A' : '💚 사람 B';
+    el.querySelector('.slot-label').textContent = label + ` — #${slot.row}`;
+    const sub = [slot.school, slot.age + '살', slot.gender, slot.mbti, slot.eventType].filter(Boolean).join(' · ');
+    content.innerHTML = `
+      <div class="name-line">${esc(slot.name)}</div>
+      <div class="info-line">${esc(sub)}</div>
+      <div class="info-line">📞 ${esc(slot.phone || '(전화 없음)')} · 인스타 @${esc(slot.instagram || '(없음)')} · 카톡 ${esc(slot.kakao || '(없음)')}</div>
+      ${slot.intro ? `<div class="info-line" style="margin-top:4px;color:#444">"${esc(slot.intro)}"</div>` : ''}
+      ${slot.ideal ? `<div class="info-line" style="color:#666">이상형: ${esc(slot.ideal)}</div>` : ''}
+    `;
+  };
+  slotEl('a', slotA);
+  slotEl('b', slotB);
+  document.getElementById('genBtn').disabled = !(slotA && slotB);
+}
+
+// ============ URL GEN ============
+function hideResults() {
+  document.getElementById('resultBox').classList.add('hidden');
+  document.getElementById('sendStatus').textContent = '';
+}
+
+function buildPayload(person) {
+  // 이름은 더 이상 reveal에 표시하지 않음. 학교 + 나이로 대체.
+  return {
+    s: person.school,
+    a: person.age,
+    i: person.instagram,
+    k: person.kakao,
+    m: person.mbti,
+    b: person.intro
+  };
+}
+
+function generateUrls() {
+  if (!slotA || !slotB) return;
+  if (!slotA.phone || !slotB.phone) {
+    if (!confirm('한 명 이상 전화번호가 없어요. SMS 발송 불가하지만 URL은 만들어드릴까요?')) return;
+  }
+  const base = getSiteBase() + '/match.html';
+  const urlForA = base + '?p=' + encodeMatchData(buildPayload(slotB));
+  const urlForB = base + '?p=' + encodeMatchData(buildPayload(slotA));
+  document.getElementById('urlA').value = urlForA;
+  document.getElementById('urlB').value = urlForB;
+
+  const previewA = '🌸 ' + slotA.name + ' 님(' + (slotA.phone || '전화없음') + ')에게:\n\n' +
+    buildSmsText(slotA.name, urlForA) +
+    '\n\n────────────────\n\n' +
+    '💚 ' + slotB.name + ' 님(' + (slotB.phone || '전화없음') + ')에게:\n\n' +
+    buildSmsText(slotB.name, urlForB);
+  document.getElementById('smsPreview').textContent = previewA;
+  document.getElementById('resultBox').classList.remove('hidden');
+  document.getElementById('sendBtn').disabled = !(slotA.phone && slotB.phone);
+}
+
+function buildSmsText(name, url) {
+  return '[연애학개론] ' + name + '님 분반 배정 결과 발표! 🎓\n' +
+    '\n아래 링크에서 성적표(팀메이트)를 확인하세요:\n' + url +
+    '\n\n이번 학기 올 A+ 기원할게요 💯' +
+    '\n- 연애학개론 교무처(운영진)' +
+    '\n인스타 @_posting2';
+}
+
+// match.html / pick.html이 배포된 사이트 주소 (GitHub Pages 하위 경로도 지원)
+// http(s)로 열려 있으면 현재 페이지의 디렉터리를 자동 감지, 아니면(파일로 열었으면) 입력칸 값 사용
+function getSiteBase() {
+  const input = (document.getElementById('baseUrl').value || '').trim().replace(/\/+$/, '');
+  if (location.protocol === 'http:' || location.protocol === 'https:') {
+    return new URL('.', location.href).href.replace(/\/+$/, '');
+  }
+  return input || 'https://postitt.cloud';
+}
+window.addEventListener('DOMContentLoaded', () => {
+  if (location.protocol === 'http:' || location.protocol === 'https:') {
+    document.getElementById('baseUrl').value = new URL('.', location.href).href.replace(/\/+$/, '');
+  }
+});
+
+function copyValue(id, btn) {
+  const el = document.getElementById(id);
+  navigator.clipboard.writeText(el.value).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1200);
+  });
+}
+
+// ============ SMS SEND ============
+async function sendSms() {
+  if (!slotA || !slotB) return;
+  if (!slotA.phone || !slotB.phone) { alert('전화번호 없는 사람이 있습니다.'); return; }
+  if (!confirm(slotA.name + ' (' + slotA.phone + ')\n' + slotB.name + ' (' + slotB.phone + ')\n\n두 사람에게 매칭 결과 SMS를 발송할까요?')) return;
+
+  const urlA = document.getElementById('urlA').value;
+  const urlB = document.getElementById('urlB').value;
+  const apiUrl = document.getElementById('apiUrl').value.trim();
+  const btn = document.getElementById('sendBtn');
+  const status = document.getElementById('sendStatus');
+  btn.disabled = true;
+  btn.textContent = '⏳ 발송 중...';
+  status.className = 'status-line';
+  status.textContent = 'Apps Script 호출 중...';
+
+  try {
+    // no-cors mode — 응답 못 읽지만 발송은 됨 (설렘스물 패턴 동일)
+    await fetch(apiUrl, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        type: 'sendPostitMatch',
+        a: { name: slotA.name, phone: slotA.phone, url: urlA, row: slotA.row },
+        b: { name: slotB.name, phone: slotB.phone, url: urlB, row: slotB.row }
+      })
+    });
+    btn.textContent = '✓ 발송 요청 완료';
+    btn.classList.remove('btn-success');
+    btn.style.background = '#6dcc7a';
+    status.className = 'status-line ok';
+    status.textContent = '✓ Apps Script로 발송 요청 보냄 (실제 발송은 시트 "쪽지팅_매칭_로그" 탭 확인)';
+    // 시트 상태 갱신을 위해 잠시 후 자동 새로고침
+    setTimeout(() => {
+      loadApplicants();
+      // 슬롯 비우고 다음 매칭 준비
+      clearAll();
+      btn.textContent = '📱 SMS 양쪽 발송';
+      btn.classList.add('btn-success');
+      btn.style.background = '';
+      btn.disabled = false;
+    }, 2500);
+  } catch (e) {
+    btn.disabled = false;
+    btn.textContent = '📱 SMS 양쪽 발송';
+    status.className = 'status-line err';
+    status.textContent = '❌ 발송 실패: ' + (e.message || e);
+  }
+}
+
+// ============ 🎴 CARD MATCHING MODE ============
+let pickerSlot = null;
+let candidates = []; // 후보 배열 (신청자 객체들)
+
+function setPicker(row) {
+  const a = APPLICANTS.find(x => x.row === row);
+  if (!a) return;
+  // 후보 목록에 있으면 제외
+  candidates = candidates.filter(c => c.row !== row);
+  pickerSlot = a;
+  renderPickerSlot();
+  renderCandidates();
+}
+
+function clearPicker() {
+  pickerSlot = null;
+  renderPickerSlot();
+}
+
+function addCandidate(row) {
+  if (pickerSlot && pickerSlot.row === row) {
+    alert('픽커로 지정된 사람은 후보로 추가할 수 없어요.');
+    return;
+  }
+  if (candidates.find(c => c.row === row)) {
+    alert('이미 후보 목록에 있어요.');
+    return;
+  }
+  if (candidates.length >= 6) {
+    alert('후보는 최대 6명까지만 추가할 수 있어요 (5장 옵션).');
+    return;
+  }
+  const a = APPLICANTS.find(x => x.row === row);
+  if (!a) return;
+  candidates.push(a);
+  renderCandidates();
+}
+
+function removeCandidate(row) {
+  candidates = candidates.filter(c => c.row !== row);
+  renderCandidates();
+}
+
+function clearCards() {
+  pickerSlot = null;
+  candidates = [];
+  renderPickerSlot();
+  renderCandidates();
+  document.getElementById('pickResultBox').classList.add('hidden');
+}
+
+function renderPickerSlot() {
+  const slot = document.getElementById('slotPicker');
+  const clear = slot.querySelector('.clear-btn');
+  const content = slot.querySelector('.slot-content');
+  if (pickerSlot) {
+    slot.classList.add('filled');
+    clear.style.display = '';
+    content.innerHTML = `
+      <div class="name">${esc(pickerSlot.name)} <span style="color:#b04bd6">🎴 픽커</span></div>
+      <div class="meta">${esc(pickerSlot.school || '')} · ${esc(pickerSlot.gender || '')} · ${esc(pickerSlot.age || '')}살</div>
+      <div class="meta">📱 ${esc(pickerSlot.phone || '전화 없음')} · MBTI ${esc(pickerSlot.mbti || '?')}</div>
+    `;
+  } else {
+    slot.classList.remove('filled');
+    clear.style.display = 'none';
+    content.innerHTML = '<span class="empty-hint">비어있음</span>';
+  }
+  updatePickBtn();
+}
+
+function renderCandidates() {
+  const list = document.getElementById('candidatesList');
+  const counter = document.getElementById('candidateCount');
+  counter.textContent = `(${candidates.length}명)`;
+  if (candidates.length === 0) {
+    list.innerHTML = '<span class="empty-hint">비어있음</span>';
+  } else {
+    list.innerHTML = candidates.map((c, i) => `
+      <div class="candidate-item">
+        <span class="cand-idx">${i+1}</span>
+        <div class="cand-info">
+          <b>${esc(c.name)}</b> · ${esc(c.school || '')} · ${esc(c.gender || '')} · ${esc(c.age || '?')}살 · ${esc(c.mbti || '?')}
+        </div>
+        <button class="cand-remove" onclick="removeCandidate(${c.row})">×</button>
+      </div>
+    `).join('');
+  }
+  updatePickBtn();
+}
+
+function updatePickBtn() {
+  const genBtn = document.getElementById('genPickBtn');
+  genBtn.disabled = !(pickerSlot && candidates.length >= 2);
+}
+
+async function generatePickUrl() {
+  if (!pickerSlot || candidates.length < 2) return;
+  // pick.html의 payload 구조: { me: {n, p}, cs: [{s,a,i,k,m,b,n,p}, ...] }
+  const payload = {
+    me: {
+      n: pickerSlot.name,
+      p: pickerSlot.phone,
+      row: pickerSlot.row,
+      s: pickerSlot.school,
+      a: pickerSlot.age,
+      m: pickerSlot.mbti,
+      b: pickerSlot.intro,
+      i: pickerSlot.instagram,
+      k: pickerSlot.kakao
+    },
+    cs: candidates.map(c => ({
+      s: c.school,
+      a: c.age,
+      m: c.mbti,
+      b: c.intro,
+      n: c.name,
+      i: c.instagram,
+      k: c.kakao,
+      p: c.phone,
+      row: c.row
+    }))
+  };
+
+  // 짧은 URL: 클라이언트에서 6자리 id 생성 → Apps Script에 payload 저장 → pick.html?id=XXX
+  const chars = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
+  let sessionId = '';
+  for (let i = 0; i < 6; i++) sessionId += chars.charAt(Math.floor(Math.random() * chars.length));
+
+  const apiUrl = document.getElementById('apiUrl').value.trim();
+  const genBtn = document.getElementById('genPickBtn');
+  const originalText = genBtn.textContent;
+  genBtn.disabled = true;
+  genBtn.textContent = '⏳ 세션 저장 중...';
+
+  try {
+    await fetch(apiUrl, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        type: 'createPickSession',
+        id: sessionId,
+        payload: payload
+      })
+    });
+  } catch (e) {
+    console.warn('Session save error (continuing anyway):', e);
+  }
+
+  genBtn.disabled = false;
+  genBtn.textContent = originalText;
+
+  const url = getSiteBase() + '/pick.html?id=' + sessionId;
+  document.getElementById('pickUrl').value = url;
+
+  const sms = '🛒 픽커: ' + pickerSlot.name + ' (' + (pickerSlot.phone || '전화없음') + ')\n' +
+    '💌 후보 ' + candidates.length + '명: ' + candidates.map(c => c.name).join(', ') + '\n' +
+    '\n📱 발송 SMS 미리보기:\n\n' +
+    '[연애학개론] ' + pickerSlot.name + '님, 장바구니에 과목 ' + candidates.length + '개 도착! 🛒\n' +
+    '\n마음에 드는 한 과목만 수강확정하세요:\n' + url +
+    '\n\n확정한 상대방에게 자동으로 매칭 안내가 갑니다 ♡' +
+    '\n- 연애학개론 교무처(운영진)' +
+    '\n\n※ 본 번호는 발송 전용 (응대 불가)' +
+    '\n문의는 인스타 @_posting2 DM으로 ♡';
+  document.getElementById('pickSmsPreview').textContent = sms;
+  document.getElementById('pickResultBox').classList.remove('hidden');
+  document.getElementById('sendPickBtn').disabled = !pickerSlot.phone;
+}
+
+async function sendPickSms() {
+  if (!pickerSlot || candidates.length < 2) return;
+  if (!pickerSlot.phone) { alert('픽커 전화번호가 없어요.'); return; }
+  if (!confirm(pickerSlot.name + ' (' + pickerSlot.phone + ')에게\n후보 ' + candidates.length + '명 카드 매칭 SMS를 발송할까요?')) return;
+
+  const pickUrl = document.getElementById('pickUrl').value;
+  const apiUrl = document.getElementById('apiUrl').value.trim();
+  const btn = document.getElementById('sendPickBtn');
+  const status = document.getElementById('pickSendStatus');
+  btn.disabled = true;
+  btn.textContent = '⏳ 발송 중...';
+  status.className = 'status-line';
+  status.textContent = 'Apps Script 호출 중...';
+
+  try {
+    await fetch(apiUrl, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        type: 'sendPostitPickerSms',
+        picker: {
+          name: pickerSlot.name,
+          phone: pickerSlot.phone,
+          row: pickerSlot.row
+        },
+        url: pickUrl,
+        candidateCount: candidates.length
+      })
+    });
+    btn.textContent = '✓ 발송 요청 완료';
+    btn.style.background = '#6dcc7a';
+    status.className = 'status-line ok';
+    status.textContent = '✓ 픽커에게 SMS 발송 요청 보냄. 시트 로그에서 결과 확인.';
+    setTimeout(() => {
+      clearCards();
+      btn.textContent = '📱 픽커에게 SMS 발송';
+      btn.style.background = '';
+      btn.disabled = false;
+    }, 2500);
+  } catch (e) {
+    btn.disabled = false;
+    btn.textContent = '📱 픽커에게 SMS 발송';
+    status.className = 'status-line err';
+    status.textContent = '❌ 발송 실패: ' + (e.message || e);
+  }
+}
+
+// Auto-load on first visit
+window.addEventListener('DOMContentLoaded', () => {
+  loadApplicants();
+});
+</script>
+
+</body>
+</html>

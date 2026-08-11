@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>연애학개론 — 배정 결과 조회 🎓</title>
+<meta name="description" content="연애학개론 매칭 결과 🎓 이번 학기 팀메이트를 확인해봐">
+<meta name="theme-color" content="#23408e">
+<meta name="robots" content="noindex">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="연애학개론 🎓 배정 결과">
+<meta property="og:description" content="이번 학기 팀메이트를 확인해봐 💌">
+<meta property="og:locale" content="ko_KR">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='80' font-size='80'%3E%F0%9F%8E%93%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@600;900&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: radial-gradient(ellipse at top, #2c437e 0%, #1a2a56 50%, #0d1530 100%);
+  color: white;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(2px 2px at 15% 20%, white, transparent),
+    radial-gradient(1px 1px at 55% 60%, white, transparent),
+    radial-gradient(1.5px 1.5px at 75% 15%, #ffb3d9, transparent),
+    radial-gradient(2px 2px at 35% 75%, white, transparent),
+    radial-gradient(1px 1px at 85% 45%, #ff5d9e, transparent),
+    radial-gradient(1.5px 1.5px at 25% 50%, #ffb3d9, transparent),
+    radial-gradient(1px 1px at 65% 85%, white, transparent);
+  background-size: 350px 350px;
+  opacity: 0.4;
+  pointer-events: none;
+  animation: twinkle 4s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.55; }
+}
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 50px 20px 60px;
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero { text-align: center; margin-bottom: 30px; }
+
+.eyebrow {
+  font-family: 'Gaegu', cursive;
+  font-size: 16px;
+  color: #cfe0ff;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 900;
+  font-size: clamp(34px, 10vw, 48px);
+  color: #fff;
+  text-shadow: 0 0 20px rgba(120, 160, 255, 0.6), 0 0 40px rgba(255, 93, 158, 0.35);
+  letter-spacing: -1px;
+  line-height: 1.15;
+}
+
+/* Initial: sealed grade report */
+.stage {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+
+.note-tied {
+  position: relative;
+  width: 250px;
+  height: 300px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  animation: floatY 3s ease-in-out infinite;
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.note-tied:hover { transform: scale(1.04); }
+.note-tied:active { transform: scale(0.98); }
+
+.note-paper {
+  position: absolute;
+  inset: 0;
+  background: #fdfcf7;
+  border-radius: 8px;
+  border-top: 8px solid #23408e;
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.45),
+    inset 0 -10px 16px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  padding: 20px;
+  color: #333;
+}
+
+.note-paper .univ {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 900;
+  font-size: 13px;
+  color: #23408e;
+  letter-spacing: 2px;
+}
+
+.note-paper .seal { font-size: 46px; }
+
+.note-paper .seal-text {
+  font-weight: 900;
+  font-size: 19px;
+  color: #23408e;
+}
+
+.note-paper .for-you {
+  font-family: 'Gaegu', cursive;
+  font-size: 14px;
+  color: #888;
+}
+
+.note-paper .official-stamp {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  border: 2px solid rgba(214, 69, 69, 0.7);
+  color: rgba(214, 69, 69, 0.8);
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 900;
+  font-size: 11px;
+  padding: 5px 7px;
+  border-radius: 6px;
+  transform: rotate(-12deg);
+  letter-spacing: 1px;
+}
+
+.tap-hint {
+  font-family: 'Gaegu', cursive;
+  font-size: 18px;
+  color: #cfe0ff;
+  text-align: center;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.7; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+/* Reveal state: 성적표 */
+.reveal-card {
+  display: none;
+  background: #fdfcf7;
+  width: 100%;
+  max-width: 380px;
+  padding: 30px 26px 30px;
+  border-radius: 8px;
+  border-top: 8px solid #23408e;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  position: relative;
+  color: #333;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.reveal-card.active {
+  display: block;
+  animation: bloom 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes bloom {
+  0% { opacity: 0; transform: scale(0.4) rotate(-6deg); }
+  60% { transform: scale(1.05) rotate(1deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+.reveal-card .univ-head {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 900;
+  font-size: 12px;
+  color: #23408e;
+  letter-spacing: 2px;
+}
+
+.grade-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin: 14px 0 6px;
+}
+.grade-table th, .grade-table td { border: 1px solid #d8dee9; padding: 6px 8px; }
+.grade-table th { background: #eaf0fb; color: #23408e; font-weight: 700; }
+.grade-table td.grade { color: #d64545; font-weight: 900; font-size: 15px; }
+
+.reveal-card .heart-big {
+  font-size: 50px;
+  margin-top: 8px;
+  animation: heartPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s backwards;
+}
+
+@keyframes heartPop {
+  from { transform: scale(0); }
+  to   { transform: scale(1); }
+}
+
+.reveal-card .label {
+  font-family: 'Gaegu', cursive;
+  font-size: 16px;
+  color: #888;
+  margin-top: 4px;
+}
+
+.reveal-card .match-name {
+  font-weight: 900;
+  font-size: clamp(24px, 7vw, 32px);
+  color: #ff5d9e;
+  margin: 8px 0 4px;
+  word-break: keep-all;
+  line-height: 1.2;
+}
+
+.reveal-card .mbti-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #23408e, #3557b8);
+  color: white;
+  font-weight: 900;
+  font-size: 13px;
+  padding: 4px 14px;
+  border-radius: 100px;
+  margin-bottom: 14px;
+  letter-spacing: 1px;
+}
+
+.reveal-card .intro {
+  font-family: 'Gaegu', cursive;
+  font-size: 17px;
+  color: #555;
+  line-height: 1.5;
+  background: #f2f5fb;
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin: 12px 0 22px;
+  position: relative;
+}
+
+.reveal-card .intro::before {
+  content: '"';
+  font-size: 30px;
+  font-weight: 900;
+  color: #ff5d9e;
+  position: absolute;
+  top: 0;
+  left: 8px;
+  line-height: 1;
+}
+
+.reveal-card .intro::after {
+  content: '"';
+  font-size: 30px;
+  font-weight: 900;
+  color: #ff5d9e;
+  position: absolute;
+  bottom: -10px;
+  right: 8px;
+  line-height: 1;
+}
+
+.contact-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: #fff;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 2px dashed #ffb3d9;
+  margin-bottom: 12px;
+}
+
+.contact-row .ico { font-size: 24px; }
+
+.contact-row .id-text {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 700;
+  color: #444;
+  text-align: left;
+  word-break: break-all;
+}
+
+.contact-row .copy-btn {
+  background: #ff5d9e;
+  color: white;
+  border: none;
+  border-radius: 100px;
+  padding: 6px 12px;
+  font-weight: 900;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: 'Noto Sans KR';
+}
+
+.contact-row .copy-btn.copied { background: #2e9e5b; }
+
+.insta-link {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
+  color: white;
+  padding: 14px;
+  border-radius: 100px;
+  font-weight: 900;
+  font-size: 16px;
+  margin-top: 8px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(221, 42, 123, 0.35);
+}
+
+.footer-note {
+  text-align: center;
+  font-family: 'Gaegu', cursive;
+  font-size: 14px;
+  color: #cfe0ff;
+  margin-top: 28px;
+  opacity: 0.85;
+}
+
+/* Error state */
+.error-card {
+  display: none;
+  background: #fdfcf7;
+  border-top: 8px solid #d64545;
+  padding: 36px 28px;
+  border-radius: 8px;
+  text-align: center;
+  color: #444;
+  max-width: 360px;
+  margin: 0 auto;
+}
+.error-card.active { display: block; }
+.error-card .icon { font-size: 50px; margin-bottom: 12px; }
+.error-card h2 {
+  font-weight: 900;
+  font-size: 21px;
+  color: #23408e;
+  margin-bottom: 8px;
+}
+.error-card p {
+  font-family: 'Gaegu', cursive;
+  font-size: 15px;
+  color: #666;
+  line-height: 1.5;
+}
+
+/* Confetti */
+.confetti {
+  position: fixed;
+  pointer-events: none;
+  z-index: 50;
+  font-size: 24px;
+  animation: confettiFall 2.5s linear forwards;
+}
+
+@keyframes confettiFall {
+  0% { transform: translate(var(--start-x), -20px) rotate(0); opacity: 1; }
+  100% { transform: translate(var(--end-x), 110vh) rotate(720deg); opacity: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="hero">
+    <p class="eyebrow">LOVE101 연애학개론 · 배정 결과 발표</p>
+    <h1 class="title">성적 조회 🎓</h1>
+  </div>
+
+  <div class="stage" id="stage">
+    <div class="note-tied" id="note" onclick="reveal()">
+      <div class="note-paper">
+        <div class="univ">LOVE UNIVERSITY</div>
+        <div class="seal">📋</div>
+        <div class="seal-text">배정 결과 통지서</div>
+        <div class="for-you">- 연애학개론 교무처 -</div>
+        <div class="official-stamp">직인<br>생략</div>
+      </div>
+    </div>
+    <p class="tap-hint">👆 탭해서 결과 확인 ♡</p>
+  </div>
+
+  <div class="reveal-card" id="revealCard">
+    <div class="univ-head">LOVE UNIVERSITY · 2026-2학기</div>
+    <table class="grade-table">
+      <tr><th>학수번호</th><th>교과목명</th><th>이수구분</th><th>성적</th></tr>
+      <tr><td>LOVE101</td><td>연애학개론</td><td>교양필수</td><td class="grade">A+</td></tr>
+    </table>
+    <div class="heart-big">💖</div>
+    <div class="label">이번 학기 너의 팀메이트는…</div>
+    <div class="match-name" id="matchName"></div>
+    <div class="mbti-badge" id="matchMbti"></div>
+    <div class="intro" id="matchIntro"></div>
+
+    <div class="contact-row" id="instaRow" style="display:none">
+      <span class="ico">📷</span>
+      <span class="id-text" id="matchInsta"></span>
+      <button class="copy-btn" onclick="copyId('insta')">복사</button>
+    </div>
+
+    <div class="contact-row" id="kakaoRow" style="display:none">
+      <span class="ico">💬</span>
+      <span class="id-text" id="matchKakao"></span>
+      <button class="copy-btn" onclick="copyId('kakao')">복사</button>
+    </div>
+
+    <a id="instaLink" class="insta-link" target="_blank" rel="noopener" style="display:none">
+      📷 인스타 보러가기
+    </a>
+  </div>
+
+  <div class="error-card" id="errorCard">
+    <div class="icon">😢</div>
+    <h2>조회 결과가 없어요</h2>
+    <p>링크가 잘못되었거나 만료되었어요.<br>운영진에게 문의해주세요.</p>
+  </div>
+
+  <p class="footer-note" id="footerNote" style="display:none">연애학개론에서 좋은 인연 만들길 ♡ 올 A+ 기원 🎓</p>
+</div>
+
+<script>
+function decode(str) {
+  try {
+    let b64 = str.replace(/-/g, '+').replace(/_/g, '/');
+    while (b64.length % 4) b64 += '=';
+    const binary = atob(b64);
+    const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+    const json = new TextDecoder().decode(bytes);
+    return JSON.parse(json);
+  } catch (e) { return null; }
+}
+
+const params = new URLSearchParams(location.search);
+const p = params.get('p');
+let matchData = p ? decode(p) : null;
+
+function _buildIdentity(d) {
+  const s = (d.s || '').trim();
+  const a = (d.a || '').toString().trim();
+  if (s && a) return s + ' · ' + a + '살';
+  if (s) return s;
+  if (a) return a + '살';
+  return d.n || ''; // 이전 버전 호환 (이름만 들어있을 때)
+}
+
+if (!matchData || (!matchData.s && !matchData.a && !matchData.n)) {
+  document.getElementById('stage').style.display = 'none';
+  document.getElementById('errorCard').classList.add('active');
+}
+
+function reveal() {
+  if (!matchData) return;
+  document.getElementById('stage').style.display = 'none';
+
+  document.getElementById('matchName').textContent = _buildIdentity(matchData);
+
+  if (matchData.m) {
+    document.getElementById('matchMbti').textContent = matchData.m;
+  } else {
+    document.getElementById('matchMbti').style.display = 'none';
+  }
+
+  if (matchData.b) {
+    document.getElementById('matchIntro').textContent = matchData.b;
+  } else {
+    document.getElementById('matchIntro').style.display = 'none';
+  }
+
+  if (matchData.i) {
+    document.getElementById('instaRow').style.display = 'flex';
+    document.getElementById('matchInsta').textContent = '@' + matchData.i;
+    const link = document.getElementById('instaLink');
+    link.href = 'https://instagram.com/' + matchData.i;
+    link.style.display = 'block';
+  }
+
+  if (matchData.k) {
+    document.getElementById('kakaoRow').style.display = 'flex';
+    document.getElementById('matchKakao').textContent = matchData.k;
+  }
+
+  document.getElementById('revealCard').classList.add('active');
+  document.getElementById('footerNote').style.display = 'block';
+
+  setTimeout(launchConfetti, 200);
+}
+
+function copyId(type) {
+  const id = type === 'insta' ? matchData.i : matchData.k;
+  if (!id) return;
+  navigator.clipboard.writeText(id).then(() => {
+    const btn = event.target;
+    const orig = btn.textContent;
+    btn.textContent = '복사됨 ✓';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.classList.remove('copied');
+    }, 1500);
+  });
+}
+
+function launchConfetti() {
+  const emojis = ['💖', '✨', '🎓', '💯', '⭐', '📚'];
+  for (let i = 0; i < 24; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    const startX = Math.random() * 100;
+    const drift = (Math.random() - 0.5) * 40;
+    c.style.left = startX + 'vw';
+    c.style.top = '0';
+    c.style.setProperty('--start-x', '0vw');
+    c.style.setProperty('--end-x', drift + 'vw');
+    c.style.animationDelay = (Math.random() * 0.4) + 's';
+    c.style.animationDuration = (2 + Math.random() * 1.5) + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 4000);
+  }
+}
+</script>
+
+</body>
+</html>

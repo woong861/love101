@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>연애학개론 — 수강 장바구니 🛒</title>
+<meta name="description" content="장바구니에 담긴 과목 중 마음에 드는 한 과목을 수강확정해봐 🎓">
+<meta name="theme-color" content="#23408e">
+<meta name="robots" content="noindex">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="연애학개론 🛒 수강 장바구니">
+<meta property="og:description" content="담긴 과목 중 한 과목만 수강확정! 🎓">
+<meta property="og:locale" content="ko_KR">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='80' font-size='80'%3E%F0%9F%9B%92%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@600;900&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: radial-gradient(ellipse at top, #2c437e 0%, #1a2a56 50%, #0d1530 100%);
+  color: white;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(2px 2px at 15% 20%, white, transparent),
+    radial-gradient(1px 1px at 55% 60%, white, transparent),
+    radial-gradient(1.5px 1.5px at 75% 15%, #ffb3d9, transparent),
+    radial-gradient(2px 2px at 35% 75%, white, transparent),
+    radial-gradient(1px 1px at 85% 45%, #ff5d9e, transparent),
+    radial-gradient(1.5px 1.5px at 25% 50%, #ffb3d9, transparent),
+    radial-gradient(1px 1px at 65% 85%, white, transparent);
+  background-size: 350px 350px;
+  opacity: 0.35;
+  pointer-events: none;
+  animation: twinkle 4s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.5; }
+}
+
+.container {
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 44px 18px 70px;
+  position: relative;
+  z-index: 1;
+}
+
+.hero { text-align: center; margin-bottom: 24px; }
+
+.eyebrow {
+  font-family: 'Gaegu', cursive;
+  font-size: 16px;
+  color: #cfe0ff;
+  margin-bottom: 8px;
+}
+
+.title {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 900;
+  font-size: clamp(30px, 9vw, 42px);
+  color: #fff;
+  text-shadow: 0 0 20px rgba(120, 160, 255, 0.6), 0 0 40px rgba(255, 93, 158, 0.35);
+  letter-spacing: -1px;
+  line-height: 1.2;
+}
+
+.hero .desc {
+  margin-top: 12px;
+  font-size: 14.5px;
+  color: #dce6ff;
+  line-height: 1.6;
+}
+.hero .desc b { color: #ffb3d9; }
+
+.info-note {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 12.5px;
+  color: #cfe0ff;
+  line-height: 1.7;
+  margin-bottom: 22px;
+  text-align: center;
+}
+.info-note b { color: #ffd1e8; }
+
+/* cards */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+}
+
+.card-slot { perspective: 1000px; }
+
+.card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1.35;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+.card.flipped { transform: rotateY(180deg); }
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 12px;
+  text-align: center;
+}
+
+.card-back {
+  background: linear-gradient(155deg, #23408e, #182e68);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+  gap: 8px;
+}
+.card-back .card-number {
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 900;
+  font-size: 34px;
+  color: #fff;
+  width: 54px; height: 54px;
+  border: 2px solid rgba(255,255,255,0.5);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+.card-back .card-course { font-family: monospace; font-size: 11px; color: rgba(255,255,255,0.65); }
+.card-back .card-hint {
+  font-family: 'Gaegu', cursive;
+  font-size: 15px;
+  color: #ffd1e8;
+  line-height: 1.35;
+}
+
+.card-front {
+  background: #fdfcf7;
+  border-top: 6px solid #23408e;
+  color: #333;
+  transform: rotateY(180deg);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+  gap: 6px;
+  justify-content: space-between;
+  padding-top: 16px;
+}
+.front-code { font-family: monospace; font-size: 10px; color: #999; }
+.front-identity {
+  font-weight: 900;
+  font-size: 16px;
+  color: #23408e;
+  line-height: 1.3;
+  word-break: keep-all;
+}
+.front-mbti {
+  display: inline-block;
+  background: linear-gradient(135deg, #23408e, #3557b8);
+  color: #fff;
+  font-weight: 900;
+  font-size: 11px;
+  padding: 2px 10px;
+  border-radius: 100px;
+  letter-spacing: 1px;
+}
+.front-intro {
+  font-family: 'Gaegu', cursive;
+  font-size: 13.5px;
+  color: #666;
+  line-height: 1.35;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  word-break: keep-all;
+}
+.front-pick-btn {
+  border: none;
+  background: #ff5d9e;
+  color: #fff;
+  font-weight: 900;
+  font-size: 12.5px;
+  font-family: 'Noto Sans KR';
+  border-radius: 100px;
+  padding: 8px 12px;
+  cursor: pointer;
+  width: 100%;
+}
+.front-pick-btn:active { transform: scale(0.97); }
+
+/* error */
+.error-card {
+  display: none;
+  background: #fdfcf7;
+  border-top: 8px solid #d64545;
+  padding: 36px 28px;
+  border-radius: 10px;
+  text-align: center;
+  color: #444;
+  max-width: 380px;
+  margin: 30px auto 0;
+}
+.error-card.active { display: block; }
+.error-card .error-emoji { font-size: 50px; margin-bottom: 12px; }
+.error-card .error-title {
+  font-weight: 900;
+  font-size: 20px;
+  color: #23408e;
+  margin-bottom: 8px;
+}
+.error-card .error-desc {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.7;
+}
+
+/* result */
+.result-screen {
+  display: none;
+  background: #fdfcf7;
+  border-top: 8px solid #2e9e5b;
+  border-radius: 10px;
+  padding: 40px 28px;
+  text-align: center;
+  color: #444;
+  max-width: 380px;
+  margin: 30px auto 0;
+}
+.result-screen.active { display: block; animation: bloom 0.7s cubic-bezier(0.34, 1.56, 0.64, 1); }
+@keyframes bloom {
+  0% { opacity: 0; transform: scale(0.5); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.result-emoji { font-size: 54px; margin-bottom: 10px; }
+.result-title { font-weight: 900; font-size: 22px; color: #23408e; }
+.result-desc { font-size: 14px; color: #555; line-height: 1.7; margin-top: 10px; }
+.result-note {
+  margin-top: 16px;
+  background: #eaf0fb;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 12.5px;
+  color: #23408e;
+  line-height: 1.7;
+}
+
+/* confirm modal */
+.confirm-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(10, 16, 38, 0.75);
+  backdrop-filter: blur(3px);
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.confirm-backdrop.active { display: flex; }
+.confirm-card {
+  background: #fdfcf7;
+  border-top: 8px solid #23408e;
+  border-radius: 12px;
+  max-width: 340px;
+  width: 100%;
+  padding: 26px 22px;
+  text-align: center;
+  color: #333;
+  animation: bloom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.confirm-title { font-weight: 900; font-size: 18px; color: #23408e; }
+.confirm-desc { font-size: 14px; color: #555; line-height: 1.8; margin-top: 12px; }
+.confirm-desc .highlight { font-weight: 900; font-size: 17px; color: #ff5d9e; }
+.confirm-actions { display: flex; gap: 8px; margin-top: 20px; }
+.confirm-cancel, .confirm-yes {
+  flex: 1;
+  border: none;
+  border-radius: 100px;
+  padding: 13px 8px;
+  font-size: 13.5px;
+  font-weight: 900;
+  font-family: 'Noto Sans KR';
+  cursor: pointer;
+}
+.confirm-cancel { background: #e3e7ee; color: #555; }
+.confirm-yes { background: #ff5d9e; color: #fff; }
+
+/* loading */
+.loading-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  background: rgba(10, 16, 38, 0.8);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+}
+.loading-overlay.active { display: flex; }
+.spinner {
+  width: 44px; height: 44px;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  border-top-color: #ff5d9e;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-size: 14px; color: #dce6ff; }
+
+.footer-note {
+  text-align: center;
+  font-family: 'Gaegu', cursive;
+  font-size: 14px;
+  color: #cfe0ff;
+  margin-top: 30px;
+  opacity: 0.85;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="hero" id="hero">
+    <p class="eyebrow">LOVE101 연애학개론 · 수강 장바구니</p>
+    <h1 class="title">장바구니 🛒</h1>
+    <p class="desc">
+      <b id="userName">회원</b>님의 장바구니에<br>
+      과목(카드) <b id="cardCount">?</b>개가 담겨 있어요!<br>
+      카드를 눌러 확인하고 <b>딱 한 과목만 수강확정</b> ♡
+    </p>
+  </div>
+
+  <div class="info-note" id="infoNote">
+    🛒 카드를 탭하면 과목 정보(상대방)가 공개돼요<br>
+    ✅ <b>수강확정은 1회만</b> 가능 — 신중하게 골라줘!
+  </div>
+
+  <div class="cards-grid" id="cardsGrid"></div>
+
+  <div class="error-card" id="errorCard">
+    <div class="error-emoji">😢</div>
+    <div class="error-title">장바구니를 찾을 수 없어요</div>
+    <div class="error-desc">링크가 잘못되었거나 만료되었어요.<br>운영진에게 문의해주세요.</div>
+  </div>
+
+  <div class="result-screen" id="resultScreen">
+    <div class="result-emoji">🎓</div>
+    <div class="result-title">수강확정 완료!</div>
+    <div class="result-desc">
+      선택한 상대방에게 매칭 안내가 발송됐어요 ♡<br>
+      곧 카톡으로 연결될 거예요
+    </div>
+    <div class="result-note">
+      확정된 상대방 정보는 <b>매칭 완료 문자</b>로 보내드릴게요.<br>
+      이번 학기 올 A+ 기원 💯
+    </div>
+  </div>
+
+  <p class="footer-note">연애학개론 — 연애는 교양필수 ♡</p>
+</div>
+
+<!-- Confirm modal -->
+<div class="confirm-backdrop" id="confirmBackdrop">
+  <div class="confirm-card">
+    <div class="confirm-title">🎯 이 과목으로 수강확정할까요?</div>
+    <div class="confirm-desc">
+      <span class="highlight" id="confirmTarget">—</span><br>
+      한 번 확정하면 <b>정정(되돌리기)이 안 돼요</b>.<br>
+      정말 이 사람과 매칭할까요?
+    </div>
+    <div class="confirm-actions">
+      <button class="confirm-cancel" onclick="closeConfirm()">다시 볼래</button>
+      <button class="confirm-yes" onclick="submitPick()">수강확정 ♡</button>
+    </div>
+  </div>
+</div>
+
+<!-- Loading overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div class="loading-text">수강확정 처리 중이에요...</div>
+</div>
+
+<script>
+// ============================================================
+// Apps Script endpoint (쪽지팅과 동일 배포 사용)
+// ============================================================
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzM8IYXCT9NeD9K-L0Dval98J46dcnbkR2ElzgPN7fRvvchcuMfEfzC_HX89o8U4GXI/exec';
+
+// Base64 URL-safe decode
+function decode(str) {
+  try {
+    let b64 = str.replace(/-/g, '+').replace(/_/g, '/');
+    while (b64.length % 4) b64 += '=';
+    const binary = atob(b64);
+    const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+    const json = new TextDecoder().decode(bytes);
+    return JSON.parse(json);
+  } catch (e) { return null; }
+}
+function encode(data) {
+  const json = JSON.stringify(data);
+  const bytes = new TextEncoder().encode(json);
+  let binary = '';
+  bytes.forEach(b => binary += String.fromCharCode(b));
+  return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+const params = new URLSearchParams(location.search);
+const pParam = params.get('p');
+const idParam = params.get('id');
+let payload = pParam ? decode(pParam) : null;
+
+let selectedIdx = null;
+let pickedAlready = false;
+
+// Session ID로 payload 서버에서 조회 (짧은 URL 지원)
+async function fetchSessionPayload(id) {
+  try {
+    const res = await fetch(APPS_SCRIPT_URL + '?action=getPickSession&id=' + encodeURIComponent(id));
+    const data = await res.json();
+    if (data.usedAt) {
+      showAlreadyUsed(data.usedAt);
+      return null;
+    }
+    return data.payload || null;
+  } catch (e) {
+    console.error('Session fetch error:', e);
+    return null;
+  }
+}
+
+function showAlreadyUsed(usedAt) {
+  document.getElementById('hero').style.display = 'none';
+  document.getElementById('infoNote').style.display = 'none';
+  const err = document.getElementById('errorCard');
+  err.querySelector('.error-emoji').textContent = '🎓';
+  err.querySelector('.error-title').textContent = '이미 수강확정이 완료된 장바구니예요';
+  err.querySelector('.error-desc').innerHTML =
+    '이 장바구니는 이미 <b>한 과목을 확정</b>하셨어요.<br>' +
+    '매칭 결과 SMS를 확인해주세요 ♡<br><br>' +
+    '<span style="opacity:0.7;font-size:12px">문의: 인스타 <b>@_posting2</b></span>';
+  err.classList.add('active');
+}
+
+function buildIdentity(c) {
+  const s = (c.s || '').trim();
+  const a = (c.a || '').toString().trim();
+  if (s && a) return s + ' · ' + a + '살';
+  if (s) return s;
+  if (a) return a + '살';
+  return '익명';
+}
+
+function renderCards() {
+  const grid = document.getElementById('cardsGrid');
+  if (!payload || !payload.cs || !payload.cs.length) {
+    document.getElementById('hero').style.display = 'none';
+    document.getElementById('infoNote').style.display = 'none';
+    document.getElementById('errorCard').classList.add('active');
+    return;
+  }
+
+  document.getElementById('userName').textContent = (payload.me && payload.me.n) || '회원';
+  document.getElementById('cardCount').textContent = payload.cs.length;
+
+  payload.cs.forEach((c, idx) => {
+    const slot = document.createElement('div');
+    slot.className = 'card-slot';
+    slot.innerHTML = `
+      <div class="card" data-idx="${idx}">
+        <div class="card-face card-back">
+          <div class="card-number">${idx + 1}</div>
+          <div class="card-course">LOVE101-0${idx + 1}</div>
+          <div class="card-hint">눌러서<br>과목 열기 🛒</div>
+        </div>
+        <div class="card-face card-front">
+          <div class="front-code">LOVE101-0${idx + 1} · 교양필수</div>
+          <div class="front-identity">${buildIdentity(c)}</div>
+          ${c.m ? '<div class="front-mbti">' + c.m + '</div>' : ''}
+          <div class="front-intro">${(c.b || '').replace(/</g, '&lt;') || '자기소개가 없어요'}</div>
+          <button class="front-pick-btn" data-pick-idx="${idx}">🎓 이 과목 수강확정</button>
+        </div>
+      </div>
+    `;
+    grid.appendChild(slot);
+  });
+
+  // Bind card flip
+  grid.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('click', function(e) {
+      if (e.target.classList.contains('front-pick-btn')) return;
+      this.classList.toggle('flipped');
+    });
+  });
+
+  // Bind pick buttons
+  grid.querySelectorAll('.front-pick-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const idx = parseInt(this.dataset.pickIdx, 10);
+      openConfirm(idx);
+    });
+  });
+}
+
+function openConfirm(idx) {
+  if (pickedAlready) return;
+  selectedIdx = idx;
+  const c = payload.cs[idx];
+  document.getElementById('confirmTarget').textContent = buildIdentity(c);
+  document.getElementById('confirmBackdrop').classList.add('active');
+}
+function closeConfirm() {
+  document.getElementById('confirmBackdrop').classList.remove('active');
+  selectedIdx = null;
+}
+
+async function submitPick() {
+  if (selectedIdx === null || pickedAlready) return;
+  pickedAlready = true;
+  document.getElementById('confirmBackdrop').classList.remove('active');
+  document.getElementById('loadingOverlay').classList.add('active');
+
+  const chosen = payload.cs[selectedIdx];
+  const me = payload.me || {};
+
+  try {
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      // Apps Script는 text/plain으로 보내는 게 preflight 회피에 유리
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        type: 'sendPostitPick',
+        sessionId: idParam || '',  // 세션 1회 사용 체크용
+        requester: me,      // 신청자 (뽑은 사람)
+        chosen: chosen      // 선택된 상대방
+      })
+    });
+    // 실패 시에도 사용자는 성공 화면 (재발송 방지). 운영진이 매뉴얼 처리.
+  } catch (e) {
+    console.warn('Send error, continuing UI:', e);
+  }
+
+  document.getElementById('loadingOverlay').classList.remove('active');
+  document.getElementById('hero').style.display = 'none';
+  document.getElementById('infoNote').style.display = 'none';
+  document.getElementById('cardsGrid').style.display = 'none';
+  document.getElementById('resultScreen').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  // id 파라미터가 있으면 서버에서 payload fetch
+  if (idParam && !payload) {
+    document.getElementById('loadingOverlay').classList.add('active');
+    document.querySelector('.loading-text').textContent = '장바구니를 불러오는 중...';
+    payload = await fetchSessionPayload(idParam);
+    document.getElementById('loadingOverlay').classList.remove('active');
+  }
+  renderCards();
+});
+</script>
+
+</body>
+</html>
