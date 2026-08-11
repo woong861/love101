@@ -118,20 +118,14 @@ body {
 }
 .hero-head > * { position: relative; z-index: 1; }
 
-/* 캠퍼스 (학교 건물) 일러스트 */
+/* 캠퍼스 음각 라인 일러스트 */
 .campus {
-  position: absolute; right: 14px; bottom: 8px;
-  width: 200px; height: auto; z-index: 1;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.35));
-  animation: campusFloat 5s ease-in-out infinite;
-}
-@keyframes campusFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
+  position: absolute; right: 18px; bottom: 12px;
+  width: 195px; height: auto; z-index: 1;
 }
 @media (max-width: 560px) {
   .hero-head { padding-right: 22px; }
-  .campus { width: 132px; right: 8px; bottom: 6px; opacity: 0.5; }
+  .campus { width: 128px; right: 8px; bottom: 8px; opacity: 0.6; }
 }
 .hero-head .crumb { font-size: 11px; opacity: 0.75; margin-bottom: 10px; }
 .hero-head .course-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
@@ -657,61 +651,47 @@ body {
       </div>
       <h1 class="title course-name">연애학개론</h1>
       <div class="course-sub">"연애는 교양필수니까" ♡</div>
-      <svg class="campus" viewBox="0 -14 220 166" aria-hidden="true">
-        <!-- 좌우 별관 -->
-        <rect x="22" y="80" width="62" height="58" rx="2" fill="#f3e8cf"/>
-        <rect x="136" y="80" width="62" height="58" rx="2" fill="#f3e8cf"/>
-        <rect x="18" y="74" width="70" height="8" rx="2" fill="#e8c15a"/>
-        <rect x="132" y="74" width="70" height="8" rx="2" fill="#e8c15a"/>
-        <!-- 별관 창문 -->
-        <g fill="#2c437e" opacity="0.85">
-          <rect x="30" y="90" width="11" height="14" rx="1.5"/><rect x="47" y="90" width="11" height="14" rx="1.5"/><rect x="64" y="90" width="11" height="14" rx="1.5"/>
-          <rect x="30" y="112" width="11" height="14" rx="1.5"/><rect x="47" y="112" width="11" height="14" rx="1.5"/><rect x="64" y="112" width="11" height="14" rx="1.5"/>
-          <rect x="145" y="90" width="11" height="14" rx="1.5"/><rect x="162" y="90" width="11" height="14" rx="1.5"/><rect x="179" y="90" width="11" height="14" rx="1.5"/>
-          <rect x="145" y="112" width="11" height="14" rx="1.5"/><rect x="162" y="112" width="11" height="14" rx="1.5"/><rect x="179" y="112" width="11" height="14" rx="1.5"/>
+      <svg class="campus" viewBox="0 -14 220 162" aria-hidden="true">
+        <g fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <!-- 깃대 + 하트 깃발 -->
+          <line x1="110" y1="6" x2="110" y2="-7"/>
+          <path d="M112 -5.2 C 112 -8, 116.5 -8, 116.5 -4.9 C 116.5 -2.6, 113.3 -0.8, 112 0.3 C 110.7 -0.8, 107.5 -2.6, 107.5 -4.9 C 107.5 -8, 112 -8, 112 -5.2 z"/>
+          <!-- 중앙 시계탑 -->
+          <polygon points="94,26 126,26 110,6"/>
+          <path d="M96 26 v46 M124 26 v46"/>
+          <circle cx="110" cy="42" r="7"/>
+          <path d="M110 42 v-4.5 M110 42 l3.5 2"/>
+          <!-- 페디먼트 + 하트 -->
+          <polygon points="74,72 146,72 110,46"/>
+          <path d="M110 66c-4.2-3.2-7-5.8-7-8.8a3.7 3.7 0 0 1 7-1.5 3.7 3.7 0 0 1 7 1.5c0 3-2.8 5.6-7 8.8z"/>
+          <line x1="72" y1="78" x2="148" y2="78"/>
+          <!-- 기둥 4개 -->
+          <path d="M82 78 v52 M96 78 v52 M124 78 v52 M138 78 v52"/>
+          <!-- 중앙 아치문 -->
+          <path d="M103 130 v-15 a7 7 0 0 1 14 0 v15"/>
+          <!-- 좌우 별관 -->
+          <path d="M84 130 H24 V82 H84 M136 130 h60 V82 h-60"/>
+          <line x1="20" y1="82" x2="88" y2="82"/>
+          <line x1="132" y1="82" x2="200" y2="82"/>
+          <!-- 별관 창문 -->
+          <g stroke-width="1.6" opacity="0.85">
+            <rect x="33" y="92" width="10" height="13" rx="1"/>
+            <rect x="50" y="92" width="10" height="13" rx="1"/>
+            <rect x="67" y="92" width="10" height="13" rx="1"/>
+            <rect x="33" y="113" width="10" height="13" rx="1"/>
+            <rect x="50" y="113" width="10" height="13" rx="1"/>
+            <rect x="67" y="113" width="10" height="13" rx="1"/>
+            <rect x="143" y="92" width="10" height="13" rx="1"/>
+            <rect x="160" y="92" width="10" height="13" rx="1"/>
+            <rect x="177" y="92" width="10" height="13" rx="1"/>
+            <rect x="143" y="113" width="10" height="13" rx="1"/>
+            <rect x="160" y="113" width="10" height="13" rx="1"/>
+            <rect x="177" y="113" width="10" height="13" rx="1"/>
+          </g>
+          <!-- 계단 + 지면 -->
+          <line x1="66" y1="136" x2="154" y2="136"/>
+          <line x1="8" y1="142" x2="212" y2="142"/>
         </g>
-        <!-- 중앙 시계탑 -->
-        <rect x="98" y="26" width="24" height="46" fill="#fdf4e0"/>
-        <polygon points="93,28 127,28 110,6" fill="#e8c15a"/>
-        <circle cx="110" cy="44" r="8" fill="#fff" stroke="#2c437e" stroke-width="1.6"/>
-        <line x1="110" y1="44" x2="110" y2="39" stroke="#2c437e" stroke-width="1.4" stroke-linecap="round"/>
-        <line x1="110" y1="44" x2="114" y2="46" stroke="#2c437e" stroke-width="1.4" stroke-linecap="round"/>
-        <!-- 깃대 + 하트 깃발 -->
-        <line x1="110" y1="6" x2="110" y2="-8" stroke="#e8c15a" stroke-width="1.6"/>
-        <path d="M112 -6 C 112 -9, 117 -9, 117 -5.5 C 117 -3, 113.5 -1, 112 0 C 110.5 -1, 107 -3, 107 -5.5 C 107 -9, 112 -9, 112 -6 z" fill="#ff5d9e"/>
-        <!-- 본관 페디먼트(삼각 지붕) + 하트 -->
-        <polygon points="74,70 146,70 110,44" fill="#fdf4e0" stroke="#e8c15a" stroke-width="2"/>
-        <path d="M110 64c-4.5-3.4-7.5-6.2-7.5-9.4a3.9 3.9 0 0 1 7.5-1.6 3.9 3.9 0 0 1 7.5 1.6c0 3.2-3 6-7.5 9.4z" fill="#ff5d9e"/>
-        <rect x="72" y="70" width="76" height="7" rx="2" fill="#e8c15a"/>
-        <!-- 기둥 4개 -->
-        <g fill="#fdf4e0">
-          <rect x="79" y="77" width="7" height="53"/>
-          <rect x="94" y="77" width="7" height="53"/>
-          <rect x="119" y="77" width="7" height="53"/>
-          <rect x="134" y="77" width="7" height="53"/>
-        </g>
-        <g fill="#e8c15a">
-          <rect x="77.5" y="77" width="10" height="3" rx="1"/>
-          <rect x="92.5" y="77" width="10" height="3" rx="1"/>
-          <rect x="117.5" y="77" width="10" height="3" rx="1"/>
-          <rect x="132.5" y="77" width="10" height="3" rx="1"/>
-        </g>
-        <!-- 중앙 아치문 -->
-        <path d="M103 130 v-16 a7 7 0 0 1 14 0 v16 z" fill="#2c437e"/>
-        <!-- 계단 -->
-        <rect x="70" y="130" width="80" height="5" rx="1.5" fill="#f3e8cf"/>
-        <rect x="62" y="135" width="96" height="5" rx="1.5" fill="#e8dcc0"/>
-        <!-- 벚꽃나무 -->
-        <rect x="8" y="118" width="4" height="22" rx="1.5" fill="#a8825a"/>
-        <circle cx="10" cy="108" r="12" fill="#ffb3d9"/>
-        <circle cx="3" cy="115" r="8" fill="#ff9ecd"/>
-        <circle cx="18" cy="114" r="8" fill="#ffc4e0"/>
-        <rect x="208" y="118" width="4" height="22" rx="1.5" fill="#a8825a"/>
-        <circle cx="210" cy="108" r="12" fill="#ffb3d9"/>
-        <circle cx="203" cy="114" r="8" fill="#ffc4e0"/>
-        <circle cx="217" cy="115" r="8" fill="#ff9ecd"/>
-        <!-- 잔디 -->
-        <rect x="0" y="140" width="220" height="6" rx="3" fill="#7fb98a"/>
       </svg>
     </div>
     <div class="syllabus">
