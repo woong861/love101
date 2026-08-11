@@ -138,6 +138,17 @@ body {
   font-family: 'Noto Serif KR', serif; font-weight: 900;
   font-size: clamp(34px, 9vw, 46px); line-height: 1.15; letter-spacing: -1px;
 }
+.title-heart {
+  display: inline-block; width: 0.58em; height: 0.58em;
+  margin-left: 0.18em; vertical-align: baseline;
+  filter: drop-shadow(0 2px 6px rgba(255, 77, 210, 0.45));
+  animation: titleHeartBeat 1.8s ease-in-out infinite;
+}
+@keyframes titleHeartBeat {
+  0%, 28%, 100% { transform: rotate(14deg) scale(1); }
+  8% { transform: rotate(14deg) scale(1.18); }
+  18% { transform: rotate(14deg) scale(1.05); }
+}
 .hero-head .course-sub {
   font-family: 'Gaegu', cursive; font-size: 19px; color: #ffd9ea; margin-top: 6px;
 }
@@ -649,7 +660,16 @@ body {
         <span class="tag req">이수구분 교양필수</span>
         <span class="tag">3학점</span>
       </div>
-      <h1 class="title course-name">연애학개론</h1>
+      <h1 class="title course-name">연애학개론<svg class="title-heart" viewBox="0 0 32 32" aria-hidden="true">
+        <defs>
+          <linearGradient id="titleHeartG" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#ff9ec9"/>
+            <stop offset="1" stop-color="#ff4dd2"/>
+          </linearGradient>
+        </defs>
+        <path d="M16 28.5C6.8 21.6 2 15.9 2 10.4 2 6.3 5.3 3 9.4 3c2.6 0 5.1 1.3 6.6 3.4C17.5 4.3 20 3 22.6 3 26.7 3 30 6.3 30 10.4c0 5.5-4.8 11.2-14 18.1z" fill="url(#titleHeartG)"/>
+        <ellipse cx="9.5" cy="9" rx="3" ry="2.2" fill="#fff" opacity="0.65" transform="rotate(-24 9.5 9)"/>
+      </svg></h1>
       <div class="course-sub">"연애는 교양필수니까" ♡</div>
       <svg class="campus" viewBox="0 -14 220 162" aria-hidden="true">
         <g fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
