@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>연애학개론 모의고사 — 내 연애 학점은? 📝</title>
+<meta name="description" content="5문항으로 알아보는 내 연애 학점. A+일까 재수강일까? 연애학개론 입학 전 필수 모의고사!">
+<meta name="theme-color" content="#23408e">
+<meta property="og:type" content="website">
+<meta property="og:title" content="연애학개론 모의고사 📝 내 연애 학점은?">
+<meta property="og:description" content="A+일까 재수강일까? 5문항 즉시 채점!">
+<meta property="og:locale" content="ko_KR">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='80' font-size='80'%3E%F0%9F%93%9D%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@600;900&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #23408e;
+  --navy-dark: #182e68;
+  --navy-light: #eaf0fb;
+  --pink: #ff5d9e;
+  --bg: #eef1f6;
+  --card: #ffffff;
+  --line: #d8dee9;
+  --text: #23272f;
+  --muted: #767e8c;
+  --gold: #c9962c;
+  --green: #2e9e5b;
+  --red: #d64545;
+  --shadow: 0 2px 10px rgba(20, 35, 80, 0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.topbar {
+  background: var(--navy); color: #fff; padding: 10px 16px;
+}
+.topbar-in {
+  max-width: 560px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.topbar .logo {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 15px;
+  color: #fff; text-decoration: none;
+}
+.topbar .back {
+  color: #cfe0ff; font-size: 12px; text-decoration: none; font-weight: 700;
+}
+
+.container { max-width: 560px; margin: 0 auto; padding: 26px 16px 70px; }
+
+.hero {
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  box-shadow: var(--shadow); overflow: hidden; text-align: center; margin-bottom: 18px;
+}
+.hero-head {
+  background: linear-gradient(135deg, var(--navy), var(--navy-dark));
+  color: #fff; padding: 22px 20px;
+}
+.hero-head .eyebrow { font-size: 12px; opacity: 0.8; margin-bottom: 8px; }
+.hero-head h1 {
+  font-family: 'Noto Serif KR', serif; font-weight: 900;
+  font-size: clamp(26px, 7vw, 34px); letter-spacing: -1px;
+}
+.hero-head .sub { font-family: 'Gaegu', cursive; font-size: 17px; color: #ffd9ea; margin-top: 6px; }
+.hero-body { padding: 18px 20px 22px; }
+.hero-body p { font-size: 13.5px; color: var(--muted); line-height: 1.8; }
+.hero-body p b { color: var(--navy); }
+.start-btn {
+  margin-top: 16px; border: none; border-radius: 100px; padding: 15px 40px;
+  background: linear-gradient(135deg, var(--navy), #3557b8); color: #fff;
+  font-size: 16px; font-weight: 900; font-family: 'Noto Sans KR'; cursor: pointer;
+  box-shadow: 0 6px 16px rgba(35, 64, 142, 0.35);
+}
+.start-btn:active { transform: scale(0.97); }
+
+/* quiz */
+.quiz { display: none; }
+.quiz.active { display: block; }
+.progress-row {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+}
+.progress-track { flex: 1; height: 8px; background: #dde3ee; border-radius: 100px; overflow: hidden; }
+.progress-fill {
+  height: 100%; width: 0%; border-radius: 100px;
+  background: linear-gradient(90deg, var(--navy), var(--pink));
+  transition: width 0.3s ease;
+}
+.progress-text { font-size: 12px; font-weight: 900; color: var(--navy); white-space: nowrap; }
+
+.q-card {
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  box-shadow: var(--shadow); padding: 22px 20px;
+  animation: slideIn 0.3s ease;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.q-num {
+  display: inline-block; font-size: 11px; font-weight: 900; color: #fff;
+  background: var(--navy); border-radius: 100px; padding: 3px 12px; margin-bottom: 12px;
+}
+.q-text { font-size: 17px; font-weight: 900; line-height: 1.5; word-break: keep-all; }
+.q-options { display: grid; gap: 8px; margin-top: 16px; }
+.q-option {
+  text-align: left; border: 1.5px solid var(--line); border-radius: 10px;
+  background: #fbfcfe; padding: 13px 14px; font-size: 14px; font-family: 'Noto Sans KR';
+  cursor: pointer; line-height: 1.5; transition: all 0.12s; word-break: keep-all;
+}
+.q-option:hover { border-color: var(--navy); background: var(--navy-light); }
+.q-option:active { transform: scale(0.98); }
+
+/* result */
+.result { display: none; }
+.result.active { display: block; animation: bloom 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+@keyframes bloom {
+  0% { opacity: 0; transform: scale(0.6); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.grade-card {
+  background: #fdfcf7; border-radius: 12px; border-top: 8px solid var(--navy);
+  box-shadow: 0 10px 30px rgba(20, 35, 80, 0.18); padding: 26px 22px; text-align: center;
+}
+.grade-card .univ {
+  font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 12px;
+  color: var(--navy); letter-spacing: 2px;
+}
+.grade-table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 14px 0 4px; }
+.grade-table th, .grade-table td { border: 1px solid var(--line); padding: 6px 8px; }
+.grade-table th { background: var(--navy-light); color: var(--navy); font-weight: 700; }
+.grade-big {
+  font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 74px;
+  line-height: 1.1; margin-top: 12px;
+}
+.grade-big.gp { color: var(--green); }
+.grade-big.gm { color: var(--gold); }
+.grade-big.gc { color: #e07b2a; }
+.grade-big.gf { color: var(--red); }
+.grade-title { font-size: 19px; font-weight: 900; margin-top: 6px; }
+.grade-comment {
+  font-family: 'Gaegu', cursive; font-size: 17px; color: #555; line-height: 1.6;
+  background: #f2f5fb; border-radius: 10px; padding: 14px 16px; margin-top: 14px;
+  word-break: keep-all;
+}
+.grade-stamp {
+  margin-top: 14px; font-family: 'Gaegu', cursive; font-size: 14px; color: var(--pink);
+}
+.result-cta {
+  display: block; text-align: center; text-decoration: none; margin-top: 16px;
+  background: linear-gradient(135deg, var(--pink), #ff4dd2); color: #fff;
+  font-weight: 900; font-size: 15.5px; border-radius: 100px; padding: 15px;
+  box-shadow: 0 6px 16px rgba(255, 93, 158, 0.35);
+}
+.result-actions { display: flex; gap: 8px; margin-top: 10px; }
+.result-actions button {
+  flex: 1; border: none; border-radius: 100px; padding: 13px; font-size: 13.5px;
+  font-weight: 700; cursor: pointer; font-family: 'Noto Sans KR';
+}
+.save-btn { background: var(--navy); color: #fff; }
+.retry-btn { background: #e3e7ee; color: #555; }
+.share-hint { text-align: center; font-size: 12px; color: var(--muted); margin-top: 14px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <a class="logo" href="index.html">🎓 LOVE UNIV.</a>
+    <a class="back" href="index.html">← 수강신청 하러가기</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- intro -->
+  <div class="hero" id="intro">
+    <div class="hero-head">
+      <div class="eyebrow">LOVE101 연애학개론 · 입학 전 필수</div>
+      <h1>연애학개론 모의고사</h1>
+      <div class="sub">내 연애 학점, A+일까 재수강일까? 📝</div>
+    </div>
+    <div class="hero-body">
+      <p>
+        총 <b>5문항 · 소요시간 30초</b> · 즉시 채점<br>
+        본 모의고사 성적은 실제 매칭에 반영되지 않습니다 (아마도)
+      </p>
+      <button class="start-btn" onclick="startQuiz()">시험 시작 ✏️</button>
+    </div>
+  </div>
+
+  <!-- quiz -->
+  <div class="quiz" id="quiz">
+    <div class="progress-row">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-text" id="progressText">1 / 5</span>
+    </div>
+    <div class="q-card" id="qCard">
+      <span class="q-num" id="qNum">문제 1</span>
+      <div class="q-text" id="qText"></div>
+      <div class="q-options" id="qOptions"></div>
+    </div>
+  </div>
+
+  <!-- result -->
+  <div class="result" id="result">
+    <div class="grade-card" id="gradeCard">
+      <div class="univ">LOVE UNIVERSITY · 모의고사 성적표</div>
+      <table class="grade-table">
+        <tr><th>학수번호</th><th>교과목명</th><th>이수구분</th></tr>
+        <tr><td>LOVE100</td><td>연애학개론 모의고사</td><td>교양필수</td></tr>
+      </table>
+      <div class="grade-big" id="gradeBig">A+</div>
+      <div class="grade-title" id="gradeTitle"></div>
+      <div class="grade-comment" id="gradeComment"></div>
+      <div class="grade-stamp">— 담당교수 Prof. 큐피드 —</div>
+    </div>
+    <a class="result-cta" href="index.html">🎓 진짜 수강신청 하러가기 (연애학개론)</a>
+    <div class="result-actions">
+      <button class="save-btn" onclick="saveGradeCard()">📸 성적표 저장</button>
+      <button class="retry-btn" onclick="retry()">다시 풀기</button>
+    </div>
+    <p class="share-hint">성적표 저장해서 에타 · 인스타에 공유해봐!<br>친구들은 몇 점일까? 👀</p>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+<script>
+const QUESTIONS = [
+  {
+    q: '썸 타는 상대한테 카톡이 왔다. 나의 답장은?',
+    opts: [
+      { t: '3초컷 바로 답장 — 밀당? 그게 뭔데', s: 2 },
+      { t: '30분 뒤에 쿨한 척 답장', s: 1 },
+      { t: '읽고 나중에 답해야지… (3일 뒤 발견)', s: 0 }
+    ]
+  },
+  {
+    q: '첫 데이트 장소를 정해야 한다면?',
+    opts: [
+      { t: '상대 취향 미리 조사해서 풀코스 준비', s: 2 },
+      { t: '실패 없는 유명 맛집 예약', s: 1 },
+      { t: '"아무데나 좋아~" (진심 100%)', s: 0 }
+    ]
+  },
+  {
+    q: '상대방이 "나 오늘 좀 힘들었어…"라고 하면?',
+    opts: [
+      { t: '"무슨 일 있었어? 다 얘기해봐" 하고 들어준다', s: 2 },
+      { t: '"헐 힘내!! 맛있는 거 먹자" 응원 폭격', s: 1 },
+      { t: '원인 분석 + 해결책 3가지를 제시한다', s: 0 }
+    ]
+  },
+  {
+    q: '기념일을 챙기는 나의 방식은?',
+    opts: [
+      { t: '미리 선물 + 이벤트까지 완벽 준비', s: 2 },
+      { t: '당일 아침에 축하 메시지는 보냄', s: 1 },
+      { t: '기념일이… 언제였더라?', s: 0 }
+    ]
+  },
+  {
+    q: '소개팅 자리, 내가 제일 신경 쓰는 것은?',
+    opts: [
+      { t: '대화 리드하면서 상대 얘기 경청하기', s: 2 },
+      { t: '첫인상! 깔끔한 옷차림과 향수', s: 1 },
+      { t: '일단 나간 것에 의의를 둔다', s: 0 }
+    ]
+  }
+];
+
+const GRADES = [
+  { min: 8, grade: 'A+', cls: 'gp', title: '연애 천재형 인재', comment: '이론 만점. 더 배울 게 없어요. 이제 실전(수강신청)만 남았습니다 — 이런 분이 안 만나고 있는 게 학과의 손실이에요.' },
+  { min: 5, grade: 'B+', cls: 'gm', title: '이론파 모범생', comment: '이론은 탄탄한데 실습 학점이 비어있네요. 실습 파트너는 저희가 구해드립니다. 수강신청 고고 ♡' },
+  { min: 3, grade: 'C+', cls: 'gc', title: '출석만 하는 타입', comment: '출석은 하는데 과제 제출을 안 하는 스타일. 혼자는 어려우니 조별과제(2:2 미팅)부터 시작해보는 걸 추천해요.' },
+  { min: 0, grade: 'F',  cls: 'gf', title: '재수강 대상자', comment: '괜찮아요, 연애학개론은 재수강 환영입니다. 담당교수(운영진)가 1:1 과외로 처음부터 알려드릴게요. 일단 수강신청부터.' }
+];
+
+let qIdx = 0;
+let score = 0;
+
+function startQuiz() {
+  qIdx = 0; score = 0;
+  document.getElementById('intro').style.display = 'none';
+  document.getElementById('result').classList.remove('active');
+  document.getElementById('quiz').classList.add('active');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = QUESTIONS[qIdx];
+  document.getElementById('qNum').textContent = '문제 ' + (qIdx + 1);
+  document.getElementById('qText').textContent = q.q;
+  document.getElementById('progressText').textContent = (qIdx + 1) + ' / ' + QUESTIONS.length;
+  document.getElementById('progressFill').style.width = ((qIdx) / QUESTIONS.length * 100) + '%';
+
+  const wrap = document.getElementById('qOptions');
+  wrap.innerHTML = '';
+  q.opts.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'q-option';
+    btn.textContent = opt.t;
+    btn.onclick = () => answer(opt.s);
+    wrap.appendChild(btn);
+  });
+
+  // 카드 재진입 애니메이션
+  const card = document.getElementById('qCard');
+  card.style.animation = 'none';
+  void card.offsetWidth;
+  card.style.animation = '';
+}
+
+function answer(s) {
+  score += s;
+  qIdx++;
+  if (qIdx < QUESTIONS.length) {
+    renderQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.getElementById('quiz').classList.remove('active');
+  const g = GRADES.find(g => score >= g.min);
+  const big = document.getElementById('gradeBig');
+  big.textContent = g.grade;
+  big.className = 'grade-big ' + g.cls;
+  document.getElementById('gradeTitle').textContent = '「' + g.title + '」';
+  document.getElementById('gradeComment').textContent = g.comment;
+  document.getElementById('result').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function retry() {
+  startQuiz();
+}
+
+async function saveGradeCard() {
+  const card = document.getElementById('gradeCard');
+  const btn = document.querySelector('.save-btn');
+  if (!card || !window.html2canvas) {
+    alert('이미지 저장 기능을 불러오는 중이에요. 잠시 후 다시 시도해주세요.');
+    return;
+  }
+  const orig = btn.textContent;
+  btn.textContent = '만드는 중...';
+  btn.disabled = true;
+  try {
+    const canvas = await html2canvas(card, { backgroundColor: null, scale: 2, useCORS: true });
+    const link = document.createElement('a');
+    link.download = '연애학개론_모의고사_성적표_' + Date.now() + '.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    btn.textContent = '저장됨 ✓';
+    setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 1500);
+  } catch (err) {
+    console.error(err);
+    alert('이미지 저장에 실패했어요. 스크린샷으로 저장해주세요!');
+    btn.textContent = orig;
+    btn.disabled = false;
+  }
+}
+</script>
+
+</body>
+</html>

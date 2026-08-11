@@ -195,6 +195,93 @@ body {
   margin: 26px 0 14px;
 }
 
+/* ===== 모의고사 배너 ===== */
+.exam-banner {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin-top: 12px; padding: 13px 14px; border-radius: 10px; text-decoration: none;
+  background: linear-gradient(135deg, #fff3d6, #ffe9c2); border: 1.5px solid #f0d193;
+  color: #7a5c12; font-size: 14px; font-weight: 700;
+  box-shadow: 0 2px 8px rgba(201, 150, 44, 0.15); transition: transform 0.15s;
+}
+.exam-banner:active { transform: scale(0.98); }
+.exam-banner .arrow { font-weight: 900; color: var(--gold); }
+
+/* ===== 수강신청 대기열 오버레이 ===== */
+.queue-overlay {
+  display: none; position: fixed; inset: 0; z-index: 150;
+  background: rgba(24, 33, 58, 0.75); backdrop-filter: blur(3px);
+  align-items: center; justify-content: center; padding: 24px;
+}
+.queue-overlay.active { display: flex; }
+.queue-card {
+  background: #fff; border-radius: 12px; overflow: hidden;
+  width: 100%; max-width: 340px; box-shadow: 0 24px 70px rgba(0,0,0,0.4);
+  animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.queue-head {
+  background: var(--navy); color: #fff; padding: 11px 16px;
+  font-size: 13.5px; font-weight: 900; display: flex; align-items: center; gap: 8px;
+}
+.queue-head .dot-live { width: 8px; height: 8px; border-radius: 50%; background: #ffde59; animation: blink 1s infinite; }
+.queue-body { padding: 24px 22px 22px; text-align: center; }
+.queue-label { font-size: 13px; color: var(--muted); }
+.queue-num {
+  font-size: 46px; font-weight: 900; color: var(--navy); margin: 6px 0 2px;
+  font-variant-numeric: tabular-nums;
+}
+.queue-sub { font-size: 12px; color: var(--muted); }
+.queue-bar-wrap {
+  margin-top: 16px; height: 10px; background: var(--navy-light);
+  border-radius: 100px; overflow: hidden;
+}
+.queue-bar {
+  height: 100%; width: 0%; border-radius: 100px;
+  background: linear-gradient(90deg, var(--navy), var(--pink));
+  transition: width 0.12s linear;
+}
+.queue-warn { margin-top: 14px; font-size: 11.5px; color: var(--red); }
+.queue-card.success .queue-num { color: var(--green); font-size: 30px; }
+
+/* ===== 실시간 수강신청 현황판 ===== */
+.status-board { margin-top: 44px; }
+.sb-title { text-align: center; font-size: 21px; color: var(--navy); }
+.sb-sub { text-align: center; font-size: 12.5px; color: var(--muted); margin-top: 6px; }
+.sb-card {
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  box-shadow: var(--shadow); margin-top: 16px; overflow: hidden;
+}
+.sb-gender { padding: 16px 16px 6px; }
+.sb-gender-labels {
+  display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 700; margin-bottom: 6px;
+}
+.sb-gender-labels .m { color: #1565c0; }
+.sb-gender-labels .f { color: #c2185b; }
+.sb-gender-bar {
+  display: flex; height: 14px; border-radius: 100px; overflow: hidden; background: #eee;
+}
+.sb-gender-bar .m { background: linear-gradient(90deg, #64a5f0, #1565c0); }
+.sb-gender-bar .f { background: linear-gradient(90deg, #f48cb1, #c2185b); }
+.sb-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
+.sb-table th {
+  background: var(--navy-light); color: var(--navy); font-weight: 700;
+  padding: 8px 12px; text-align: left; font-size: 12px; border-top: 1px solid var(--line);
+}
+.sb-table th:last-child, .sb-table td:last-child { text-align: right; }
+.sb-table td { padding: 8px 12px; border-top: 1px solid #eef1f6; }
+.sb-table .rank { color: var(--gold); font-weight: 900; width: 30px; }
+.sb-table .cnt { font-weight: 900; color: var(--navy); }
+.sb-badge {
+  display: inline-block; font-size: 10.5px; font-weight: 900;
+  padding: 2px 8px; border-radius: 100px;
+}
+.sb-badge.hot { background: #fdeaea; color: var(--red); }
+.sb-badge.popular { background: #fff3d6; color: #a3661a; }
+.sb-badge.open { background: #e8f6ee; color: var(--green); }
+.sb-foot {
+  text-align: center; font-size: 11.5px; color: var(--muted);
+  padding: 10px; background: #fafbfd; border-top: 1px solid #eef1f6;
+}
+
 /* ===== course wall (개설강좌) ===== */
 .wall-head {
   display: flex; align-items: center; justify-content: space-between;
@@ -592,6 +679,7 @@ body {
           <span>장학 코드 입력 시 <strong>수강료 3,000원 감면</strong></span>
         </div>
       </div>
+      <a class="exam-banner" href="exam.html">📝 <b>입학 전 필수!</b> 내 연애 학점 모의고사 풀어보기 <span class="arrow">→</span></a>
     </div>
   </div>
 
@@ -701,6 +789,30 @@ body {
   </div>
 
   <p class="footer-note">어떤 분반을 골라도 같은 수강신청서로 연결돼요 ♡</p>
+
+  <section class="status-board" id="statusBoard" style="display:none">
+    <h2 class="sb-title">📊 실시간 수강신청 현황</h2>
+    <p class="sb-sub">지금 이 순간 신청 현황 — 정원 임박 학교를 확인하세요</p>
+    <div class="sb-card">
+      <div class="sb-gender">
+        <div class="sb-gender-labels">
+          <span class="m" id="sbMaleLabel">남학우 ―</span>
+          <span class="f" id="sbFemaleLabel">여학우 ―</span>
+        </div>
+        <div class="sb-gender-bar">
+          <div class="m" id="sbMaleBar" style="width:50%"></div>
+          <div class="f" id="sbFemaleBar" style="width:50%"></div>
+        </div>
+      </div>
+      <table class="sb-table">
+        <thead>
+          <tr><th>순위</th><th>학교</th><th>상태</th><th>신청</th></tr>
+        </thead>
+        <tbody id="sbSchoolRows"></tbody>
+      </table>
+      <div class="sb-foot">실제 신청 데이터 기준 · 1분마다 자동 갱신 ⏱</div>
+    </div>
+  </section>
 
   <section class="reviews">
     <h2 class="reviews-title">📝 강의평</h2>
@@ -956,6 +1068,19 @@ body {
 
       <button type="submit" class="submit-btn">수강신청 완료하기 🎓</button>
     </form>
+  </div>
+</div>
+
+<div class="queue-overlay" id="queueOverlay">
+  <div class="queue-card" id="queueCard">
+    <div class="queue-head"><span class="dot-live"></span> LOVE UNIV. 수강신청 시스템</div>
+    <div class="queue-body">
+      <div class="queue-label" id="queueLabel">접속 인원이 많아 대기중입니다</div>
+      <div class="queue-num" id="queueNum">―</div>
+      <div class="queue-sub" id="queueSub">내 앞 대기인원</div>
+      <div class="queue-bar-wrap"><div class="queue-bar" id="queueBar"></div></div>
+      <div class="queue-warn">⚠️ 새로고침하면 대기순번이 초기화됩니다 (진짜 아님 ㅎ)</div>
+    </div>
   </div>
 </div>
 
@@ -1224,18 +1349,58 @@ document.getElementById('applyForm').addEventListener('submit', function(e) {
   const metaParts = [userSchool, userEvent].filter(Boolean);
   const userMeta = metaParts.length ? metaParts.join(' · ') : '';
 
+  // 수강신청 대기열 연출 후 완료 화면
   setTimeout(() => {
     closeForm();
-    document.getElementById('shareUserName').textContent = userName;
-    document.getElementById('shareUserMeta').textContent = userMeta;
-    document.getElementById('successModal').classList.add('active');
-    document.body.style.overflow = 'hidden';
-    this.reset();
-    try { localStorage.removeItem('love101_draft_v1'); } catch (e) {}
-    btn.disabled = false;
-    btn.textContent = '수강신청 완료하기 🎓';
-  }, 700);
+    runQueueTheater(() => {
+      document.getElementById('shareUserName').textContent = userName;
+      document.getElementById('shareUserMeta').textContent = userMeta;
+      document.getElementById('successModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+      this.reset();
+      try { localStorage.removeItem('love101_draft_v1'); } catch (e) {}
+      btn.disabled = false;
+      btn.textContent = '수강신청 완료하기 🎓';
+    });
+  }, 400);
 });
+
+// ====== 수강신청 대기열 연출 ======
+function runQueueTheater(done) {
+  const overlay = document.getElementById('queueOverlay');
+  const card = document.getElementById('queueCard');
+  const numEl = document.getElementById('queueNum');
+  const bar = document.getElementById('queueBar');
+  const label = document.getElementById('queueLabel');
+  const sub = document.getElementById('queueSub');
+  card.classList.remove('success');
+  label.textContent = '접속 인원이 많아 대기중입니다';
+  sub.textContent = '내 앞 대기인원';
+  const start = 400 + Math.floor(Math.random() * 500);
+  let cur = start;
+  numEl.textContent = cur + '명';
+  bar.style.width = '0%';
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  const tick = setInterval(() => {
+    cur -= Math.max(9, Math.floor(cur * (0.14 + Math.random() * 0.14)));
+    if (cur <= 0) {
+      clearInterval(tick);
+      card.classList.add('success');
+      numEl.textContent = '접속 성공! 🎉';
+      label.textContent = '수강신청 서버 접속 완료';
+      sub.textContent = '신청서를 처리하고 있어요...';
+      bar.style.width = '100%';
+      setTimeout(() => {
+        overlay.classList.remove('active');
+        done();
+      }, 900);
+      return;
+    }
+    numEl.textContent = cur + '명';
+    bar.style.width = Math.min(99, Math.round((1 - cur / start) * 100)) + '%';
+  }, 120);
+}
 
 // ====== Form autosave (localStorage) ======
 const AUTOSAVE_KEY = 'love101_draft_v1';
@@ -1453,6 +1618,7 @@ async function updateLiveCounter() {
         : `남 ${males} · 여 ${females}`;
       split.classList.toggle('recruit', needFemales);
     }
+    renderStatusBoard(apps, males, females);
     return;
   } catch (e) {
     console.warn('Live counter fetch failed, using sim:', e);
@@ -1473,6 +1639,50 @@ async function updateLiveCounter() {
 }
 updateLiveCounter();
 setInterval(updateLiveCounter, 60000);
+
+// ====== 실시간 수강신청 현황판 ======
+function _escHtml(s) {
+  return String(s || '').replace(/[&<>"']/g, c => ({
+    '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+  }[c]));
+}
+
+function renderStatusBoard(apps, males, females) {
+  const board = document.getElementById('statusBoard');
+  if (!board || !apps || apps.length < 10) return;
+
+  const total = males + females;
+  if (total > 0) {
+    const mp = Math.round(males / total * 100);
+    const fp = 100 - mp;
+    document.getElementById('sbMaleLabel').textContent = `남학우 ${males}명 (${mp}%)`;
+    document.getElementById('sbFemaleLabel').textContent = `여학우 ${females}명 (${fp}%)`;
+    document.getElementById('sbMaleBar').style.width = mp + '%';
+    document.getElementById('sbFemaleBar').style.width = fp + '%';
+  }
+
+  // 학교별 집계 TOP 8
+  const counts = {};
+  apps.forEach(a => {
+    const s = _shortenSchool(a.school || '');
+    if (!s || s.length > 12) return;
+    counts[s] = (counts[s] || 0) + 1;
+  });
+  const top = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 8);
+  if (!top.length) return;
+
+  const badge = n => n >= 40
+    ? '<span class="sb-badge hot">🔥 정원 임박</span>'
+    : n >= 15
+      ? '<span class="sb-badge popular">💫 인기</span>'
+      : '<span class="sb-badge open">모집중</span>';
+
+  document.getElementById('sbSchoolRows').innerHTML = top.map(([s, n], i) =>
+    `<tr><td class="rank">${i + 1}</td><td>${_escHtml(s)}</td><td>${badge(n)}</td><td class="cnt">${n}명</td></tr>`
+  ).join('');
+
+  board.style.display = 'block';
+}
 
 // ====== Real applicants on course wall ======
 // 구글시트를 CSV로 게시하면 URL을 아래에 넣어주세요. 비워두면 가상 명단 그대로.
