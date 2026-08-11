@@ -1223,8 +1223,8 @@ body {
 
 <script>
 // ====== 구글폼 연결 설정 ======
-// 쪽지팅과 같은 구글폼/시트를 그대로 사용 (새 회차용 폼 만들면 여기만 교체)
-const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSeyvrrxfZ-lhl0IlMqyvFfc2NXgVsp4tjEuBzQYh3ZX43S19A/formResponse';
+// 연애학개론 전용 폼 (2026-08-12 분리, entry ID는 쪽지팅 사본이라 동일)
+const GOOGLE_FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSdapUs9ERn5HcDhJqzHxphTSruu70Q1mxpbvLOks-1Mcadddw/formResponse';
 const FIELD_IDS = {
   name: 'entry.553539159',
   school: 'entry.270231493',
@@ -1666,7 +1666,8 @@ updateDday();
 setInterval(updateDday, 60000);
 
 // ====== Live counter (실제 시트 데이터 fetch) ======
-const COUNTER_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbzM8IYXCT9NeD9K-L0Dval98J46dcnbkR2ElzgPN7fRvvchcuMfEfzC_HX89o8U4GXI/exec';
+// 연애학개론 전용 Apps Script (새 시트 바인딩)
+const COUNTER_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbzT6KZqKdly-wEpXJnUqUOXMY4Y1P84Mp886UpalROmTshOP89fvFuaTaibYVhcbbQy/exec';
 const COUNTER_LAUNCH = new Date('2026-08-12T00:00:00+09:00');
 const COUNTER_BASE = 1096;
 const COUNTER_PER_HOUR = 0.5;
@@ -1686,6 +1687,9 @@ async function updateLiveCounter() {
     const total = apps.length;
     const males = apps.filter(a => a.gender === '남자').length;
     const females = apps.filter(a => a.gender === '여자').length;
+
+    // 새 시트 초반(30명 미만)엔 역대 누적 기준 시뮬 카운터로 표시 (0명 노출 방지)
+    if (total < 30) throw new Error('early-stage: use sim counter');
 
     el.textContent = total;
     _liveCacheCount = total;
