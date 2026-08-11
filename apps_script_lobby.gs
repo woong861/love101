@@ -174,29 +174,72 @@ function lobbyExclude_(d) {
   return { ok: true };
 }
 
-// ---------------- 운영진: 확정 + 오픈채팅 링크 SMS 발송 ----------------
+// ---------------- 운영진: 확정 + SMS 발송 (링크 / 대표자 교환 병행) ----------------
+// mode: 'link' = 오픈채팅 링크 전원 발송 (기본) / 'rep' = 각 팀 대표끼리 카톡 ID 교환
 function lobbyConfirm_(d) {
-  if (!d.lobbyId || !d.link) return { error: 'missing lobbyId/link' };
+  if (!d.lobbyId) return { error: 'missing lobbyId' };
+  var mode = d.mode === 'rep' ? 'rep' : 'link';
+  if (mode === 'link' && !d.link) return { error: 'missing link' };
   var data = lobbyList_(true);
   var lobby = null;
   data.lobbies.forEach(function (l) { if (l.id === String(d.lobbyId)) lobby = l; });
   if (!lobby) return { error: 'notfound' };
   if (!lobby.members.length) return { error: 'no members' };
 
-  var text = '[연애학개론] "' + lobby.title + '" 미팅이 확정됐어요! 🎉\n\n' +
-    '아래 오픈채팅방에 입장해주세요:\n' + d.link + '\n\n' +
-    '즐거운 만남 되세요 ♡\n- 연애학개론 교무처\n인스타 @_posting2';
-
   var sent = 0, failed = [];
-  lobby.members.forEach(function (mem) {
+  var send = function (mem, text) {
     if (lobbySms_(mem.phone, text)) sent++;
     else failed.push(mem.name + '(' + mem.phone + ')');
-  });
+  };
+
+  var linkValue, summary, repInfo = null;
+
+  if (mode === 'link') {
+    var text = '[연애학개론] "' + lobby.title + '" 미팅이 확정됐어요! 🎉\n\n' +
+      '아래 오픈채팅방에 입장해주세요:\n' + d.link + '\n\n' +
+      '즐거운 만남 되세요 ♡\n- 연애학개론 교무처\n인스타 @_posting2';
+    lobby.members.forEach(function (mem) { send(mem, text); });
+    linkValue = d.link;
+    summary = text;
+  } else {
+    // 대표자: 성별별 첫 신청자
+    var repM = null, repF = null;
+    lobby.members.forEach(function (mem) {
+      if (!repM && mem.gender === '남자') repM = mem;
+      if (!repF && mem.gender === '여자') repF = mem;
+    });
+    if (!repM || !repF) return { error: 'rep mode needs both genders' };
+
+    lobby.members.forEach(function (mem) {
+      var text;
+      if (mem === repM) {
+        text = '[연애학개론] "' + lobby.title + '" 미팅이 확정됐어요! 🎉\n\n' +
+          mem.name + '님이 남자팀 대표예요.\n' +
+          '상대팀 대표 카톡 ID: ' + (repF.kakao || repF.phone) + '\n\n' +
+          '먼저 친추하고 인사한 뒤, 6명 단체 카톡방을 만들어주세요 ♡\n' +
+          '- 연애학개론 교무처\n문의 인스타 @_posting2';
+      } else if (mem === repF) {
+        text = '[연애학개론] "' + lobby.title + '" 미팅이 확정됐어요! 🎉\n\n' +
+          mem.name + '님이 여자팀 대표예요.\n' +
+          '상대팀 대표 카톡 ID: ' + (repM.kakao || repM.phone) + '\n' +
+          '곧 연락이 올 거예요. 단체방이 만들어지면 팀원들을 초대해주세요 ♡\n' +
+          '- 연애학개론 교무처\n문의 인스타 @_posting2';
+      } else {
+        text = '[연애학개론] "' + lobby.title + '" 미팅이 확정됐어요! 🎉\n\n' +
+          '각 팀 대표끼리 연결 중이에요.\n곧 단체 카톡방에 초대될 예정입니다 ♡\n' +
+          '- 연애학개론 교무처\n문의 인스타 @_posting2';
+      }
+      send(mem, text);
+    });
+    repInfo = { m: repM.name, f: repF.name };
+    linkValue = '(대표자 교환) 남 ' + repM.name + ' ↔ 여 ' + repF.name;
+    summary = linkValue;
+  }
 
   var lsh = lobbySheet_(LOBBY_SHEET_LOBBIES);
   lsh.getRange(lobby.row, 7).setValue('confirmed');
-  lsh.getRange(lobby.row, 8).setValue(d.link);
-  return { ok: true, sent: sent, failed: failed, total: lobby.members.length, smsText: text };
+  lsh.getRange(lobby.row, 8).setValue(linkValue);
+  return { ok: true, mode: mode, sent: sent, failed: failed, total: lobby.members.length, smsText: summary, reps: repInfo };
 }
 
 // ---------------- 운영진: 분반 마감 ----------------

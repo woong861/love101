@@ -1192,8 +1192,9 @@ function renderLobbyAdmin(lobbies) {
       ? `<div style="font-size:11.5px;color:var(--green);margin-top:6px">✅ 발송 완료 — ${esc(l.link || '')}</div>`
       : `<div style="display:flex;gap:6px;margin-top:8px">
           <input id="lobbyLink_${esc(l.id)}" placeholder="오픈채팅방 링크 붙여넣기" style="flex:1;padding:6px 8px;font-size:11.5px;border:1px solid var(--line);border-radius:6px">
-          <button class="btn btn-success" style="font-size:11.5px;padding:6px 10px" onclick="lobbyConfirmAdmin('${esc(l.id)}', '${esc(l.title)}')">📱 확정·발송</button>
-        </div>`;
+          <button class="btn btn-success" style="font-size:11.5px;padding:6px 10px" onclick="lobbyConfirmAdmin('${esc(l.id)}', '${esc(l.title)}', 'link')">📱 링크로 확정</button>
+        </div>
+        <button class="btn btn-secondary" style="font-size:11.5px;padding:6px 10px;margin-top:6px;width:100%" onclick="lobbyConfirmAdmin('${esc(l.id)}', '${esc(l.title)}', 'rep')" title="방 없이 각 팀 대표(성별별 첫 신청자)끼리 카톡 ID를 교환해줍니다">🤝 대표자 교환으로 확정 (방 안 만들어도 됨)</button>`;
     return `
       <div style="border:1px solid var(--line);border-left:4px solid ${l.status === 'full' ? '#ff9800' : l.status === 'confirmed' ? 'var(--green)' : 'var(--pink)'};border-radius:8px;padding:10px;margin-bottom:10px;background:#fafbfd">
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px">
@@ -1234,15 +1235,23 @@ async function lobbyExcludeAdmin(row, name) {
   lobbyAdminLoad();
 }
 
-async function lobbyConfirmAdmin(id, title) {
-  const link = (document.getElementById('lobbyLink_' + id) || {}).value || '';
-  if (!link.trim()) { alert('오픈채팅방 링크를 먼저 붙여넣으세요'); return; }
-  if (!confirm('「' + title + '」 분반을 확정하고\n멤버 전원에게 채팅방 링크 SMS를 발송할까요?\n\n⚠️ 입금·프로필 확인을 마쳤는지 다시 확인!')) return;
-  const r = await lobbyApi('lobbyConfirm', { lobbyId: id, link: link.trim() }).catch(e => ({ error: e }));
+async function lobbyConfirmAdmin(id, title, mode) {
+  mode = mode === 'rep' ? 'rep' : 'link';
+  const payload = { lobbyId: id, mode };
+  if (mode === 'link') {
+    const link = (document.getElementById('lobbyLink_' + id) || {}).value || '';
+    if (!link.trim()) { alert('오픈채팅방 링크를 먼저 붙여넣으세요'); return; }
+    payload.link = link.trim();
+    if (!confirm('「' + title + '」 분반을 확정하고\n멤버 전원에게 채팅방 링크 SMS를 발송할까요?\n\n⚠️ 입금·프로필 확인을 마쳤는지 다시 확인!')) return;
+  } else {
+    if (!confirm('「' + title + '」 분반을 대표자 교환 방식으로 확정할까요?\n\n· 남/여 각 팀의 첫 신청자가 대표로 지정됩니다\n· 두 대표에게 서로의 카톡 ID가 문자로 발송됩니다\n· 나머지 멤버에겐 확정 안내만 발송\n\n⚠️ 입금·프로필 확인을 마쳤는지 다시 확인!')) return;
+  }
+  const r = await lobbyApi('lobbyConfirm', payload).catch(e => ({ error: e }));
   if (r && r.ok) {
     let msg = '✅ 확정 완료 — SMS ' + r.sent + '/' + r.total + '건 발송';
+    if (r.reps) msg += '\n🤝 대표: 남 ' + r.reps.m + ' ↔ 여 ' + r.reps.f;
     if (r.failed && r.failed.length) {
-      msg += '\n\n❌ 발송 실패 (수동 발송 필요):\n' + r.failed.join('\n') + '\n\n문자 내용:\n' + r.smsText;
+      msg += '\n\n❌ 발송 실패 (수동 발송 필요):\n' + r.failed.join('\n') + '\n\n내용:\n' + r.smsText;
     }
     alert(msg);
   } else {

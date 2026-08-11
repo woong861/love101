@@ -21,7 +21,7 @@
   --navy-light: #eaf0fb;
   --pink: #ff5d9e;
   --pink-strong: #ff4dd2;
-  --bg: #eef1f6;
+  --bg: #e9ecf8;
   --card: #ffffff;
   --line: #d8dee9;
   --text: #23272f;
@@ -108,35 +108,100 @@ body {
   box-shadow: var(--shadow); overflow: hidden; margin-bottom: 22px;
 }
 .hero-head {
-  background: linear-gradient(135deg, var(--navy), var(--navy-dark));
-  color: #fff; padding: 20px 215px 18px 22px; position: relative;
+  background: linear-gradient(180deg, #f7f8ff 0%, #edf0fc 100%);
+  color: var(--text); padding: 30px 22px 26px; position: relative;
+  text-align: center;
 }
 .hero-head::after {
   content: ''; position: absolute; inset: 0; pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z' fill='white'/%3E%3C/svg%3E");
-  background-size: 44px 44px; opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z' fill='%2323408e'/%3E%3C/svg%3E");
+  background-size: 48px 48px; opacity: 0.035;
 }
 .hero-head > * { position: relative; z-index: 1; }
 
-/* 캠퍼스 음각 라인 일러스트 */
-.campus {
-  position: absolute; right: 18px; bottom: 12px;
-  width: 195px; height: auto; z-index: 1;
+/* 말풍선 배지 */
+.p-bubble {
+  display: inline-block; position: relative;
+  background: linear-gradient(135deg, var(--pink), #ff7cb5);
+  color: #fff; font-size: 14px; font-weight: 900;
+  padding: 9px 20px; border-radius: 100px; margin-bottom: 16px;
+  box-shadow: 0 5px 14px rgba(255, 93, 158, 0.35);
 }
+.p-bubble::after {
+  content: ''; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%) rotate(45deg);
+  width: 12px; height: 12px; background: #ff6ba9; border-radius: 2px;
+}
+
+/* 체크리스트 노트 */
+.p-check {
+  display: inline-block; text-align: left;
+  background: #fffdf4; border: 1px solid #efe8cf; border-radius: 14px;
+  padding: 14px 22px 14px 18px; margin-top: 18px;
+  box-shadow: 0 6px 18px rgba(30, 45, 90, 0.09);
+  transform: rotate(-1.2deg);
+}
+.p-check .pc-row {
+  display: flex; align-items: center; gap: 9px;
+  font-family: 'Gaegu', cursive; font-size: 17.5px; font-weight: 700; color: #3b414d;
+  padding: 3px 0;
+}
+.p-check .pc-box {
+  flex: none; width: 17px; height: 17px; border: 2px solid var(--navy); border-radius: 4px;
+  color: var(--navy); font-size: 12px; font-weight: 900; line-height: 14px; text-align: center;
+  background: #fff; font-family: 'Noto Sans KR';
+}
+
+/* OPEN 필 */
+.p-open {
+  display: inline-block; background: var(--navy); color: #fff;
+  font-size: 14px; font-weight: 900; letter-spacing: 0.5px;
+  padding: 10px 26px; border-radius: 100px; margin-top: 20px;
+  box-shadow: 0 6px 16px rgba(35, 64, 142, 0.3);
+}
+
+/* 기능 아이콘 4종 */
+.p-features {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
+  background: #fff; border: 1px solid #e3e8f5; border-radius: 16px;
+  padding: 14px 10px; margin-top: 18px;
+  box-shadow: 0 6px 18px rgba(30, 45, 90, 0.07);
+}
+.p-feat { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.p-feat .ico {
+  width: 44px; height: 44px; border-radius: 13px; background: var(--navy-light);
+  display: flex; align-items: center; justify-content: center; font-size: 22px;
+}
+.p-feat:nth-child(even) .ico { background: #ffeef6; }
+.p-feat .lbl { font-size: 11.5px; font-weight: 700; color: #3b414d; word-break: keep-all; }
 @media (max-width: 560px) {
-  .hero-head { padding-right: 22px; }
-  .campus { width: 128px; right: 8px; bottom: 8px; opacity: 0.6; }
+  .p-features { grid-template-columns: repeat(2, 1fr); gap: 12px 8px; }
 }
-.hero-head .crumb { font-size: 11px; opacity: 0.75; margin-bottom: 10px; }
-.hero-head .course-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+
+/* 하단 네이비 스트립 */
+.p-strip {
+  background: linear-gradient(100deg, var(--navy-dark), var(--navy));
+  color: #fff; text-align: center;
+  font-family: 'Gaegu', cursive; font-size: 19px; padding: 13px 16px;
+}
+.p-strip .hearts { color: #ffb3d9; }
+
+/* 캠퍼스 음각 라인 일러스트 (배경 장식) */
+.campus {
+  position: absolute; right: 14px; top: 118px;
+  width: 175px; height: auto; z-index: 0; opacity: 0.55;
+}
+@media (max-width: 640px) {
+  .campus { width: 110px; right: 6px; top: 140px; opacity: 0.3; }
+}
+.hero-head .course-tags { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-top: 14px; }
 .tag {
-  font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 100px;
-  background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.25);
+  font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 100px;
+  background: var(--navy-light); border: 1px solid #ccd7ef; color: var(--navy);
 }
-.tag.req { background: var(--pink); border-color: var(--pink); }
+.tag.req { background: var(--pink); border-color: var(--pink); color: #fff; }
 .hero-head .course-name {
-  font-family: 'Noto Serif KR', serif; font-weight: 900;
-  font-size: clamp(34px, 9vw, 46px); line-height: 1.15; letter-spacing: -1px;
+  font-family: 'Noto Serif KR', serif; font-weight: 900; color: var(--navy);
+  font-size: clamp(38px, 10vw, 54px); line-height: 1.15; letter-spacing: -1.5px;
 }
 .title-heart {
   display: inline-block; width: 0.85em; height: 0.85em;
@@ -150,7 +215,13 @@ body {
   18% { transform: rotate(14deg) scale(1.05); }
 }
 .hero-head .course-sub {
-  font-family: 'Gaegu', cursive; font-size: 19px; color: #ffd9ea; margin-top: 6px;
+  display: inline-block; position: relative;
+  font-family: 'Gaegu', cursive; font-size: 22px; font-weight: 700;
+  color: var(--navy); margin-top: 8px; padding: 0 4px 4px;
+}
+.hero-head .course-sub::after {
+  content: ''; position: absolute; left: 0; right: 18px; bottom: 0; height: 4px;
+  background: linear-gradient(90deg, #ffb3d9, #ff8fc0); border-radius: 100px; opacity: 0.85;
 }
 .hero-head .stamp {
   position: absolute; right: 18px; top: 16px;
@@ -658,13 +729,7 @@ body {
 
   <div class="hero">
     <div class="hero-head">
-      <div class="stamp">수강신청<br>OPEN</div>
-      <div class="crumb">수강신청 &gt; 개설강좌 조회 &gt; 교양필수</div>
-      <div class="course-tags">
-        <span class="tag">학수번호 LOVE101</span>
-        <span class="tag req">이수구분 교양필수</span>
-        <span class="tag">3학점</span>
-      </div>
+      <div class="p-bubble">대학생 연애, 이론부터 실전까지! 💗</div>
       <h1 class="title course-name">연애학개론<svg class="title-heart" viewBox="0 0 32 32" aria-hidden="true">
         <defs>
           <linearGradient id="titleHeartG" x1="0" y1="0" x2="1" y2="1">
@@ -675,9 +740,28 @@ body {
         <path d="M16 28.5C6.8 21.6 2 15.9 2 10.4 2 6.3 5.3 3 9.4 3c2.6 0 5.1 1.3 6.6 3.4C17.5 4.3 20 3 22.6 3 26.7 3 30 6.3 30 10.4c0 5.5-4.8 11.2-14 18.1z" fill="url(#titleHeartG)"/>
         <ellipse cx="9.5" cy="9" rx="3" ry="2.2" fill="#fff" opacity="0.65" transform="rotate(-24 9.5 9)"/>
       </svg></h1>
-      <div class="course-sub">"연애는 교양필수니까" ♡</div>
+      <div><span class="course-sub">"연애는, 교양필수니까" ♡</span></div>
+      <div class="course-tags">
+        <span class="tag">학수번호 LOVE101</span>
+        <span class="tag req">이수구분 교양필수</span>
+        <span class="tag">3학점</span>
+      </div>
+      <div>
+        <div class="p-check">
+          <div class="pc-row"><span class="pc-box">✓</span> 교양필수</div>
+          <div class="pc-row"><span class="pc-box">✓</span> 매칭 &amp; 데이트 권장</div>
+          <div class="pc-row"><span class="pc-box">✓</span> 캠퍼스 맞춤</div>
+        </div>
+      </div>
+      <div class="p-features">
+        <div class="p-feat"><span class="ico">📅</span><span class="lbl">주 1회 데이트 권장</span></div>
+        <div class="p-feat"><span class="ico">💬</span><span class="lbl">실전 매칭 시스템</span></div>
+        <div class="p-feat"><span class="ico">📍</span><span class="lbl">캠퍼스 기반 매칭</span></div>
+        <div class="p-feat"><span class="ico">🎁</span><span class="lbl">초대 코드 혜택</span></div>
+      </div>
+      <div><span class="p-open">수강신청 OPEN!</span></div>
       <svg class="campus" viewBox="0 -14 220 162" aria-hidden="true">
-        <g fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <g fill="none" stroke="rgba(35,64,142,0.45)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <!-- 깃대 + 하트 깃발 -->
           <line x1="110" y1="6" x2="110" y2="-7"/>
           <path d="M112 -5.2 C 112 -8, 116.5 -8, 116.5 -4.9 C 116.5 -2.6, 113.3 -0.8, 112 0.3 C 110.7 -0.8, 107.5 -2.6, 107.5 -4.9 C 107.5 -8, 112 -8, 112 -5.2 z"/>
@@ -719,6 +803,7 @@ body {
         </g>
       </svg>
     </div>
+    <div class="p-strip">연애도 배워서 해야, 더 설레잖아? <span class="hearts">💕</span></div>
     <div class="syllabus">
       <table class="syllabus-table">
         <tr><th>담당교수</th><td>Prof. 큐피드 (운영진 정성 매칭)</td></tr>
