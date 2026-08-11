@@ -234,6 +234,11 @@ body {
 }
 .exam-banner:active { transform: scale(0.98); }
 .exam-banner .arrow { font-weight: 900; color: var(--gold); }
+.lobby-banner {
+  background: linear-gradient(135deg, #eef3ff, #e2ebff); border-color: #b9cdf3; color: var(--navy);
+  box-shadow: 0 2px 8px rgba(35, 64, 142, 0.12);
+}
+.lobby-banner .arrow { color: var(--navy); }
 
 /* ===== 수강신청 대기열 오버레이 ===== */
 .queue-overlay {
@@ -760,6 +765,7 @@ body {
         </div>
       </div>
       <a class="exam-banner" href="exam.html">📝 <b>입학 전 필수!</b> 내 연애 학점 모의고사 풀어보기 <span class="arrow">→</span></a>
+      <a class="exam-banner lobby-banner" href="lobby.html">🚪 <b>NEW!</b> 미팅 로비 오픈 — 분반 자리 잡기 (실시간 여석) <span class="arrow">→</span></a>
     </div>
   </div>
 

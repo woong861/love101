@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>연애학개론 — 미팅 로비 (베타) 🚪</title>
+<meta name="description" content="개설된 미팅 분반에 자리 잡기! 여석 실시간 확인, 다 차면 채팅방이 열려요.">
+<meta name="theme-color" content="#23408e">
+<meta property="og:type" content="website">
+<meta property="og:title" content="연애학개론 🚪 미팅 로비">
+<meta property="og:description" content="3:3 미팅 분반 자리 잡기 — 여석 실시간 공개!">
+<meta property="og:locale" content="ko_KR">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='80' font-size='80'%3E%F0%9F%9A%AA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@600;900&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #23408e;
+  --navy-dark: #182e68;
+  --navy-light: #eaf0fb;
+  --pink: #ff5d9e;
+  --bg: #eef1f6;
+  --card: #ffffff;
+  --line: #d8dee9;
+  --text: #23272f;
+  --muted: #767e8c;
+  --gold: #c9962c;
+  --green: #2e9e5b;
+  --red: #d64545;
+  --shadow: 0 2px 10px rgba(20, 35, 80, 0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.topbar { background: linear-gradient(100deg, var(--navy-dark), var(--navy) 55%, #45338f); color: #fff; padding: 10px 16px; }
+.topbar-in { max-width: 620px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.topbar .logo { display: flex; align-items: center; gap: 8px; font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 15px; color: #fff; text-decoration: none; }
+.topbar .back { color: #cfe0ff; font-size: 12px; text-decoration: none; font-weight: 700; }
+
+.container { max-width: 620px; margin: 0 auto; padding: 24px 16px 70px; }
+
+.hero {
+  background: linear-gradient(135deg, var(--navy), var(--navy-dark));
+  color: #fff; border-radius: 14px; padding: 24px 22px; text-align: center;
+  box-shadow: var(--shadow); margin-bottom: 10px; position: relative; overflow: hidden;
+}
+.hero .beta-tag {
+  display: inline-block; background: var(--pink); font-size: 11px; font-weight: 900;
+  padding: 3px 12px; border-radius: 100px; margin-bottom: 10px; letter-spacing: 1px;
+}
+.hero h1 { font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: clamp(26px, 7vw, 34px); }
+.hero .sub { font-family: 'Gaegu', cursive; font-size: 17px; color: #ffd9ea; margin-top: 6px; }
+.hero .desc { font-size: 13px; color: #cfe0ff; line-height: 1.8; margin-top: 12px; }
+.hero .desc b { color: #fff; }
+
+.how {
+  background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+  box-shadow: var(--shadow); padding: 14px 16px; margin-bottom: 20px;
+  display: grid; gap: 6px;
+}
+.how .step { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; line-height: 1.6; }
+.how .n {
+  flex: none; width: 20px; height: 20px; border-radius: 50%; background: var(--navy);
+  color: #fff; font-size: 11px; font-weight: 900; display: flex; align-items: center; justify-content: center;
+  margin-top: 2px;
+}
+.how .step b { color: var(--pink); }
+
+.list-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.list-head h2 { font-size: 17px; color: var(--navy); }
+.refresh-note { font-size: 11.5px; color: var(--muted); }
+
+.lobby-list { display: grid; gap: 12px; }
+
+.lobby-card {
+  background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--navy);
+  border-radius: 12px; box-shadow: var(--shadow); padding: 16px;
+}
+.lobby-card.full { border-left-color: var(--gold); }
+.lobby-card.confirmed { border-left-color: var(--green); opacity: 0.75; }
+.lc-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.lc-title { font-size: 16px; font-weight: 900; }
+.lc-type {
+  font-size: 11px; font-weight: 900; color: var(--navy); background: var(--navy-light);
+  padding: 2px 10px; border-radius: 100px; margin-left: 6px; vertical-align: middle;
+}
+.lc-status { font-size: 11.5px; font-weight: 900; padding: 3px 10px; border-radius: 100px; white-space: nowrap; }
+.lc-status.open { background: #e8f6ee; color: var(--green); }
+.lc-status.hot { background: #fdeaea; color: var(--red); }
+.lc-status.full { background: #fff3d6; color: #a3661a; }
+.lc-status.confirmed { background: #e3e7ee; color: #555; }
+.lc-desc { font-size: 12.5px; color: var(--muted); margin-top: 6px; }
+
+.lc-seats { display: flex; gap: 18px; margin-top: 12px; flex-wrap: wrap; }
+.seat-group { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 700; }
+.seat-group .lbl.m { color: #1565c0; }
+.seat-group .lbl.f { color: #c2185b; }
+.seat-dots { display: flex; gap: 4px; }
+.seat-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid #c9d2e3; background: #fff; }
+.seat-dot.taken.m { background: #64a5f0; border-color: #1565c0; }
+.seat-dot.taken.f { background: #f48cb1; border-color: #c2185b; }
+.seat-count { font-size: 12px; color: var(--muted); font-weight: 500; }
+
+.lc-join {
+  margin-top: 14px; width: 100%; border: none; border-radius: 100px; padding: 12px;
+  background: linear-gradient(135deg, var(--pink), #ff4dd2); color: #fff;
+  font-size: 14.5px; font-weight: 900; font-family: 'Noto Sans KR'; cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 93, 158, 0.3);
+}
+.lc-join:active { transform: scale(0.98); }
+.lc-join:disabled { background: #c9d2e3; box-shadow: none; cursor: default; }
+
+.empty-state {
+  background: var(--card); border: 1.5px dashed var(--line); border-radius: 12px;
+  text-align: center; padding: 40px 20px; color: var(--muted); font-size: 14px; line-height: 1.8;
+}
+.empty-state .big { font-size: 40px; margin-bottom: 8px; }
+
+.foot-note { text-align: center; font-size: 12px; color: var(--muted); margin-top: 24px; line-height: 1.7; }
+.foot-note a { color: var(--pink); font-weight: 700; text-decoration: none; }
+
+/* ===== join modal ===== */
+.modal-backdrop {
+  display: none; position: fixed; inset: 0; z-index: 100;
+  background: rgba(24, 33, 58, 0.6); backdrop-filter: blur(3px);
+  align-items: flex-start; justify-content: center; overflow-y: auto; padding: 30px 14px;
+}
+.modal-backdrop.active { display: flex; }
+.join-card {
+  background: var(--card); border-radius: 14px; border-top: 6px solid var(--navy);
+  width: 100%; max-width: 420px; padding: 24px 20px; position: relative;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.35);
+}
+.close-btn { position: absolute; right: 12px; top: 10px; border: none; background: none; font-size: 26px; color: #aab; cursor: pointer; }
+.join-title { font-size: 19px; font-weight: 900; color: var(--navy); text-align: center; }
+.join-sub { text-align: center; font-size: 12.5px; color: var(--muted); margin: 6px 0 16px; }
+
+.field { margin-bottom: 13px; }
+.field label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #333a47; }
+.field input {
+  width: 100%; border: 1.5px solid var(--line); border-radius: 9px;
+  padding: 11px 12px; font-size: 14px; font-family: 'Noto Sans KR'; outline: none; background: #fbfcfe;
+}
+.field input:focus { border-color: var(--navy); background: #fff; }
+.radio-group { display: flex; gap: 14px; }
+.radio-group label { font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 6px; margin: 0; }
+.radio-group input { width: 16px; height: 16px; accent-color: var(--pink); }
+
+.pay-box {
+  background: var(--navy-light); border: 1px solid #c6d4ef; border-radius: 10px;
+  padding: 12px 14px; font-size: 12.5px; line-height: 1.8; margin-bottom: 13px;
+}
+.pay-box b { color: var(--navy); }
+.pay-box .acct { font-weight: 900; color: var(--navy); }
+
+.join-submit {
+  width: 100%; border: none; border-radius: 100px; padding: 14px;
+  background: linear-gradient(135deg, var(--navy), #3557b8); color: #fff;
+  font-size: 15px; font-weight: 900; font-family: 'Noto Sans KR'; cursor: pointer;
+}
+.join-submit:disabled { opacity: 0.6; }
+.join-err { text-align: center; font-size: 13px; color: var(--red); font-weight: 700; margin-top: 10px; display: none; }
+.join-err.show { display: block; }
+
+/* success */
+.success-card {
+  background: #fdfcf7; border-radius: 14px; border-top: 6px solid var(--green);
+  width: 100%; max-width: 400px; padding: 30px 24px; text-align: center;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.35);
+}
+.success-card .big { font-size: 50px; }
+.success-card h2 { font-size: 21px; color: var(--navy); margin-top: 8px; }
+.success-card .seat-line { font-size: 14px; font-weight: 700; color: var(--pink); margin-top: 8px; }
+.success-card p { font-size: 13.5px; color: var(--muted); line-height: 1.8; margin-top: 12px; }
+.success-card .warn {
+  background: #fff8e6; border: 1px solid #f0e2b6; color: #7a5c12;
+  border-radius: 10px; padding: 10px 12px; font-size: 12.5px; line-height: 1.7; margin-top: 14px;
+}
+.success-card button {
+  margin-top: 16px; border: none; border-radius: 100px; padding: 12px 30px;
+  background: var(--navy); color: #fff; font-weight: 900; font-size: 14px; cursor: pointer; font-family: 'Noto Sans KR';
+}
+
+.spin { display: inline-block; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <a class="logo" href="index.html">🎓 LOVE UNIV.</a>
+    <a class="back" href="index.html">← 수강신청 홈</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="hero">
+    <span class="beta-tag">BETA</span>
+    <h1>미팅 로비 🚪</h1>
+    <div class="sub">분반 자리 잡기 — 선착순 ♡</div>
+    <div class="desc">
+      개설된 미팅 분반에서 <b>마음에 드는 자리를 먼저 잡으세요!</b><br>
+      여석은 실시간으로 줄어들어요 👀
+    </div>
+  </div>
+
+  <div class="how">
+    <div class="step"><span class="n">1</span><span>분반 골라서 <b>자리 잡기</b> (신청서 1분 컷)</span></div>
+    <div class="step"><span class="n">2</span><span>수강료 입금 → 운영진이 <b>입금·프로필 확인</b></span></div>
+    <div class="step"><span class="n">3</span><span>분반이 다 차면 <b>문자로 단체 채팅방 링크</b>가 와요 🎉</span></div>
+  </div>
+
+  <div class="list-head">
+    <h2>📋 개설된 분반</h2>
+    <span class="refresh-note">여석 자동 갱신 <span id="refreshSpin"></span></span>
+  </div>
+
+  <div class="lobby-list" id="lobbyList">
+    <div class="empty-state"><div class="big">⏳</div>분반을 불러오는 중이에요...</div>
+  </div>
+
+  <p class="foot-note">
+    원하는 분반이 없나요? 1:1 소개팅은 <a href="index.html">수강신청</a>으로!<br>
+    문의는 인스타 <a href="https://instagram.com/_posting2" target="_blank" rel="noopener">@_posting2</a> DM ♡
+  </p>
+</div>
+
+<!-- join modal -->
+<div class="modal-backdrop" id="joinModal">
+  <div class="join-card">
+    <button class="close-btn" onclick="closeJoin()" aria-label="닫기">×</button>
+    <div class="join-title" id="joinTitle">자리 잡기</div>
+    <div class="join-sub" id="joinSub">신청 후 입금까지 완료해야 자리가 확정돼요</div>
+    <form id="joinForm">
+      <div class="field"><label>이름</label><input type="text" name="name" required placeholder="이름"></div>
+      <div class="field">
+        <label>성별</label>
+        <div class="radio-group">
+          <label><input type="radio" name="gender" value="남자" required> 남자</label>
+          <label><input type="radio" name="gender" value="여자" required> 여자</label>
+        </div>
+      </div>
+      <div class="field"><label>학교</label><input type="text" name="school" required placeholder="예: 한국대학교"></div>
+      <div class="field"><label>나이</label><input type="text" name="age" required placeholder="예: 22" inputmode="numeric" maxlength="3"></div>
+      <div class="field"><label>전화번호</label><input type="tel" name="phone" required placeholder="010-0000-0000" inputmode="numeric"></div>
+      <div class="field"><label>카톡 ID</label><input type="text" name="kakao" required placeholder="카카오톡 아이디"></div>
+      <div class="field"><label>인스타 ID</label><input type="text" name="insta" placeholder="@를 빼고 (선택)"></div>
+      <div class="pay-box">
+        💳 <b>미팅 수강료</b> — 남 1인 6,000원 · 여 1인 2,000원<br>
+        입금 계좌: <span class="acct">카카오뱅크 3333-24-1809842 (박*일)</span><br>
+        신청 후 <b>3시간 내 미입금 시 자리가 취소</b>될 수 있어요
+      </div>
+      <div class="field"><label>입금자명 / 시간 / 금액</label><input type="text" name="payment" required placeholder="예: 홍길동 / 15:30 / 6000"></div>
+      <button type="submit" class="join-submit" id="joinSubmitBtn">이 분반에 자리 잡기 🚪</button>
+      <p class="join-err" id="joinErr"></p>
+    </form>
+  </div>
+</div>
+
+<!-- success modal -->
+<div class="modal-backdrop" id="successModal">
+  <div class="success-card">
+    <div class="big">🎉</div>
+    <h2>자리 잡기 성공!</h2>
+    <div class="seat-line" id="seatLine"></div>
+    <p>
+      운영진이 입금을 확인하면 자리가 확정되고,<br>
+      분반이 <b>다 차면 문자로 채팅방 링크</b>를 보내드려요.
+    </p>
+    <div class="warn">
+      📸 신청 마무리: <b>오픈카톡방</b>에 입금내역 + 본인 사진 1장 보내주세요<br>
+      <a href="https://open.kakao.com/o/sn90otGi" target="_blank" rel="noopener" style="color:#7a5c12;font-weight:900">💬 오픈카톡방 입장하기</a>
+    </div>
+    <button onclick="closeSuccess()">확인</button>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// 연애학개론 전용 Apps Script (index.html과 동일 배포)
+// ============================================================
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzT6KZqKdly-wEpXJnUqUOXMY4Y1P84Mp886UpalROmTshOP89fvFuaTaibYVhcbbQy/exec';
+const MOCK = new URLSearchParams(location.search).get('mock') === '1';
+
+function encodeD(obj) {
+  const bytes = new TextEncoder().encode(JSON.stringify(obj));
+  let bin = '';
+  bytes.forEach(b => bin += String.fromCharCode(b));
+  return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+let LOBBIES = [];
+let joiningLobby = null;
+
+const MOCK_DATA = { lobbies: [
+  { id: 'L01', title: '금요일 저녁 · 건대 3:3', type: '3:3', desc: '금요일 7시쯤 건대입구 근처에서 만나요!', capM: 3, capF: 3, m: 2, f: 3, status: 'open' },
+  { id: 'L02', title: '토요일 낮 · 홍대 2:2', type: '2:2', desc: '토요일 오후 보드게임카페 or 맛집', capM: 2, capF: 2, m: 1, f: 0, status: 'open' },
+  { id: 'L03', title: '일요일 · 잠실 3:3', type: '3:3', desc: '일요일 석촌호수 산책 + 저녁', capM: 3, capF: 3, m: 3, f: 3, status: 'full' },
+  { id: 'L04', title: '지난주 성수 3:3', type: '3:3', desc: '', capM: 3, capF: 3, m: 3, f: 3, status: 'confirmed' }
+]};
+
+async function loadLobbies() {
+  const spin = document.getElementById('refreshSpin');
+  spin.innerHTML = '<span class="spin">⏳</span>';
+  try {
+    let data;
+    if (MOCK) {
+      await new Promise(r => setTimeout(r, 300));
+      data = MOCK_DATA;
+    } else {
+      const res = await fetch(APPS_SCRIPT_URL + '?action=lobbyList&t=' + Date.now(), { cache: 'no-store' });
+      data = await res.json();
+    }
+    LOBBIES = (data.lobbies || []).filter(l => l.status !== 'closed');
+    renderLobbies();
+  } catch (e) {
+    console.warn('lobby load failed', e);
+    if (!LOBBIES.length) {
+      document.getElementById('lobbyList').innerHTML =
+        '<div class="empty-state"><div class="big">😢</div>분반을 불러오지 못했어요.<br>잠시 후 새로고침 해주세요.</div>';
+    }
+  }
+  spin.textContent = '';
+}
+
+function esc(s) {
+  return String(s || '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function seatDots(taken, cap, cls) {
+  let html = '';
+  for (let i = 0; i < cap; i++) {
+    html += `<span class="seat-dot ${i < taken ? 'taken ' + cls : ''}"></span>`;
+  }
+  return html;
+}
+
+function renderLobbies() {
+  const wrap = document.getElementById('lobbyList');
+  if (!LOBBIES.length) {
+    wrap.innerHTML = '<div class="empty-state"><div class="big">🚪</div>아직 개설된 분반이 없어요.<br>곧 새 분반이 열릴 예정이니 조금만 기다려주세요 ♡</div>';
+    return;
+  }
+  wrap.innerHTML = LOBBIES.map(l => {
+    const leftM = l.capM - l.m, leftF = l.capF - l.f;
+    const totalLeft = leftM + leftF;
+    let statusCls = 'open', statusTxt = '🟢 모집중';
+    if (l.status === 'confirmed') { statusCls = 'confirmed'; statusTxt = '✅ 매칭 완료'; }
+    else if (l.status === 'full') { statusCls = 'full'; statusTxt = '⏳ 운영진 확인중'; }
+    else if (totalLeft <= 2) { statusCls = 'hot'; statusTxt = '🔥 여석 ' + totalLeft; }
+    const joinable = l.status === 'open';
+    return `
+      <div class="lobby-card ${l.status}">
+        <div class="lc-top">
+          <div class="lc-title">${esc(l.title)}<span class="lc-type">${esc(l.type)}</span></div>
+          <span class="lc-status ${statusCls}">${statusTxt}</span>
+        </div>
+        ${l.desc ? `<div class="lc-desc">${esc(l.desc)}</div>` : ''}
+        <div class="lc-seats">
+          <div class="seat-group">
+            <span class="lbl m">남</span>
+            <span class="seat-dots">${seatDots(l.m, l.capM, 'm')}</span>
+            <span class="seat-count">${l.m}/${l.capM}</span>
+          </div>
+          <div class="seat-group">
+            <span class="lbl f">여</span>
+            <span class="seat-dots">${seatDots(l.f, l.capF, 'f')}</span>
+            <span class="seat-count">${l.f}/${l.capF}</span>
+          </div>
+        </div>
+        <button class="lc-join" ${joinable ? '' : 'disabled'} onclick="openJoin('${esc(l.id)}')">
+          ${joinable ? '이 분반에 자리 잡기 🚪' : l.status === 'full' ? '정원 마감 — 운영진 확인중' : '매칭 완료된 분반이에요'}
+        </button>
+      </div>
+    `;
+  }).join('');
+}
+
+function openJoin(id) {
+  joiningLobby = LOBBIES.find(l => l.id === id);
+  if (!joiningLobby) return;
+  document.getElementById('joinTitle').textContent = '「' + joiningLobby.title + '」 자리 잡기';
+  const leftM = joiningLobby.capM - joiningLobby.m, leftF = joiningLobby.capF - joiningLobby.f;
+  document.getElementById('joinSub').textContent = `현재 여석 — 남 ${leftM} · 여 ${leftF}`;
+  document.getElementById('joinErr').classList.remove('show');
+  document.getElementById('joinModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeJoin() {
+  document.getElementById('joinModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+function closeSuccess() {
+  document.getElementById('successModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('joinForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  if (!joiningLobby) return;
+  const btn = document.getElementById('joinSubmitBtn');
+  const err = document.getElementById('joinErr');
+  err.classList.remove('show');
+  btn.disabled = true;
+  btn.textContent = '자리 잡는 중...';
+
+  const fd = new FormData(this);
+  const payload = {
+    lobbyId: joiningLobby.id,
+    name: fd.get('name'), gender: fd.get('gender'), school: fd.get('school'),
+    age: fd.get('age'), phone: fd.get('phone'), kakao: fd.get('kakao'),
+    insta: fd.get('insta'), payment: fd.get('payment')
+  };
+
+  let result;
+  try {
+    if (MOCK) {
+      await new Promise(r => setTimeout(r, 600));
+      result = { ok: true, m: joiningLobby.m + (payload.gender === '남자' ? 1 : 0), f: joiningLobby.f + (payload.gender === '여자' ? 1 : 0), capM: joiningLobby.capM, capF: joiningLobby.capF };
+    } else {
+      const res = await fetch(APPS_SCRIPT_URL + '?action=lobbyJoin&d=' + encodeD(payload) + '&t=' + Date.now(), { cache: 'no-store' });
+      result = await res.json();
+    }
+  } catch (ex) {
+    result = { error: 'network' };
+  }
+
+  btn.disabled = false;
+  btn.textContent = '이 분반에 자리 잡기 🚪';
+
+  if (result && result.ok) {
+    closeJoin();
+    this.reset();
+    document.getElementById('seatLine').textContent =
+      `「${joiningLobby.title}」 — 현재 남 ${result.m}/${result.capM} · 여 ${result.f}/${result.capF}`;
+    document.getElementById('successModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    loadLobbies();
+    return;
+  }
+
+  const messages = {
+    full: '앗, 방금 이 성별 자리가 마감됐어요 😢 다른 분반을 확인해주세요!',
+    dup: '이미 이 분반에 신청되어 있어요 (같은 전화번호)',
+    closed: '이 분반은 마감됐어요. 다른 분반을 확인해주세요!',
+    notfound: '분반을 찾을 수 없어요. 새로고침 후 다시 시도해주세요.',
+    network: '네트워크 오류예요. 잠시 후 다시 시도해주세요.'
+  };
+  err.textContent = messages[result && result.error] || '오류가 발생했어요: ' + (result && result.error);
+  err.classList.add('show');
+  loadLobbies();
+});
+
+document.getElementById('joinModal').addEventListener('click', function (e) { if (e.target === this) closeJoin(); });
+document.getElementById('successModal').addEventListener('click', function (e) { if (e.target === this) closeSuccess(); });
+
+loadLobbies();
+setInterval(loadLobbies, 25000);
+</script>
+
+</body>
+</html>
