@@ -503,6 +503,10 @@ body {
         <div class="slot-content"><span class="empty-hint">비어있음</span></div>
       </div>
 
+      <div style="margin-bottom:10px">
+        <label style="font-size:12px;font-weight:700;display:block;margin-bottom:4px">💌 큐피드 교수 코멘트 (선택 — 양쪽 성적표에 표시)</label>
+        <textarea id="matchComment" placeholder="예: 두 분 다 카페 투어가 취미시고, 대화 결이 잘 맞을 것 같아 매칭했어요!" maxlength="120" style="width:100%;min-height:52px;padding:8px 10px;font-size:12px;border:1px solid var(--line);border-radius:8px;resize:vertical;font-family:inherit"></textarea>
+      </div>
       <div class="actions">
         <button class="btn btn-secondary" onclick="swapSlots()" title="A ↔ B">🔁 교환</button>
         <button class="btn btn-secondary" onclick="clearAll()">🗑 비우기</button>
@@ -613,6 +617,7 @@ function encodeMatchData(obj) {
   if (obj.k) clean.k = obj.k;
   if (obj.m) clean.m = obj.m;
   if (obj.b) clean.b = obj.b;
+  if (obj.c) clean.c = obj.c;   // 큐피드 교수 코멘트
   const json = JSON.stringify(clean);
   const bytes = new TextEncoder().encode(json);
   let binary = '';
@@ -810,13 +815,15 @@ function hideResults() {
 
 function buildPayload(person) {
   // 이름은 더 이상 reveal에 표시하지 않음. 학교 + 나이로 대체.
+  const comment = (document.getElementById('matchComment') || {}).value || '';
   return {
     s: person.school,
     a: person.age,
     i: person.instagram,
     k: person.kakao,
     m: person.mbti,
-    b: person.intro
+    b: person.intro,
+    c: comment.trim()
   };
 }
 

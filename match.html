@@ -298,6 +298,37 @@ body::before {
   line-height: 1;
 }
 
+/* 큐피드 교수 코멘트 */
+.prof-note {
+  background: #fff6fa;
+  border: 2px dashed #ffb3d9;
+  border-radius: 12px;
+  padding: 14px 16px 12px;
+  margin: 0 0 18px;
+  text-align: left;
+}
+.prof-note .pn-label {
+  font-size: 11.5px;
+  font-weight: 900;
+  color: #ff5d9e;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+.prof-note .pn-text {
+  font-family: 'Gaegu', cursive;
+  font-size: 17px;
+  color: #6b4757;
+  line-height: 1.55;
+  word-break: keep-all;
+}
+.prof-note .pn-sign {
+  text-align: right;
+  font-family: 'Gaegu', cursive;
+  font-size: 13.5px;
+  color: #b08699;
+  margin-top: 6px;
+}
+
 .contact-row {
   display: flex;
   gap: 8px;
@@ -434,6 +465,12 @@ body::before {
     <div class="mbti-badge" id="matchMbti"></div>
     <div class="intro" id="matchIntro"></div>
 
+    <div class="prof-note" id="profNote" style="display:none">
+      <div class="pn-label">💌 담당교수 추천 코멘트</div>
+      <div class="pn-text" id="profNoteText"></div>
+      <div class="pn-sign">— Prof. 큐피드 —</div>
+    </div>
+
     <div class="contact-row" id="instaRow" style="display:none">
       <span class="ico">📷</span>
       <span class="id-text" id="matchInsta"></span>
@@ -506,6 +543,11 @@ function reveal() {
     document.getElementById('matchIntro').textContent = matchData.b;
   } else {
     document.getElementById('matchIntro').style.display = 'none';
+  }
+
+  if (matchData.c) {
+    document.getElementById('profNote').style.display = 'block';
+    document.getElementById('profNoteText').textContent = matchData.c;
   }
 
   if (matchData.i) {
