@@ -197,7 +197,7 @@ function lobbyConfirm_(d) {
   if (mode === 'link') {
     var text = '[연애학개론] "' + lobby.title + '" 미팅이 확정됐어요! 🎉\n\n' +
       '아래 오픈채팅방에 입장해주세요:\n' + d.link + '\n\n' +
-      '즐거운 만남 되세요 ♡\n- 연애학개론 교무처\n인스타 @_posting2';
+      '즐거운 만남 되세요 ♡\n- 연애학개론 교무처\n인스타 @loveuniv101';
     lobby.members.forEach(function (mem) { send(mem, text); });
     linkValue = d.link;
     summary = text;
@@ -217,17 +217,17 @@ function lobbyConfirm_(d) {
           mem.name + '님이 남자팀 대표예요.\n' +
           '상대팀 대표 카톡 ID: ' + (repF.kakao || repF.phone) + '\n\n' +
           '먼저 친추하고 인사한 뒤, 6명 단체 카톡방을 만들어주세요 ♡\n' +
-          '- 연애학개론 교무처\n문의 인스타 @_posting2';
+          '- 연애학개론 교무처\n문의 인스타 @loveuniv101';
       } else if (mem === repF) {
         text = '[연애학개론] "' + lobby.title + '" 미팅이 확정됐어요! 🎉\n\n' +
           mem.name + '님이 여자팀 대표예요.\n' +
           '상대팀 대표 카톡 ID: ' + (repM.kakao || repM.phone) + '\n' +
           '곧 연락이 올 거예요. 단체방이 만들어지면 팀원들을 초대해주세요 ♡\n' +
-          '- 연애학개론 교무처\n문의 인스타 @_posting2';
+          '- 연애학개론 교무처\n문의 인스타 @loveuniv101';
       } else {
         text = '[연애학개론] "' + lobby.title + '" 미팅이 확정됐어요! 🎉\n\n' +
           '각 팀 대표끼리 연결 중이에요.\n곧 단체 카톡방에 초대될 예정입니다 ♡\n' +
-          '- 연애학개론 교무처\n문의 인스타 @_posting2';
+          '- 연애학개론 교무처\n문의 인스타 @loveuniv101';
       }
       send(mem, text);
     });
