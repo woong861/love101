@@ -237,6 +237,16 @@ body {
 .syllabus-table th { background: var(--navy-light); color: var(--navy); font-weight: 700; width: 88px; white-space: nowrap; }
 .syllabus-table td b.pink { color: var(--pink); }
 
+.earlybird-banner {
+  display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
+  background: linear-gradient(100deg, #fff1f7, #ffe9f2);
+  border: 1.5px solid #ffb3d9; color: #b0356e;
+  border-radius: 10px; padding: 11px 14px; font-size: 13.5px; margin-top: 14px;
+}
+.earlybird-banner .eb-fire { font-size: 16px; }
+.earlybird-banner .eb-price { font-size: 16px; font-weight: 900; color: var(--pink); }
+.earlybird-banner .eb-orig { color: #c9a5b8; font-size: 12px; }
+
 .dday-banner {
   display: flex; align-items: center; justify-content: center; gap: 8px;
   background: var(--navy-light); border: 1px solid #c6d4ef; color: var(--navy);
@@ -815,6 +825,10 @@ body {
         <tr><th>강의시간</th><td>매칭 후 협의 <b class="pink">(데이트 권장)</b></td></tr>
       </table>
 
+      <div class="earlybird-banner">
+        <span class="eb-fire">🔥</span>
+        <span><b>개강 얼리버드</b> — 선착순 50명 소개팅 수강료 <b class="eb-price">15,000원</b> <s class="eb-orig">19,000원</s></span>
+      </div>
       <div class="dday-banner" id="ddayBanner">
         <span class="dd-icon">⏰</span>
         <span>수강신청 마감까지</span>
@@ -1201,7 +1215,8 @@ body {
         <h3>💳 수강료 납부 안내 💳</h3>
         <div class="block">
           <p class="block-title">1:1 소개팅 (개인 수강)</p>
-          <p class="row"><span>남학우</span><strong>17,000원</strong></p>
+          <p class="row"><span>남학우 <span style="font-size:10.5px;background:#fdeaea;color:#d64545;font-weight:900;padding:1px 7px;border-radius:100px">🔥 얼리버드</span></span><strong><s style="color:#aab;font-weight:400;font-size:12px">19,000원</s> 15,000원</strong></p>
+          <p class="row" style="font-size:11.5px;color:var(--muted)"><span>└ 선착순 50명 한정 · 마감 후</span><span>장학금가 17,000원</span></p>
           <p class="row"><span>여학우</span><strong>0원 · 전액 장학금 🎓</strong></p>
         </div>
         <div class="block">
