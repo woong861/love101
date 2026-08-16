@@ -671,7 +671,14 @@ body {
   background: var(--card); border-radius: 14px; border: 1.5px solid #f0e2b6;
   max-width: 400px; margin: 14px auto 0; padding: 18px;
 }
+.next-alert {
+  background: #fdeaea; border: 1.5px solid #f3c1c1; border-radius: 10px;
+  padding: 11px 12px; margin-bottom: 12px; text-align: center;
+  font-size: 13px; font-weight: 700; color: var(--red); line-height: 1.65;
+}
+.next-alert b { font-weight: 900; }
 .next-title { font-size: 15px; font-weight: 900; color: #7a5c12; margin-bottom: 10px; }
+.next-list .free-note { color: var(--pink); font-weight: 900; }
 .next-list { padding-left: 20px; font-size: 13.5px; line-height: 1.8; color: #3b414d; }
 .next-list ul { padding-left: 16px; font-size: 12.5px; color: var(--muted); }
 .kakao-cta {
@@ -1268,36 +1275,37 @@ body {
     <div class="form-postit share-card" id="shareCard">
       <div class="card-brand">LOVE UNIV. 🎓 연애학개론</div>
       <div class="heart-pop">🎉</div>
-      <div class="done-label">수강신청 완료!</div>
-      <div class="done-sublabel">— 올클 성공 —</div>
+      <div class="done-label">신청서 접수 완료!</div>
+      <div class="done-sublabel">— 이제 마지막 1단계 —</div>
       <div class="user-name" id="shareUserName">친구</div>
       <div class="user-meta" id="shareUserMeta"></div>
       <table class="enroll-table">
         <tr><th>학수번호</th><th>교과목명</th><th>이수구분</th><th>상태</th></tr>
-        <tr><td>LOVE101</td><td>연애학개론</td><td>교양필수</td><td class="ok">신청완료</td></tr>
+        <tr><td>LOVE101</td><td>연애학개론</td><td>교양필수</td><td class="ok">접수완료</td></tr>
       </table>
       <p class="quote">
-        수강신청이 정상 처리됐어!<br>
-        분반 배정(매칭) 결과는 곧 인스타 DM으로 ♡
+        신청서가 정상 접수됐어!<br>
+        아래 <b>오픈카톡방 인증</b>까지 마치면 최종 완료 ♡
       </p>
       <div class="url-stamp">연애는 교양필수 ♡</div>
       <div class="follow-stamp">📷 @loveuniv101</div>
     </div>
     <div class="next-steps">
+      <div class="next-alert">🚨 아직 수강신청이 <u>완료되지 않았어요!</u><br>아래 2단계까지 마쳐야 <b>최종 신청 완료</b>입니다</div>
       <div class="next-title">📌 수강신청 마무리하기 (필수)</div>
       <ol class="next-list">
         <li>아래 <b>오픈카톡방</b> 입장 (<b>기본프로필</b>로 입장)</li>
         <li>방에 사진 보내기
           <ul>
-            <li>입금내역 사진 (입금자명 기재)</li>
+            <li>입금내역 사진 (입금자명 기재)<br><b class="free-note">여성분 소개팅은 사진만!</b></li>
             <li>본인 사진 1장 (필수)</li>
           </ul>
         </li>
       </ol>
-      <a href="https://open.kakao.com/o/sn90otGi" target="_blank" rel="noopener" class="kakao-cta">
+      <a href="https://open.kakao.com/o/s5DrgKIi" target="_blank" rel="noopener" class="kakao-cta">
         💬 오픈카톡방 입장하기
       </a>
-      <p class="next-warn">⚠️ 사진 확인 후 매칭 진행됩니다</p>
+      <p class="next-warn">⚠️ 카톡방 입장 + 사진 전송까지 완료해야 신청 완료!<br>미완료 시 매칭에서 제외됩니다</p>
     </div>
     <div class="referral-box">
       <div class="referral-box-title">☕ 친구 초대 = 커피쿠폰 증정!</div>
