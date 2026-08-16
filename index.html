@@ -601,6 +601,8 @@ body {
 }
 .card-option.premium .card-option-badge { background: var(--gold); }
 .card-option-title { font-size: 14px; font-weight: 900; }
+.card-option-title .opt-people { font-size: 11.5px; font-weight: 700; color: var(--pink); }
+.hint .hint-em { color: var(--pink); }
 .card-option-desc { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
 .card-option-price { font-size: 13px; font-weight: 900; color: var(--navy); white-space: nowrap; }
 
@@ -1162,14 +1164,17 @@ body {
 
       <div class="field card-options-field">
         <label>🛒 장바구니 옵션 (선택)</label>
-        <p class="hint">장바구니에 여러 과목 담고 그 중 <b>마음에 드는 한 과목 골라잡기</b> ♡</p>
+        <p class="hint">
+          <b>이성 여러 명의 프로필을 한 번에 받아보고</b>, 그중<br>
+          <b class="hint-em">마음에 드는 딱 한 명</b>만 골라서 매칭하는 옵션이에요 ♡
+        </p>
         <div class="card-options">
           <label class="card-option">
             <input type="radio" name="card_option" value="기본 (1장)" checked>
             <div class="card-option-inner">
               <div class="card-option-body">
                 <div class="card-option-title">기본 수강신청</div>
-                <div class="card-option-desc">운영진이 큐레이션한 1과목</div>
+                <div class="card-option-desc">운영진이 골라준 <b>이성 1명</b> 매칭</div>
               </div>
               <div class="card-option-price">+0원</div>
             </div>
@@ -1179,8 +1184,8 @@ body {
             <div class="card-option-inner">
               <span class="card-option-badge">💫 인기</span>
               <div class="card-option-body">
-                <div class="card-option-title">장바구니 3과목</div>
-                <div class="card-option-desc">3과목 중 1과목 선택</div>
+                <div class="card-option-title">장바구니 3과목 <span class="opt-people">= 이성 3명 소개</span></div>
+                <div class="card-option-desc">프로필 <b>3명</b> 보고 → <b>1명</b> 선택해서 매칭</div>
               </div>
               <div class="card-option-price">+10,000원</div>
             </div>
@@ -1190,8 +1195,8 @@ body {
             <div class="card-option-inner">
               <span class="card-option-badge">👑 VVIP</span>
               <div class="card-option-body">
-                <div class="card-option-title">장바구니 6과목</div>
-                <div class="card-option-desc">6과목 중 1과목 선택</div>
+                <div class="card-option-title">장바구니 6과목 <span class="opt-people">= 이성 6명 소개</span></div>
+                <div class="card-option-desc">프로필 <b>6명</b> 보고 → <b>1명</b> 선택해서 매칭</div>
               </div>
               <div class="card-option-price">+20,000원</div>
             </div>
@@ -1232,9 +1237,9 @@ body {
           <p class="row"><span>여성</span><strong>1인 2,000원</strong></p>
         </div>
         <div class="block">
-          <p class="block-title">🛒 장바구니 옵션</p>
-          <p class="row"><span>3과목 중 선택</span><strong>+10,000원</strong></p>
-          <p class="row"><span>6과목 중 선택</span><strong>+20,000원</strong></p>
+          <p class="block-title">🛒 장바구니 옵션 (이성 여러 명 중 1명 선택)</p>
+          <p class="row"><span>이성 3명 소개 → 1명 선택</span><strong>+10,000원</strong></p>
+          <p class="row"><span>이성 6명 소개 → 1명 선택</span><strong>+20,000원</strong></p>
         </div>
         <div class="account">
           <p class="block-title">📩 입금 계좌 (등록금 고지서)</p>
@@ -2016,6 +2021,52 @@ document.querySelectorAll('.postit').forEach(el => {
 });
 
 // ====== Share card image save ======
+// 모바일에서 data URL 다운로드가 막히므로 공유시트 → blob 다운로드 → 길게눌러저장 순으로 시도
+async function saveOrShareImage(blob, filename, title) {
+  try {
+    const file = new File([blob], filename, { type: 'image/png' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: title });
+        return 'shared';
+      } catch (e) {
+        if (e && e.name === 'AbortError') return 'cancelled';
+      }
+    }
+  } catch (e) { /* File 생성 미지원 → 아래로 */ }
+
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  if (typeof a.download !== 'undefined') {
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 20000);
+    return 'downloaded';
+  }
+  showLongPressSave(url);
+  return 'longpress';
+}
+
+function showLongPressSave(url) {
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'position:fixed;inset:0;z-index:300;background:rgba(24,33,58,0.9);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;overflow:auto';
+  const msg = document.createElement('div');
+  msg.textContent = '이미지를 꾹 눌러 저장해주세요 📲';
+  msg.style.cssText = 'color:#fff;font-size:15px;font-weight:900';
+  const img = document.createElement('img');
+  img.src = url;
+  img.style.cssText = 'max-width:100%;max-height:70vh;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.4)';
+  const close = document.createElement('button');
+  close.textContent = '닫기';
+  close.style.cssText = 'border:none;border-radius:100px;padding:12px 30px;background:#fff;color:#333;font-weight:900;font-size:14px;cursor:pointer';
+  close.onclick = () => { document.body.removeChild(wrap); URL.revokeObjectURL(url); };
+  wrap.append(msg, img, close);
+  document.body.appendChild(wrap);
+}
+
 async function saveShareCard() {
   const card = document.getElementById('shareCard');
   const btn = document.querySelector('.save-btn');
@@ -2028,15 +2079,14 @@ async function saveShareCard() {
   btn.disabled = true;
   try {
     const canvas = await html2canvas(card, {
-      backgroundColor: null,
+      backgroundColor: '#ffffff',
       scale: 2,
       useCORS: true
     });
-    const link = document.createElement('a');
-    link.download = '연애학개론_수강신청완료_' + Date.now() + '.png';
-    link.href = canvas.toDataURL('image/png');
-    link.click();
-    btn.textContent = '저장됨 ✓';
+    const blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
+    if (!blob) throw new Error('이미지 생성 실패');
+    const result = await saveOrShareImage(blob, '연애학개론_수강신청완료.png', '연애학개론 수강신청 완료');
+    btn.textContent = result === 'cancelled' ? orig : '저장됨 ✓';
     setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 1500);
   } catch (err) {
     console.error(err);

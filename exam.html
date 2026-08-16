@@ -352,6 +352,53 @@ function retry() {
   startQuiz();
 }
 
+// 모바일에서 data URL 다운로드가 막히므로 공유시트 → blob 다운로드 → 길게눌러저장 순으로 시도
+async function saveOrShareImage(blob, filename, title) {
+  try {
+    const file = new File([blob], filename, { type: 'image/png' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      try {
+        await navigator.share({ files: [file], title: title });
+        return 'shared';
+      } catch (e) {
+        if (e && e.name === 'AbortError') return 'cancelled';
+      }
+    }
+  } catch (e) { /* File 생성 미지원 → 아래로 */ }
+
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  if (typeof a.download !== 'undefined') {
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 20000);
+    return 'downloaded';
+  }
+  showLongPressSave(url);
+  return 'longpress';
+}
+
+// download 속성이 안 먹는 브라우저(구형 iOS 등) — 이미지 띄우고 길게 눌러 저장 안내
+function showLongPressSave(url) {
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'position:fixed;inset:0;z-index:300;background:rgba(24,33,58,0.9);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;overflow:auto';
+  const msg = document.createElement('div');
+  msg.textContent = '이미지를 꾹 눌러 저장해주세요 📲';
+  msg.style.cssText = 'color:#fff;font-size:15px;font-weight:900';
+  const img = document.createElement('img');
+  img.src = url;
+  img.style.cssText = 'max-width:100%;max-height:70vh;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.4)';
+  const close = document.createElement('button');
+  close.textContent = '닫기';
+  close.style.cssText = 'border:none;border-radius:100px;padding:12px 30px;background:#fff;color:#333;font-weight:900;font-size:14px;cursor:pointer';
+  close.onclick = () => { document.body.removeChild(wrap); URL.revokeObjectURL(url); };
+  wrap.append(msg, img, close);
+  document.body.appendChild(wrap);
+}
+
 async function saveGradeCard() {
   const card = document.getElementById('gradeCard');
   const btn = document.querySelector('.save-btn');
@@ -363,12 +410,11 @@ async function saveGradeCard() {
   btn.textContent = '만드는 중...';
   btn.disabled = true;
   try {
-    const canvas = await html2canvas(card, { backgroundColor: null, scale: 2, useCORS: true });
-    const link = document.createElement('a');
-    link.download = '연애학개론_모의고사_성적표_' + Date.now() + '.png';
-    link.href = canvas.toDataURL('image/png');
-    link.click();
-    btn.textContent = '저장됨 ✓';
+    const canvas = await html2canvas(card, { backgroundColor: '#fdfcf7', scale: 2, useCORS: true });
+    const blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
+    if (!blob) throw new Error('이미지 생성 실패');
+    const result = await saveOrShareImage(blob, '연애학개론_모의고사_성적표.png', '연애학개론 모의고사 성적표');
+    btn.textContent = result === 'cancelled' ? orig : '저장됨 ✓';
     setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 1500);
   } catch (err) {
     console.error(err);
