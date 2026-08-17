@@ -167,6 +167,8 @@ body {
   font-weight: 700; cursor: pointer; font-family: 'Noto Sans KR';
 }
 .save-btn { background: var(--navy); color: #fff; }
+.capturing, .capturing * { animation: none !important; transition: none !important; }
+
 .retry-btn { background: #e3e7ee; color: #555; }
 .share-hint { text-align: center; font-size: 12px; color: var(--muted); margin-top: 14px; line-height: 1.6; }
 </style>
@@ -238,7 +240,7 @@ body {
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js"></script>
 
 <script>
 const QUESTIONS = [
@@ -352,8 +354,10 @@ function retry() {
   startQuiz();
 }
 
-// 모바일에서 data URL 다운로드가 막히므로 공유시트 → blob 다운로드 → 길게눌러저장 순으로 시도
+// 모바일(특히 카톡·인스타 인앱브라우저)은 파일 다운로드가 막히는 경우가 많아
+// ① 공유시트 → ② (데스크톱만) 다운로드 → ③ 이미지 띄우고 꾹 눌러 저장 순으로 처리
 async function saveOrShareImage(blob, filename, title) {
+  const isTouch = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
   try {
     const file = new File([blob], filename, { type: 'image/png' });
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -364,11 +368,12 @@ async function saveOrShareImage(blob, filename, title) {
         if (e && e.name === 'AbortError') return 'cancelled';
       }
     }
-  } catch (e) { /* File 생성 미지원 → 아래로 */ }
+  } catch (e) { /* File/share 미지원 → 아래로 */ }
 
   const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  if (typeof a.download !== 'undefined') {
+
+  if (!isTouch && typeof document.createElement('a').download !== 'undefined') {
+    const a = document.createElement('a');
     a.href = url;
     a.download = filename;
     document.body.appendChild(a);
@@ -377,32 +382,78 @@ async function saveOrShareImage(blob, filename, title) {
     setTimeout(() => URL.revokeObjectURL(url), 20000);
     return 'downloaded';
   }
-  showLongPressSave(url);
-  return 'longpress';
+
+  showImageSaveSheet(url, blob, filename, title);
+  return 'sheet';
 }
 
-// download 속성이 안 먹는 브라우저(구형 iOS 등) — 이미지 띄우고 길게 눌러 저장 안내
-function showLongPressSave(url) {
+// 모바일 폴백 — 이미지를 화면에 띄워서 꾹 눌러 저장 / 공유 (인앱브라우저에서도 항상 동작)
+function showImageSaveSheet(url, blob, filename, title) {
   const wrap = document.createElement('div');
-  wrap.style.cssText = 'position:fixed;inset:0;z-index:300;background:rgba(24,33,58,0.9);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px;overflow:auto';
+  wrap.style.cssText = 'position:fixed;inset:0;z-index:300;background:rgba(24,33,58,0.92);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:22px 18px;overflow:auto';
+
+  const head = document.createElement('div');
+  head.textContent = '📸 성적표 완성!';
+  head.style.cssText = 'color:#fff;font-size:18px;font-weight:900';
+
   const msg = document.createElement('div');
-  msg.textContent = '이미지를 꾹 눌러 저장해주세요 📲';
-  msg.style.cssText = 'color:#fff;font-size:15px;font-weight:900';
+  msg.innerHTML = '이미지를 <b>꾹 눌러서 저장</b>하거나<br>아래 버튼으로 공유해줘 ♡';
+  msg.style.cssText = 'color:#cfe0ff;font-size:13.5px;text-align:center;line-height:1.6';
+
   const img = document.createElement('img');
   img.src = url;
-  img.style.cssText = 'max-width:100%;max-height:70vh;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.4)';
+  img.style.cssText = 'max-width:100%;max-height:62vh;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.45)';
+
+  const row = document.createElement('div');
+  row.style.cssText = 'display:flex;gap:8px;width:100%;max-width:320px;margin-top:4px';
+
+  if (navigator.share) {
+    const shareBtn = document.createElement('button');
+    shareBtn.textContent = '📤 공유하기';
+    shareBtn.style.cssText = 'flex:1;border:none;border-radius:100px;padding:13px;background:#ff5d9e;color:#fff;font-weight:900;font-size:14px;cursor:pointer;font-family:inherit';
+    shareBtn.onclick = async () => {
+      try {
+        const file = new File([blob], filename, { type: 'image/png' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({ files: [file], title: title });
+        } else {
+          await navigator.share({ title: title, text: '내 연애 학점 나왔어! 🎓', url: location.href });
+        }
+      } catch (e) { /* 사용자가 취소 */ }
+    };
+    row.appendChild(shareBtn);
+  }
+
   const close = document.createElement('button');
   close.textContent = '닫기';
-  close.style.cssText = 'border:none;border-radius:100px;padding:12px 30px;background:#fff;color:#333;font-weight:900;font-size:14px;cursor:pointer';
+  close.style.cssText = 'flex:1;border:none;border-radius:100px;padding:13px;background:#e3e7ee;color:#555;font-weight:900;font-size:14px;cursor:pointer;font-family:inherit';
   close.onclick = () => { document.body.removeChild(wrap); URL.revokeObjectURL(url); };
-  wrap.append(msg, img, close);
+  row.appendChild(close);
+
+  wrap.append(head, msg, img, row);
   document.body.appendChild(wrap);
+}
+
+// html2canvas는 한글 굵은 글씨가 겹쳐 렌더링되는 문제가 있어 html-to-image 사용
+async function renderNodeToBlob(node, bg) {
+  if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch (e) {} }
+  // skipFonts: 구글폰트 CSS를 인라인하려다 CORS로 막혀 느려지는 문제 회피 (16s → 1s)
+  const opts = { pixelRatio: 2, backgroundColor: bg, skipFonts: true };
+  // 캡처 시 복제본에서 애니메이션이 재시작돼 scale(0) 상태로 찍히는 것 방지
+  node.classList.add('capturing');
+  try {
+    const blob = await htmlToImage.toBlob(node, opts);
+    if (!blob) throw new Error('이미지 생성 실패');
+    return blob;
+  } finally {
+    node.classList.remove('capturing');
+  }
 }
 
 async function saveGradeCard() {
   const card = document.getElementById('gradeCard');
   const btn = document.querySelector('.save-btn');
-  if (!card || !window.html2canvas) {
+  if (!card || !window.htmlToImage) {
     alert('이미지 저장 기능을 불러오는 중이에요. 잠시 후 다시 시도해주세요.');
     return;
   }
@@ -410,9 +461,7 @@ async function saveGradeCard() {
   btn.textContent = '만드는 중...';
   btn.disabled = true;
   try {
-    const canvas = await html2canvas(card, { backgroundColor: '#fdfcf7', scale: 2, useCORS: true });
-    const blob = await new Promise(res => canvas.toBlob(res, 'image/png'));
-    if (!blob) throw new Error('이미지 생성 실패');
+    const blob = await renderNodeToBlob(card, '#fdfcf7');
     const result = await saveOrShareImage(blob, '연애학개론_모의고사_성적표.png', '연애학개론 모의고사 성적표');
     btn.textContent = result === 'cancelled' ? orig : '저장됨 ✓';
     setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 1500);
