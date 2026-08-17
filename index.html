@@ -404,67 +404,98 @@ body {
 
 /* ===== course wall (개설강좌) ===== */
 .wall-head {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
   background: var(--navy); color: #fff; border-radius: 10px 10px 0 0;
   padding: 10px 14px; font-size: 13px; font-weight: 700;
 }
 .wall-head .small { font-size: 11px; font-weight: 400; opacity: 0.8; }
-.postit-wall {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px;
+
+/* ===== 시간표 ===== */
+.tt-scroll {
   background: var(--card); border: 1px solid var(--line); border-top: none;
-  border-radius: 0 0 10px 10px; padding: 14px; box-shadow: var(--shadow);
+  border-radius: 0 0 10px 10px; padding: 10px; box-shadow: var(--shadow);
+  overflow-x: auto;
 }
-.postit-slot { perspective: 900px; }
-.postit {
-  position: relative; width: 100%; aspect-ratio: 1 / 0.92; cursor: pointer;
+.timetable {
+  display: grid;
+  grid-template-columns: 30px repeat(5, minmax(0, 1fr));
+  gap: 3px;
 }
-.postit-inner {
-  position: absolute; inset: 0;
-  transform-style: preserve-3d; transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1);
+@media (max-width: 420px) {
+  .tt-scroll { padding: 8px 6px; }
+  .timetable { gap: 2px; grid-template-columns: 26px repeat(5, minmax(0, 1fr)); }
+  .tt-block { padding: 5px 3px; border-left-width: 2px; }
+  .tt-block .b-school { font-size: 10px; }
+  .tt-block .b-name { font-size: 9px; }
+  .tt-block .b-seat { font-size: 8.5px; }
+  .tt-time { font-size: 8px; padding-right: 2px; }
+  .tt-empty { font-size: 8.5px; }
+  .tt-day { font-size: 11px; }
 }
-.postit.flipped .postit-inner { transform: rotateY(180deg); }
-.postit-front, .postit-back {
-  position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
-  border-radius: 10px; padding: 10px; display: flex; flex-direction: column;
+.tt-corner { }
+.tt-day {
+  text-align: center; font-size: 12px; font-weight: 900; color: var(--navy);
+  background: var(--navy-light); border-radius: 7px; padding: 6px 0;
 }
-.postit-front {
-  background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--navy);
-  justify-content: space-between;
-  transition: box-shadow 0.2s, transform 0.2s;
+.tt-time {
+  font-size: 9.5px; color: var(--muted); text-align: right; padding: 4px 4px 0 0;
+  line-height: 1.25; font-family: monospace;
 }
-.postit:hover .postit-front { box-shadow: 0 6px 16px rgba(20,35,80,0.13); }
-.postit.picking .postit-front { animation: pickPulse 0.45s ease; }
-@keyframes pickPulse { 50% { transform: scale(0.95); } }
-.pf-code {
-  font-family: monospace; font-size: 10px; color: var(--muted);
-  display: flex; justify-content: space-between; align-items: center;
+.tt-cell { min-height: 62px; }
+.tt-block {
+  height: 100%; border-radius: 8px; padding: 6px 5px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  cursor: pointer; overflow: hidden; transition: transform 0.12s, box-shadow 0.12s;
+  border-left: 3px solid rgba(0,0,0,0.16);
 }
-.pf-seat {
-  font-size: 10px; font-weight: 700; color: var(--red);
-  background: #fdeaea; padding: 1px 7px; border-radius: 100px;
+.tt-block:hover { transform: translateY(-2px); box-shadow: 0 5px 14px rgba(20,35,80,0.18); }
+.tt-block:active { transform: scale(0.97); }
+.tt-block .b-school { font-size: 11.5px; font-weight: 900; line-height: 1.2; word-break: keep-all; overflow-wrap: anywhere; }
+.tt-block .b-name { font-size: 10.5px; font-weight: 700; opacity: 0.85; line-height: 1.2; margin-top: 1px; }
+.tt-block .b-seat { font-size: 9px; font-weight: 900; opacity: 0.9; }
+.tt-empty {
+  height: 100%; border: 1.5px dashed #dfe5f2; border-radius: 8px; background: #fbfcfe;
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  font-size: 9.5px; color: #b9c2d6; cursor: pointer; padding: 4px; line-height: 1.35;
+  transition: all 0.14s;
 }
-.pf-seat.ok { color: var(--green); background: #e8f6ee; }
-.pf-main {
-  font-weight: 900; font-size: 16px; line-height: 1.35; color: var(--text);
-  flex: 1; display: flex; align-items: center;
+.tt-empty:hover { border-color: var(--pink); color: var(--pink); background: #fff6fa; }
+.tt-legend {
+  display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap;
+  font-size: 11px; color: var(--muted); margin-top: 10px;
 }
-.pf-foot { font-size: 10px; color: var(--muted); display: flex; justify-content: space-between; align-items: center; }
-.pf-foot .credits { color: var(--gold); font-weight: 700; }
-.postit-back {
-  background: linear-gradient(160deg, #fff6fa, #ffeef6);
-  border: 1px solid #ffd1e8;
-  transform: rotateY(180deg);
-  align-items: center; justify-content: center; gap: 8px; text-align: center;
+.tt-legend .dot { width: 9px; height: 9px; border-radius: 3px; display: inline-block; }
+
+/* ===== 강의계획서 모달 ===== */
+.syllabus-card {
+  background: var(--card); border-radius: 14px; border-top: 6px solid var(--navy);
+  width: 100%; max-width: 430px; padding: 24px 22px; position: relative;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.35);
 }
-.back-intro {
-  font-family: 'Gaegu', cursive; font-size: 14.5px; color: #6b4757; line-height: 1.35;
-  word-break: keep-all;
+.sy-code { font-family: monospace; font-size: 12px; color: var(--muted); }
+.sy-title {
+  font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 24px;
+  color: var(--navy); margin-top: 4px; line-height: 1.25; word-break: keep-all;
 }
-.back-apply-btn {
-  border: none; background: var(--pink); color: #fff; font-weight: 700; font-size: 12.5px;
-  border-radius: 100px; padding: 7px 14px; cursor: pointer; font-family: 'Noto Sans KR';
+.sy-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 10px; }
+.sy-table { width: 100%; border-collapse: collapse; font-size: 12.5px; margin-top: 14px; }
+.sy-table th, .sy-table td { border: 1px solid var(--line); padding: 7px 9px; text-align: left; }
+.sy-table th { background: var(--navy-light); color: var(--navy); font-weight: 700; width: 74px; white-space: nowrap; }
+.sy-sec-title { font-size: 13px; font-weight: 900; color: var(--navy); margin: 16px 0 7px; }
+.sy-intro {
+  font-family: 'Gaegu', cursive; font-size: 16.5px; color: #5a5f6b; line-height: 1.5;
+  background: #f5f7fc; border-radius: 10px; padding: 12px 14px; word-break: keep-all;
 }
-.back-apply-btn:active { transform: scale(0.96); }
+.sy-weeks { padding-left: 18px; font-size: 12.5px; line-height: 1.95; color: #3b414d; }
+.sy-weeks b { color: var(--pink); }
+.sy-apply {
+  width: 100%; border: none; border-radius: 100px; padding: 14px; margin-top: 18px;
+  background: linear-gradient(135deg, var(--navy), #3557b8); color: #fff;
+  font-size: 15.5px; font-weight: 900; font-family: 'Noto Sans KR'; cursor: pointer;
+  box-shadow: 0 6px 16px rgba(35, 64, 142, 0.3);
+}
+.sy-apply:active { transform: scale(0.98); }
+.sy-note { text-align: center; font-size: 11.5px; color: var(--muted); margin-top: 10px; }
 
 .footer-note { text-align: center; font-size: 12px; color: var(--muted); margin-top: 12px; }
 
@@ -719,7 +750,6 @@ body {
 .close-share-btn { background: #e3e7ee; color: #555; }
 
 @media (max-width: 560px) {
-  .postit-wall { grid-template-columns: repeat(2, 1fr); }
   .topbar .login-state { display: none; }
 }
 </style>
@@ -875,106 +905,11 @@ body {
   <div class="prompt">📖 개설강좌 확인하고 신청서 작성!</div>
 
   <div class="wall-head">
-    <span>개설강좌 목록 — 교양필수</span>
-    <span class="small">카드를 누르면 신청서가 나타나요</span>
+    <span>📅 2026-2학기 시간표</span>
+    <span class="small">빈 칸을 눌러 연애학개론을 넣어보세요</span>
   </div>
-  <div class="postit-wall" id="postitWall">
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-01</span><span class="pf-seat">여석 1</span></div><div class="pf-main">연대<br>박서준</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">주말엔 카페 투어가 취미</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-02</span><span class="pf-seat ok">여석 3</span></div><div class="pf-main">건대 미대<br>지젤</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">그림 그리고 노래 듣는 게 좋아요</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-03</span><span class="pf-seat">여석 2</span></div><div class="pf-main">세종대<br>전지현</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">고양이 집사, 영화 보러 다녀요</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-04</span><span class="pf-seat ok">여석 4</span></div><div class="pf-main">예술디자인<br>대학</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">축제 같이 즐길 사람 찾아요</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-05</span><span class="pf-seat">여석 1</span></div><div class="pf-main">홍대<br>카리나</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">밤 산책 좋아하는 평범한 사람</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-06</span><span class="pf-seat ok">여석 5</span></div><div class="pf-main">한양대<br>안유진</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">운동 좋아하고 활발해요</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-07</span><span class="pf-seat">여석 1</span></div><div class="pf-main">고대<br>차은우</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">조용하지만 친구 사귀는 건 좋아함</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-08</span><span class="pf-seat ok">여석 3</span></div><div class="pf-main">이대<br>수지</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">노래 듣고 베이킹 좋아해요</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-09</span><span class="pf-seat">여석 2</span></div><div class="pf-main">서강대<br>박보검</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">농구 좋아하는 평범한 학생</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-10</span><span class="pf-seat ok">여석 4</span></div><div class="pf-main">중대<br>장원영</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">여행이랑 사진 찍는 거 좋아함</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-11</span><span class="pf-seat">여석 1</span></div><div class="pf-main">성대<br>정해인</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">책 좋아하고 가끔 글도 써요</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-12</span><span class="pf-seat ok">여석 3</span></div><div class="pf-main">숙대 미대<br>김혜윤</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">꽃 사진 찍는 게 취미</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-13</span><span class="pf-seat">여석 2</span></div><div class="pf-main">인하대<br>송강</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">게임이랑 운동 좋아해요</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-14</span><span class="pf-seat ok">여석 5</span></div><div class="pf-main">경희대<br>민지</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">음악 좋아하고 친구랑 노는 거</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-15</span><span class="pf-seat">여석 1</span></div><div class="pf-main">동대<br>남주혁</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">축구 좋아하는 활발한 성격</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-16</span><span class="pf-seat ok">여석 3</span></div><div class="pf-main">외대<br>정채연</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">여행 좋아하고 새 친구 사귀는 거</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-17</span><span class="pf-seat">여석 2</span></div><div class="pf-main">카이스트<br>이도현</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">공부 외엔 영화랑 게임</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-18</span><span class="pf-seat ok">여석 4</span></div><div class="pf-main">시립대<br>안소희</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">맛집 탐방이 진짜 취미</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-19</span><span class="pf-seat">여석 1</span></div><div class="pf-main">서울대<br>김수현</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">음악 좋아하고 가볍게 운동해요</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-20</span><span class="pf-seat ok">여석 3</span></div><div class="pf-main">국민대<br>혜리</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">강아지 좋아하고 카페 투어</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-21</span><span class="pf-seat">여석 2</span></div><div class="pf-main">단국대<br>변우석</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">여행이랑 드라이브 좋아함</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-22</span><span class="pf-seat ok">여석 5</span></div><div class="pf-main">상명대<br>한지민</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">그림 그리는 거 좋아해요</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-23</span><span class="pf-seat">여석 1</span></div><div class="pf-main">아주대<br>박형식</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">스포츠랑 친구들이랑 한 잔</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
-    <div class="postit-slot"><div class="postit" onclick="flipPostit(this)"><div class="postit-inner">
-      <div class="postit-front"><div class="pf-code"><span>LOVE101-24</span><span class="pf-seat ok">여석 3</span></div><div class="pf-main">서울예대<br>예지</div><div class="pf-foot"><span>교양필수</span><span class="credits">3학점</span></div></div>
-      <div class="postit-back"><p class="back-intro">춤추고 노래 듣는 게 행복</p><button class="back-apply-btn" onclick="event.stopPropagation();applyFromPostit(this)">수강신청 📖</button></div>
-    </div></div></div>
+  <div class="tt-scroll">
+    <div class="timetable" id="timetable"></div>
   </div>
 
   <p class="footer-note">어떤 분반을 골라도 같은 수강신청서로 연결돼요 ♡</p>
@@ -1080,6 +1015,36 @@ body {
   <p class="operator-credit">
     문의 / 신고는 <a href="https://instagram.com/loveuniv101" target="_blank" rel="noopener">@loveuniv101</a> ♡
   </p>
+</div>
+
+<div class="modal-backdrop" id="syllabusModal">
+  <div class="syllabus-card">
+    <button class="close-btn" onclick="closeSyllabus()" aria-label="닫기">×</button>
+    <div class="sy-code" id="syCode">LOVE101-01</div>
+    <h2 class="sy-title" id="syTitle">연애학개론</h2>
+    <div class="sy-tags">
+      <span class="tag">교양필수</span><span class="tag">3학점</span>
+      <span class="tag req" id="sySeat">여석 1</span>
+    </div>
+    <table class="sy-table">
+      <tr><th>담당교수</th><td>Prof. 큐피드 (운영진 정성 매칭)</td></tr>
+      <tr><th>강의시간</th><td id="syTime">매칭 후 협의</td></tr>
+      <tr><th>수강대상</th><td>연애가 고픈 대학생 누구나</td></tr>
+    </table>
+    <div class="sy-sec-title">📖 강의 소개</div>
+    <div class="sy-intro" id="syIntro"></div>
+    <div class="sy-sec-title">🗓 주차별 강의계획</div>
+    <ol class="sy-weeks">
+      <li><b>1주차</b> 오리엔테이션 — 매칭 결과(성적표) 확인</li>
+      <li><b>2주차</b> 첫 카톡 — 어색함 깨기 실습</li>
+      <li><b>3주차</b> 첫 만남 — 카페 or 맛집 현장학습</li>
+      <li><b>4주차</b> 심화 데이트 — 한강 / 놀이공원</li>
+      <li><b>중간고사</b> 100일 기념일 (선택적 재수강 가능)</li>
+      <li><b>기말고사</b> 절대평가 · 목표 올 A+ 커플 💯</li>
+    </ol>
+    <button class="sy-apply" onclick="applyFromSyllabus()">이 강의 수강신청 📖</button>
+    <p class="sy-note">어떤 분반을 골라도 같은 수강신청서로 연결돼요 ♡</p>
+  </div>
 </div>
 
 <div class="modal-backdrop" id="modal">
@@ -1368,22 +1333,259 @@ function openForm(el) {
   document.body.style.overflow = 'hidden';
 }
 
-function flipPostit(el) {
-  document.querySelectorAll('.postit.flipped').forEach(p => {
-    if (p !== el) p.classList.remove('flipped');
+// ====== 개설강좌 데이터 (시간표) ======
+const COURSES = [
+ {
+  "code": "LOVE101-01",
+  "seats": 1,
+  "school": "연대",
+  "name": "박서준",
+  "intro": "주말엔 카페 투어가 취미"
+ },
+ {
+  "code": "LOVE101-02",
+  "seats": 3,
+  "school": "건대 미대",
+  "name": "지젤",
+  "intro": "그림 그리고 노래 듣는 게 좋아요"
+ },
+ {
+  "code": "LOVE101-03",
+  "seats": 2,
+  "school": "세종대",
+  "name": "전지현",
+  "intro": "고양이 집사, 영화 보러 다녀요"
+ },
+ {
+  "code": "LOVE101-04",
+  "seats": 4,
+  "school": "예술디자인",
+  "name": "대학",
+  "intro": "축제 같이 즐길 사람 찾아요"
+ },
+ {
+  "code": "LOVE101-05",
+  "seats": 1,
+  "school": "홍대",
+  "name": "카리나",
+  "intro": "밤 산책 좋아하는 평범한 사람"
+ },
+ {
+  "code": "LOVE101-06",
+  "seats": 5,
+  "school": "한양대",
+  "name": "안유진",
+  "intro": "운동 좋아하고 활발해요"
+ },
+ {
+  "code": "LOVE101-07",
+  "seats": 1,
+  "school": "고대",
+  "name": "차은우",
+  "intro": "조용하지만 친구 사귀는 건 좋아함"
+ },
+ {
+  "code": "LOVE101-08",
+  "seats": 3,
+  "school": "이대",
+  "name": "수지",
+  "intro": "노래 듣고 베이킹 좋아해요"
+ },
+ {
+  "code": "LOVE101-09",
+  "seats": 2,
+  "school": "서강대",
+  "name": "박보검",
+  "intro": "농구 좋아하는 평범한 학생"
+ },
+ {
+  "code": "LOVE101-10",
+  "seats": 4,
+  "school": "중대",
+  "name": "장원영",
+  "intro": "여행이랑 사진 찍는 거 좋아함"
+ },
+ {
+  "code": "LOVE101-11",
+  "seats": 1,
+  "school": "성대",
+  "name": "정해인",
+  "intro": "책 좋아하고 가끔 글도 써요"
+ },
+ {
+  "code": "LOVE101-12",
+  "seats": 3,
+  "school": "숙대 미대",
+  "name": "김혜윤",
+  "intro": "꽃 사진 찍는 게 취미"
+ },
+ {
+  "code": "LOVE101-13",
+  "seats": 2,
+  "school": "인하대",
+  "name": "송강",
+  "intro": "게임이랑 운동 좋아해요"
+ },
+ {
+  "code": "LOVE101-14",
+  "seats": 5,
+  "school": "경희대",
+  "name": "민지",
+  "intro": "음악 좋아하고 친구랑 노는 거"
+ },
+ {
+  "code": "LOVE101-15",
+  "seats": 1,
+  "school": "동대",
+  "name": "남주혁",
+  "intro": "축구 좋아하는 활발한 성격"
+ },
+ {
+  "code": "LOVE101-16",
+  "seats": 3,
+  "school": "외대",
+  "name": "정채연",
+  "intro": "여행 좋아하고 새 친구 사귀는 거"
+ },
+ {
+  "code": "LOVE101-17",
+  "seats": 2,
+  "school": "카이스트",
+  "name": "이도현",
+  "intro": "공부 외엔 영화랑 게임"
+ },
+ {
+  "code": "LOVE101-18",
+  "seats": 4,
+  "school": "시립대",
+  "name": "안소희",
+  "intro": "맛집 탐방이 진짜 취미"
+ },
+ {
+  "code": "LOVE101-19",
+  "seats": 1,
+  "school": "서울대",
+  "name": "김수현",
+  "intro": "음악 좋아하고 가볍게 운동해요"
+ },
+ {
+  "code": "LOVE101-20",
+  "seats": 3,
+  "school": "국민대",
+  "name": "혜리",
+  "intro": "강아지 좋아하고 카페 투어"
+ },
+ {
+  "code": "LOVE101-21",
+  "seats": 2,
+  "school": "단국대",
+  "name": "변우석",
+  "intro": "여행이랑 드라이브 좋아함"
+ },
+ {
+  "code": "LOVE101-22",
+  "seats": 5,
+  "school": "상명대",
+  "name": "한지민",
+  "intro": "그림 그리는 거 좋아해요"
+ },
+ {
+  "code": "LOVE101-23",
+  "seats": 1,
+  "school": "아주대",
+  "name": "박형식",
+  "intro": "스포츠랑 친구들이랑 한 잔"
+ },
+ {
+  "code": "LOVE101-24",
+  "seats": 3,
+  "school": "서울예대",
+  "name": "예지",
+  "intro": "춤추고 노래 듣는 게 행복"
+ }
+];
+
+const TT_DAYS = ['월', '화', '수', '목', '금'];
+const TT_PERIODS = [
+  { label: '1교시', time: '10:00' },
+  { label: '2교시', time: '12:00' },
+  { label: '3교시', time: '14:00' },
+  { label: '4교시', time: '16:00' },
+  { label: '5교시', time: '18:00' },
+  { label: '6교시', time: '20:00' }
+];
+// 파스텔 블록 색 (배경, 글자)
+const TT_COLORS = [
+  ['#e7edfb', '#23408e'], ['#ffeaf3', '#b0356e'], ['#e8f4ec', '#2e7d51'],
+  ['#fff2e0', '#a3661a'], ['#efeafb', '#5b3fa8'], ['#e4f2f7', '#1f6b85']
+];
+
+// 빈 칸에 넣을 문구 (수강신청 유도)
+const TT_EMPTY_HINTS = ['+ 연애학개론\n넣기', '공강', '+ 신청', '공강'];
+
+function renderTimetable() {
+  const tt = document.getElementById('timetable');
+  if (!tt) return;
+  const slots = {};
+  COURSES.forEach((c, i) => {
+    const day = i % TT_DAYS.length;
+    const period = Math.floor(i / TT_DAYS.length);
+    if (period < TT_PERIODS.length) slots[period + '-' + day] = { c, i };
   });
-  el.classList.toggle('flipped');
+
+  let html = '<div class="tt-corner"></div>';
+  TT_DAYS.forEach(d => { html += '<div class="tt-day">' + d + '</div>'; });
+
+  TT_PERIODS.forEach((p, pi) => {
+    html += '<div class="tt-time">' + p.label + '<br>' + p.time + '</div>';
+    TT_DAYS.forEach((d, di) => {
+      const hit = slots[pi + '-' + di];
+      if (hit) {
+        const { c, i } = hit;
+        const col = TT_COLORS[i % TT_COLORS.length];
+        html += '<div class="tt-cell"><div class="tt-block" style="background:' + col[0] + ';color:' + col[1] + '" onclick="openSyllabus(' + i + ')">' +
+          '<div><div class="b-school">' + esc(c.school) + '</div><div class="b-name">' + esc(c.name) + '</div></div>' +
+          '<div class="b-seat">여석 ' + c.seats + '</div>' +
+          '</div></div>';
+      } else {
+        const hint = TT_EMPTY_HINTS[(pi + di) % TT_EMPTY_HINTS.length];
+        html += '<div class="tt-cell"><div class="tt-empty" onclick="openForm(this)">' + hint.replace(/\n/g, '<br>') + '</div></div>';
+      }
+    });
+  });
+  tt.innerHTML = html;
+  bindSparkle();
 }
 
-function applyFromPostit(btn) {
-  const postit = btn.closest('.postit');
-  openForm(postit);
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
-document.addEventListener('click', (e) => {
-  if (e.target.closest('.postit')) return;
-  if (e.target.closest('.modal-backdrop')) return;
-  document.querySelectorAll('.postit.flipped').forEach(p => p.classList.remove('flipped'));
+// ====== 강의계획서 모달 ======
+let syllabusIdx = null;
+function openSyllabus(i) {
+  const c = COURSES[i];
+  if (!c) return;
+  syllabusIdx = i;
+  document.getElementById('syCode').textContent = c.code;
+  document.getElementById('syTitle').textContent = c.school + ' · ' + c.name;
+  document.getElementById('sySeat').textContent = '여석 ' + c.seats;
+  document.getElementById('syTime').textContent = TT_DAYS[i % TT_DAYS.length] + '요일 ' +
+    (TT_PERIODS[Math.floor(i / TT_DAYS.length)] || TT_PERIODS[0]).time + ' (매칭 후 협의)';
+  document.getElementById('syIntro').textContent = c.intro || '자기소개가 없어요';
+  document.getElementById('syllabusModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeSyllabus() {
+  document.getElementById('syllabusModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+function applyFromSyllabus() {
+  closeSyllabus();
+  openForm(null);
+}
+document.getElementById('syllabusModal').addEventListener('click', function (e) {
+  if (e.target === this) closeSyllabus();
 });
 
 function closeForm() {
@@ -1839,12 +2041,6 @@ updateLiveCounter();
 setInterval(updateLiveCounter, 60000);
 
 // ====== 실시간 수강신청 현황판 ======
-function _escHtml(s) {
-  return String(s || '').replace(/[&<>"']/g, c => ({
-    '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
-  }[c]));
-}
-
 function renderStatusBoard(apps, males, females) {
   const board = document.getElementById('statusBoard');
   if (!board || !apps || apps.length < 10) return;
@@ -1876,7 +2072,7 @@ function renderStatusBoard(apps, males, females) {
       : '<span class="sb-badge open">모집중</span>';
 
   document.getElementById('sbSchoolRows').innerHTML = top.map(([s, n], i) =>
-    `<tr><td class="rank">${i + 1}</td><td>${_escHtml(s)}</td><td>${badge(n)}</td><td class="cnt">${n}명</td></tr>`
+    `<tr><td class="rank">${i + 1}</td><td>${esc(s)}</td><td>${badge(n)}</td><td class="cnt">${n}명</td></tr>`
   ).join('');
 
   board.style.display = 'block';
@@ -1951,27 +2147,19 @@ async function injectRealApplicants() {
   } catch (e) { console.warn('[love101] csv fetch failed', e); return; }
   if (!applicants.length) return;
 
-  const slots = Array.from(document.querySelectorAll('.postit'));
-  const order = _shuffle([...slots.keys()]);
   const apps = _shuffle(applicants);
-  const n = Math.min(apps.length, slots.length);
+  const n = Math.min(apps.length, COURSES.length);
+  const order = _shuffle([...COURSES.keys()]);
 
   for (let i = 0; i < n; i++) {
-    const slot = slots[order[i]];
+    const c = COURSES[order[i]];
     const app = apps[i];
-    const front = slot.querySelector('.pf-main');
-    const introEl = slot.querySelector('.back-intro');
-    if (front) {
-      const line2 = (app.mbti && /^[EI][SN][TF][JP]$/.test(app.mbti)) ? app.mbti : '';
-      front.innerHTML = line2
-        ? `${_shortenSchool(app.school)}<br>${line2}`
-        : `${_shortenSchool(app.school)}`;
-    }
-    if (introEl) {
-      const t = (app.intro || '').trim().replace(/\s+/g, ' ');
-      introEl.textContent = t.length > 28 ? t.slice(0, 28) + '…' : t;
-    }
+    c.school = _shortenSchool(app.school);
+    c.name = (app.mbti && /^[EI][SN][TF][JP]$/.test(app.mbti)) ? app.mbti : '';
+    const t = (app.intro || '').trim().replace(/\s+/g, ' ');
+    c.intro = t.length > 40 ? t.slice(0, 40) + '…' : t;
   }
+  renderTimetable();
 }
 injectRealApplicants();
 
@@ -2012,15 +2200,22 @@ function spawnSparkles(target) {
     setTimeout(() => s.remove(), 1100);
   }
 }
-document.querySelectorAll('.postit').forEach(el => {
-  let lastTime = 0;
-  el.addEventListener('mouseenter', () => {
-    const now = Date.now();
-    if (now - lastTime < 600) return;
-    lastTime = now;
-    spawnSparkles(el);
+function bindSparkle() {
+  document.querySelectorAll('.tt-block').forEach(el => {
+    if (el.dataset.sparkle) return;
+    el.dataset.sparkle = '1';
+    let lastTime = 0;
+    el.addEventListener('mouseenter', () => {
+      const now = Date.now();
+      if (now - lastTime < 600) return;
+      lastTime = now;
+      spawnSparkles(el);
+    });
   });
-});
+}
+
+// 시간표 최초 렌더
+renderTimetable();
 
 // ====== Share card image save ======
 // 모바일(특히 카톡·인스타 인앱브라우저)은 파일 다운로드가 막히는 경우가 많아
