@@ -36,26 +36,10 @@
 
 body {
   font-family: 'Noto Sans KR', sans-serif;
+  background: var(--bg);
   color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
-  background-color: #ecefFB;
-  /* 파스텔 그라데이션 (핑크·라벤더·크림) */
-  background-image:
-    radial-gradient(760px 430px at 6% -8%, rgba(255, 166, 208, 0.36), transparent 62%),
-    radial-gradient(720px 430px at 97% 2%, rgba(146, 163, 255, 0.34), transparent 62%),
-    radial-gradient(820px 460px at 50% 104%, rgba(255, 201, 233, 0.30), transparent 62%);
-  background-attachment: fixed;
-}
-
-/* 모눈종이 결 — 수강신청 노트 느낌 */
-body::before {
-  content: '';
-  position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background-image:
-    linear-gradient(rgba(35, 64, 142, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(35, 64, 142, 0.055) 1px, transparent 1px);
-  background-size: 32px 32px;
 }
 
 /* ===== falling items ===== */
@@ -120,11 +104,11 @@ body::before {
 
 /* ===== hero: 강의계획서 ===== */
 .hero {
-  background: var(--card); border: 1px solid rgba(255,255,255,0.9); border-radius: 16px;
-  box-shadow: 0 10px 34px rgba(35, 64, 142, 0.13); overflow: hidden; margin-bottom: 22px;
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  box-shadow: var(--shadow); overflow: hidden; margin-bottom: 22px;
 }
 .hero-head {
-  background: linear-gradient(180deg, #ffffff 0%, #f4f6ff 100%);
+  background: linear-gradient(180deg, #f7f8ff 0%, #edf0fc 100%);
   color: var(--text); padding: 30px 22px 26px; position: relative;
   text-align: center;
 }
