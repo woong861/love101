@@ -39,12 +39,12 @@ body {
   color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
-  background-color: #ecefFB;
-  /* 파스텔 그라데이션 (핑크·라벤더·크림) */
+  background-color: #e6eafa;
+  /* 파스텔 그라데이션 (핑크·라벤더·연분홍) */
   background-image:
-    radial-gradient(760px 430px at 6% -8%, rgba(255, 166, 208, 0.36), transparent 62%),
-    radial-gradient(720px 430px at 97% 2%, rgba(146, 163, 255, 0.34), transparent 62%),
-    radial-gradient(820px 460px at 50% 104%, rgba(255, 201, 233, 0.30), transparent 62%);
+    radial-gradient(680px 420px at 2% -6%, rgba(255, 150, 200, 0.55), transparent 60%),
+    radial-gradient(640px 400px at 100% 3%, rgba(132, 150, 255, 0.50), transparent 60%),
+    radial-gradient(720px 440px at 50% 103%, rgba(255, 176, 222, 0.48), transparent 60%);
   background-attachment: fixed;
 }
 
@@ -53,9 +53,19 @@ body::before {
   content: '';
   position: fixed; inset: 0; z-index: 0; pointer-events: none;
   background-image:
-    linear-gradient(rgba(35, 64, 142, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(35, 64, 142, 0.055) 1px, transparent 1px);
-  background-size: 32px 32px;
+    linear-gradient(rgba(35, 64, 142, 0.085) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(35, 64, 142, 0.085) 1px, transparent 1px);
+  background-size: 30px 30px;
+}
+
+/* 폰에서는 배경이 보이는 여백이 좁아 격자를 조금 더 촘촘·진하게 */
+@media (max-width: 560px) {
+  body::before {
+    background-image:
+      linear-gradient(rgba(35, 64, 142, 0.10) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(35, 64, 142, 0.10) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
 }
 
 /* ===== falling items ===== */
