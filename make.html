@@ -450,7 +450,7 @@ body {
 
   <div class="warn-bar">
     ⚠️ <strong>운영진 전용.</strong> 절대 신청자에게 공유하지 마세요. 매칭 결과 SMS는 신청자 휴대폰으로 즉시 발송되니 신중하게.<br>
-    ℹ️ 실제 SMS 문구는 <strong>Apps Script 서버 템플릿</strong>에서 만들어져요 — 아직 "[쪽지팅]" 문구라면 Apps Script 쪽 템플릿도 "[연애학개론]"으로 바꿔주세요.
+    ℹ️ 발송 문구는 모두 <strong>[연애학개론]</strong>으로 나갑니다. 매칭 완료 표시는 시트 맨 끝 <strong>"매칭상태"</strong> 컬럼에 기록돼요.
   </div>
 
   <div class="config-bar">
@@ -913,7 +913,7 @@ async function sendSms() {
     btn.classList.remove('btn-success');
     btn.style.background = '#6dcc7a';
     status.className = 'status-line ok';
-    status.textContent = '✓ Apps Script로 발송 요청 보냄 (실제 발송은 시트 "쪽지팅_매칭_로그" 탭 확인)';
+    status.textContent = '✓ Apps Script로 발송 요청 보냄 (실제 발송은 시트 "연애학개론_매칭_로그" 탭 확인)';
     // 시트 상태 갱신을 위해 잠시 후 자동 새로고침
     setTimeout(() => {
       loadApplicants();
