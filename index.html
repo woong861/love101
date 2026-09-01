@@ -185,23 +185,9 @@ body::before {
   box-shadow: 0 6px 16px rgba(35, 64, 142, 0.3);
 }
 
-/* 기능 아이콘 4종 */
-.p-features {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
-  background: #fff; border: 1px solid #e3e8f5; border-radius: 16px;
-  padding: 14px 10px; margin-top: 18px;
-  box-shadow: 0 6px 18px rgba(30, 45, 90, 0.07);
-}
-.p-feat { display: flex; flex-direction: column; align-items: center; gap: 6px; }
-.p-feat .ico {
-  width: 44px; height: 44px; border-radius: 13px; background: var(--navy-light);
-  display: flex; align-items: center; justify-content: center; font-size: 22px;
-}
-.p-feat:nth-child(even) .ico { background: #ffeef6; }
-.p-feat .lbl { font-size: 11.5px; font-weight: 700; color: #3b414d; word-break: keep-all; }
-@media (max-width: 560px) {
-  .p-features { grid-template-columns: repeat(2, 1fr); gap: 12px 8px; }
-}
+/* 히어로 안내 배너 (모의고사 · 미팅 로비) */
+.hero-links { display: grid; gap: 9px; margin-top: 18px; text-align: left; }
+.hero-links .exam-banner { margin-top: 0; }
 
 /* 하단 네이비 스트립 */
 .p-strip {
@@ -802,11 +788,9 @@ body::before {
           <div class="pc-row"><span class="pc-box">✓</span> 캠퍼스 맞춤</div>
         </div>
       </div>
-      <div class="p-features">
-        <div class="p-feat"><span class="ico">📅</span><span class="lbl">주 1회 데이트 권장</span></div>
-        <div class="p-feat"><span class="ico">💬</span><span class="lbl">실전 매칭 시스템</span></div>
-        <div class="p-feat"><span class="ico">📍</span><span class="lbl">캠퍼스 기반 매칭</span></div>
-        <div class="p-feat"><span class="ico">🎁</span><span class="lbl">초대 코드 혜택</span></div>
+      <div class="hero-links">
+        <a class="exam-banner" href="exam.html">📝 <span class="eb-txt"><b>내 학점은?</b> 연애 모의고사 풀어보기</span> <span class="arrow">→</span></a>
+        <a class="exam-banner lobby-banner" href="lobby.html">🚪 <span class="eb-txt"><b>NEW!</b> 미팅 로비 — 분반 자리 잡기</span> <span class="arrow">→</span></a>
       </div>
       <div><span class="p-open">수강신청 OPEN!</span></div>
       <svg class="campus" viewBox="0 -14 220 162" aria-hidden="true">
@@ -872,8 +856,6 @@ body::before {
         <span class="live-split" id="liveSplit"></span>
       </div>
 
-      <a class="exam-banner" href="exam.html">📝 <span class="eb-txt"><b>내 학점은?</b> 연애 모의고사 풀어보기</span> <span class="arrow">→</span></a>
-      <a class="exam-banner lobby-banner" href="lobby.html">🚪 <span class="eb-txt"><b>NEW!</b> 미팅 로비 — 분반 자리 잡기</span> <span class="arrow">→</span></a>
     </div>
   </div>
 
