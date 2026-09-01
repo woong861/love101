@@ -285,28 +285,6 @@ body::before {
 .live-split.recruit { color: var(--pink); font-weight: 700; }
 
 /* hero referral */
-.hero-referral {
-  margin-top: 16px; background: #fff6fa; border: 1.5px dashed #ffb3d9; border-radius: 12px; padding: 14px;
-}
-.hr-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-.hr-icon { font-size: 26px; }
-.hr-title { font-weight: 900; font-size: 14px; color: var(--pink); }
-.hr-desc { font-size: 12px; color: var(--muted); }
-.hr-code-area { display: flex; gap: 8px; }
-.hr-code-display {
-  flex: 1; background: #fff; border: 1.5px solid #ffd1e8; border-radius: 9px;
-  display: flex; align-items: center; justify-content: center;
-  font-family: monospace; font-weight: 700; font-size: 16px; letter-spacing: 2px; color: var(--pink);
-  min-height: 42px;
-}
-.hr-code-display.empty { color: #c9a5b8; font-family: 'Noto Sans KR'; font-size: 12px; letter-spacing: 0; font-weight: 500; }
-.hr-btn {
-  border: none; background: var(--pink); color: #fff; font-weight: 700; font-size: 13px;
-  border-radius: 9px; padding: 0 16px; cursor: pointer; white-space: nowrap;
-}
-.hr-btn:active { transform: scale(0.97); }
-.hr-msg { font-size: 12px; color: var(--green); margin-top: 8px; opacity: 0; transition: opacity 0.2s; }
-.hr-msg.show { opacity: 1; }
 
 .benefit-banner { margin-top: 12px; display: grid; gap: 6px; }
 .benefit-row {
@@ -894,20 +872,6 @@ body::before {
         <span class="live-split" id="liveSplit"></span>
       </div>
 
-      <div class="hero-referral">
-        <div class="hr-head">
-          <span class="hr-icon">🎁</span>
-          <div>
-            <div class="hr-title">장학 코드 생성 (추천인 코드)</div>
-            <div class="hr-desc">친구 초대 시 <strong>커피쿠폰 증정 ☕</strong></div>
-          </div>
-        </div>
-        <div class="hr-code-area">
-          <div class="hr-code-display empty" id="heroReferralDisplay">↓ 버튼을 눌러줘 ↓</div>
-          <button class="hr-btn" id="heroReferralBtn" onclick="generateHeroRefCode()">✨ 코드 받기</button>
-        </div>
-        <p class="hr-msg" id="heroReferralMsg"></p>
-      </div>
       <a class="exam-banner" href="exam.html">📝 <span class="eb-txt"><b>내 학점은?</b> 연애 모의고사 풀어보기</span> <span class="arrow">→</span></a>
       <a class="exam-banner lobby-banner" href="lobby.html">🚪 <span class="eb-txt"><b>NEW!</b> 미팅 로비 — 분반 자리 잡기</span> <span class="arrow">→</span></a>
     </div>
@@ -1664,32 +1628,6 @@ function resetReferralCode() {
   if (msg) msg.classList.remove('show');
 }
 
-function generateHeroRefCode() {
-  const chars = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
-  let c = '';
-  for (let i = 0; i < 4; i++) c += chars.charAt(Math.floor(Math.random() * chars.length));
-  const code = 'LV-' + c;
-  const display = document.getElementById('heroReferralDisplay');
-  display.textContent = code;
-  display.classList.remove('empty');
-  const btn = document.getElementById('heroReferralBtn');
-  btn.textContent = '📋 복사';
-  btn.onclick = function() { copyHeroRefCode(code); };
-}
-
-function copyHeroRefCode(code) {
-  const onDone = () => {
-    const msg = document.getElementById('heroReferralMsg');
-    msg.textContent = '복사됨! 친구에게 공유해줘 ♡';
-    msg.classList.add('show');
-    setTimeout(() => msg.classList.remove('show'), 2200);
-  };
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(code).then(onDone).catch(() => fallbackCopy(code, onDone));
-  } else {
-    fallbackCopy(code, onDone);
-  }
-}
 
 document.getElementById('applyForm').addEventListener('submit', function(e) {
   e.preventDefault();
