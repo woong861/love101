@@ -185,9 +185,160 @@ body::before {
   box-shadow: 0 6px 16px rgba(35, 64, 142, 0.3);
 }
 
-/* 히어로 안내 배너 (모의고사 · 미팅 로비) */
-.hero-links { display: grid; gap: 9px; margin-top: 18px; text-align: left; }
-.hero-links .exam-banner { margin-top: 0; }
+/* 히어로 실시간 현황 (사회적 증거) */
+.hero-proof {
+  display: flex; align-items: stretch; justify-content: center; gap: 4px;
+  margin-top: 20px; background: #fff; border: 1px solid #e3e8f5;
+  border-radius: 16px; padding: 14px 10px;
+  box-shadow: 0 8px 22px rgba(30, 45, 90, 0.09);
+}
+.hp-item { flex: 1; text-align: center; }
+.hp-num {
+  font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 26px;
+  color: var(--navy); line-height: 1.1; font-variant-numeric: tabular-nums;
+}
+.hp-num.f { color: #c2185b; }
+.hp-num.m { color: #1565c0; }
+.hp-lbl { font-size: 11.5px; color: var(--muted); margin-top: 3px; font-weight: 700; }
+.hp-div { width: 1px; background: #eaeef8; margin: 4px 0; }
+.hero-recruit {
+  margin-top: 10px; background: linear-gradient(100deg, #fff1f7, #ffe6f1);
+  border: 1.5px solid #ffb3d9; color: #b0356e;
+  border-radius: 12px; padding: 11px 14px; font-size: 13.5px; font-weight: 700;
+}
+.hero-recruit b { font-weight: 900; color: var(--pink); }
+
+/* ===== 공용 섹션 헤더 (퀄리티 업) ===== */
+.sec { margin-top: 46px; }
+.sec-head { text-align: center; margin-bottom: 18px; }
+.sec-eyebrow {
+  display: inline-block; font-size: 10.5px; font-weight: 900; letter-spacing: 1.5px;
+  color: var(--navy); background: var(--navy-light);
+  padding: 5px 13px; border-radius: 100px;
+}
+.sec-title {
+  font-family: 'Noto Serif KR', serif; font-weight: 900;
+  font-size: clamp(21px, 5.4vw, 26px); color: var(--navy); margin-top: 9px; letter-spacing: -0.8px;
+}
+.sec-sub { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+/* ===== 인라인 모의고사 ===== */
+.quiz-card {
+  background: var(--card); border: 1px solid rgba(255,255,255,0.9); border-radius: 18px;
+  box-shadow: 0 12px 34px rgba(30, 45, 90, 0.12); padding: 22px 20px;
+}
+.q-top { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+.q-progress { flex: 1; height: 8px; background: #e6ebf7; border-radius: 100px; overflow: hidden; }
+.q-bar {
+  height: 100%; width: 0%; border-radius: 100px;
+  background: linear-gradient(90deg, var(--navy), var(--pink)); transition: width 0.35s ease;
+}
+.q-step { font-size: 12px; font-weight: 900; color: var(--navy); white-space: nowrap; }
+.q-body { animation: qIn 0.32s cubic-bezier(0.22, 1, 0.36, 1); }
+@keyframes qIn { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: none; } }
+.q-text {
+  font-size: 17.5px; font-weight: 900; line-height: 1.5; word-break: keep-all; color: #232a38;
+}
+.q-opts { display: grid; gap: 9px; margin-top: 16px; }
+.q-opt {
+  text-align: left; border: 1.5px solid var(--line); border-radius: 12px; background: #fbfcfe;
+  padding: 14px 15px; font-size: 14.5px; font-family: 'Noto Sans KR'; cursor: pointer;
+  line-height: 1.5; word-break: keep-all; transition: all 0.14s; display: flex; gap: 10px; align-items: flex-start;
+}
+.q-opt .n {
+  flex: none; width: 21px; height: 21px; border-radius: 7px; background: var(--navy-light);
+  color: var(--navy); font-size: 11.5px; font-weight: 900;
+  display: flex; align-items: center; justify-content: center; margin-top: 1px;
+}
+.q-opt:hover { border-color: var(--navy); background: var(--navy-light); transform: translateY(-1px); }
+.q-opt:hover .n { background: var(--navy); color: #fff; }
+.q-opt:active { transform: scale(0.985); }
+
+.grade-wrap { animation: gIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+@keyframes gIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: none; } }
+.grade-card {
+  background: #fdfcf7; border-radius: 16px; border-top: 7px solid var(--navy);
+  box-shadow: 0 14px 38px rgba(20, 35, 80, 0.16); padding: 24px 22px; text-align: center;
+}
+.gc-univ {
+  font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 11.5px;
+  color: var(--navy); letter-spacing: 2px;
+}
+.gc-table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 13px 0 4px; }
+.gc-table th, .gc-table td { border: 1px solid var(--line); padding: 6px 8px; }
+.gc-table th { background: var(--navy-light); color: var(--navy); font-weight: 700; }
+.gc-grade {
+  font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 68px; line-height: 1.1; margin-top: 10px;
+}
+.gc-grade.gp { color: var(--green); }
+.gc-grade.gm { color: var(--gold); }
+.gc-grade.gc2 { color: #e07b2a; }
+.gc-grade.gf { color: var(--red); }
+.gc-title { font-size: 18px; font-weight: 900; margin-top: 4px; }
+.gc-comment {
+  font-family: 'Gaegu', cursive; font-size: 16.5px; color: #555; line-height: 1.6;
+  background: #f2f5fb; border-radius: 11px; padding: 13px 15px; margin-top: 13px; word-break: keep-all;
+}
+.gc-sign { margin-top: 12px; font-family: 'Gaegu', cursive; font-size: 14px; color: var(--pink); }
+.gc-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+.gc-btn {
+  border: none; border-radius: 100px; padding: 13px; font-size: 13.5px; font-weight: 900;
+  font-family: 'Noto Sans KR'; cursor: pointer; background: #e6eaf4; color: #46506a;
+  transition: transform 0.12s;
+}
+.gc-btn:active { transform: scale(0.97); }
+.gc-btn.primary {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, var(--navy), #3557b8); color: #fff; font-size: 15px; padding: 15px;
+  box-shadow: 0 8px 20px rgba(35, 64, 142, 0.3);
+}
+.gc-btn.ghost { background: #f0f2f8; color: #7a839c; }
+.gc-hint { text-align: center; font-size: 12px; color: var(--muted); margin-top: 12px; line-height: 1.6; }
+
+/* ===== 인라인 미팅 로비 ===== */
+.lobby-grid { display: grid; gap: 11px; }
+.lobby-loading, .lobby-empty {
+  background: var(--card); border: 1.5px dashed var(--line); border-radius: 14px;
+  padding: 30px 18px; text-align: center; color: var(--muted); font-size: 13.5px; line-height: 1.8;
+}
+.lb-card {
+  background: var(--card); border: 1px solid rgba(255,255,255,0.9); border-left: 5px solid var(--navy);
+  border-radius: 14px; box-shadow: 0 8px 24px rgba(30, 45, 90, 0.10); padding: 16px 17px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.lb-card:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(30, 45, 90, 0.15); }
+.lb-card.full { border-left-color: var(--gold); }
+.lb-card.confirmed { border-left-color: var(--green); opacity: 0.72; }
+.lb-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.lb-title { font-size: 15.5px; font-weight: 900; letter-spacing: -0.4px; }
+.lb-type {
+  font-size: 10.5px; font-weight: 900; color: var(--navy); background: var(--navy-light);
+  padding: 2px 9px; border-radius: 100px; margin-left: 6px; vertical-align: middle;
+}
+.lb-status { font-size: 11px; font-weight: 900; padding: 4px 11px; border-radius: 100px; white-space: nowrap; }
+.lb-status.open { background: #e8f6ee; color: var(--green); }
+.lb-status.hot { background: #fdeaea; color: var(--red); }
+.lb-status.full { background: #fff3d6; color: #a3661a; }
+.lb-status.confirmed { background: #e9edf5; color: #667; }
+.lb-desc { font-size: 12.5px; color: var(--muted); margin-top: 6px; }
+.lb-seats { display: flex; gap: 18px; margin-top: 12px; flex-wrap: wrap; }
+.lb-grp { display: flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 900; }
+.lb-grp .lb-lbl.m { color: #1565c0; }
+.lb-grp .lb-lbl.f { color: #c2185b; }
+.lb-dots { display: flex; gap: 4px; }
+.lb-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid #c9d2e3; background: #fff; }
+.lb-dot.on.m { background: #64a5f0; border-color: #1565c0; }
+.lb-dot.on.f { background: #f48cb1; border-color: #c2185b; }
+.lb-cnt { font-size: 12px; color: var(--muted); font-weight: 500; }
+.lb-btn {
+  display: block; width: 100%; margin-top: 13px; text-align: center; text-decoration: none;
+  border: none; border-radius: 100px; padding: 12px; font-size: 14px; font-weight: 900;
+  font-family: 'Noto Sans KR'; cursor: pointer;
+  background: linear-gradient(135deg, var(--pink), #ff4dd2); color: #fff;
+  box-shadow: 0 6px 16px rgba(255, 93, 158, 0.3);
+}
+.lb-btn:active { transform: scale(0.985); }
+.lb-btn.off { background: #dfe4ef; color: #8a92a8; box-shadow: none; cursor: default; }
 
 /* 하단 네이비 스트립 */
 .p-strip {
@@ -788,10 +939,14 @@ body::before {
           <div class="pc-row"><span class="pc-box">✓</span> 캠퍼스 맞춤</div>
         </div>
       </div>
-      <div class="hero-links">
-        <a class="exam-banner" href="exam.html">📝 <span class="eb-txt"><b>내 학점은?</b> 연애 모의고사 풀어보기</span> <span class="arrow">→</span></a>
-        <a class="exam-banner lobby-banner" href="lobby.html">🚪 <span class="eb-txt"><b>NEW!</b> 미팅 로비 — 분반 자리 잡기</span> <span class="arrow">→</span></a>
+      <div class="hero-proof" id="heroProof">
+        <div class="hp-item"><div class="hp-num" id="hpTotal">―</div><div class="hp-lbl">누적 신청</div></div>
+        <div class="hp-div"></div>
+        <div class="hp-item"><div class="hp-num f" id="hpF">―</div><div class="hp-lbl">여학우</div></div>
+        <div class="hp-div"></div>
+        <div class="hp-item"><div class="hp-num m" id="hpM">―</div><div class="hp-lbl">남학우</div></div>
       </div>
+      <div class="hero-recruit" id="heroRecruit" style="display:none"></div>
       <div><span class="p-open">수강신청 OPEN!</span></div>
       <svg class="campus" viewBox="0 -14 220 162" aria-hidden="true">
         <g fill="none" stroke="rgba(35,64,142,0.45)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -858,6 +1013,58 @@ body::before {
 
     </div>
   </div>
+
+  <!-- ===== 인라인 모의고사 ===== -->
+  <section class="sec" id="examSec">
+    <div class="sec-head">
+      <div class="sec-eyebrow">LOVE100 · 사전 진단</div>
+      <h2 class="sec-title">📝 연애학개론 모의고사</h2>
+      <p class="sec-sub">5문항 30초 · 지금 바로 내 연애 학점 확인</p>
+    </div>
+
+    <div class="quiz-card" id="quizCard">
+      <div class="q-top">
+        <div class="q-progress"><div class="q-bar" id="qBar"></div></div>
+        <span class="q-step" id="qStep">1 / 5</span>
+      </div>
+      <div class="q-body" id="qBody">
+        <div class="q-text" id="qText"></div>
+        <div class="q-opts" id="qOpts"></div>
+      </div>
+    </div>
+
+    <div class="grade-wrap" id="gradeWrap" style="display:none">
+      <div class="grade-card" id="gradeCard">
+        <div class="gc-univ">LOVE UNIVERSITY · 모의고사 성적표</div>
+        <table class="gc-table">
+          <tr><th>학수번호</th><th>교과목명</th><th>이수구분</th></tr>
+          <tr><td>LOVE100</td><td>연애학개론 모의고사</td><td>교양필수</td></tr>
+        </table>
+        <div class="gc-grade" id="gcGrade">A+</div>
+        <div class="gc-title" id="gcTitle"></div>
+        <div class="gc-comment" id="gcComment"></div>
+        <div class="gc-sign">— 담당교수 Prof. 큐피드 —</div>
+      </div>
+      <div class="gc-actions">
+        <button class="gc-btn primary" onclick="openForm(null)">🎓 이 학점으로 수강신청</button>
+        <button class="gc-btn" onclick="saveQuizCard()">📸 성적표 저장</button>
+        <button class="gc-btn ghost" onclick="startQuiz()">다시 풀기</button>
+      </div>
+      <p class="gc-hint">성적표 인증하고 <b>@loveuniv101</b> DM 보내면 추첨 커피쿠폰 ☕</p>
+    </div>
+  </section>
+
+  <!-- ===== 인라인 미팅 로비 ===== -->
+  <section class="sec" id="lobbySec">
+    <div class="sec-head">
+      <div class="sec-eyebrow">BETA · 실시간</div>
+      <h2 class="sec-title">🚪 미팅 로비 — 분반 자리 잡기</h2>
+      <p class="sec-sub">열려 있는 분반에 먼저 자리를 잡으세요 · 여석 실시간</p>
+    </div>
+    <div class="lobby-grid" id="lobbyGrid">
+      <div class="lobby-loading">분반을 불러오는 중...</div>
+    </div>
+  </section>
 
   <div class="prompt">📖 개설강좌 확인하고 신청서 작성!</div>
 
@@ -1943,12 +2150,14 @@ async function updateLiveCounter() {
     _liveCacheAt = Date.now();
 
     if (split) {
-      const needFemales = males - females > 8;
-      split.textContent = needFemales
-        ? `남 ${males} · 여 ${females} — 여학우 추가 모집 ♡`
+      const gap = males - females;
+      const need = gap > 8 ? '여학우' : (gap < -8 ? '남학우' : null);
+      split.textContent = need
+        ? `남 ${males} · 여 ${females} — ${need} 추가 모집 ♡`
         : `남 ${males} · 여 ${females}`;
-      split.classList.toggle('recruit', needFemales);
+      split.classList.toggle('recruit', !!need);
     }
+    updateHeroProof(total, males, females);
     renderStatusBoard(apps, males, females);
     return;
   } catch (e) {
@@ -2267,6 +2476,171 @@ async function saveShareCard() {
     btn.disabled = false;
   }
 }
+
+
+// ====== 인라인 모의고사 ======
+const QZ = [
+  { q: '썸 타는 상대한테 카톡이 왔다. 나의 답장은?', o: [
+    ['3초컷 바로 답장 — 밀당? 그게 뭔데', 2],
+    ['30분 뒤에 쿨한 척 답장', 1],
+    ['읽고 나중에 답해야지… (3일 뒤 발견)', 0] ] },
+  { q: '첫 데이트 장소를 정해야 한다면?', o: [
+    ['상대 취향 미리 조사해서 풀코스 준비', 2],
+    ['실패 없는 유명 맛집 예약', 1],
+    ['"아무데나 좋아~" (진심 100%)', 0] ] },
+  { q: '상대방이 "나 오늘 좀 힘들었어…"라고 하면?', o: [
+    ['"무슨 일 있었어? 다 얘기해봐" 하고 들어준다', 2],
+    ['"헐 힘내!! 맛있는 거 먹자" 응원 폭격', 1],
+    ['원인 분석 + 해결책 3가지를 제시한다', 0] ] },
+  { q: '기념일을 챙기는 나의 방식은?', o: [
+    ['미리 선물 + 이벤트까지 완벽 준비', 2],
+    ['당일 아침에 축하 메시지는 보냄', 1],
+    ['기념일이… 언제였더라?', 0] ] },
+  { q: '소개팅 자리, 내가 제일 신경 쓰는 것은?', o: [
+    ['대화 리드하면서 상대 얘기 경청하기', 2],
+    ['첫인상! 깔끔한 옷차림과 향수', 1],
+    ['일단 나간 것에 의의를 둔다', 0] ] }
+];
+const QZ_GRADES = [
+  { min: 8, g: 'A+', c: 'gp', t: '연애 천재형 인재', m: '이론 만점. 더 배울 게 없어요. 이제 실전(수강신청)만 남았습니다 — 이런 분이 안 만나고 있는 게 학과의 손실이에요.' },
+  { min: 5, g: 'B+', c: 'gm', t: '이론파 모범생', m: '이론은 탄탄한데 실습 학점이 비어있네요. 실습 파트너는 저희가 구해드립니다. 수강신청 고고 ♡' },
+  { min: 3, g: 'C+', c: 'gc2', t: '출석만 하는 타입', m: '출석은 하는데 과제 제출을 안 하는 스타일. 혼자는 어려우니 조별과제(2:2 미팅)부터 시작해보는 걸 추천해요.' },
+  { min: 0, g: 'F',  c: 'gf', t: '재수강 대상자', m: '괜찮아요, 연애학개론은 재수강 환영입니다. 담당교수(운영진)가 1:1 과외로 처음부터 알려드릴게요. 일단 수강신청부터.' }
+];
+let qzIdx = 0, qzScore = 0;
+
+function startQuiz() {
+  qzIdx = 0; qzScore = 0;
+  document.getElementById('gradeWrap').style.display = 'none';
+  document.getElementById('quizCard').style.display = '';
+  renderQ();
+}
+function renderQ() {
+  const item = QZ[qzIdx];
+  document.getElementById('qStep').textContent = (qzIdx + 1) + ' / ' + QZ.length;
+  document.getElementById('qBar').style.width = (qzIdx / QZ.length * 100) + '%';
+  document.getElementById('qText').textContent = item.q;
+  const wrap = document.getElementById('qOpts');
+  wrap.innerHTML = '';
+  item.o.forEach(([label, score], i) => {
+    const b = document.createElement('button');
+    b.className = 'q-opt';
+    b.innerHTML = '<span class="n">' + (i + 1) + '</span><span>' + esc(label) + '</span>';
+    b.onclick = () => answerQ(score);
+    wrap.appendChild(b);
+  });
+  const body = document.getElementById('qBody');
+  body.style.animation = 'none'; void body.offsetWidth; body.style.animation = '';
+}
+function answerQ(score) {
+  qzScore += score;
+  qzIdx++;
+  if (qzIdx < QZ.length) renderQ();
+  else showQuizResult();
+}
+function showQuizResult() {
+  const g = QZ_GRADES.find(x => qzScore >= x.min);
+  document.getElementById('quizCard').style.display = 'none';
+  const el = document.getElementById('gcGrade');
+  el.textContent = g.g;
+  el.className = 'gc-grade ' + g.c;
+  document.getElementById('gcTitle').textContent = '「' + g.t + '」';
+  document.getElementById('gcComment').textContent = g.m;
+  document.getElementById('gradeWrap').style.display = '';
+}
+async function saveQuizCard() {
+  const card = document.getElementById('gradeCard');
+  const btn = document.querySelector('.gc-btn:not(.primary):not(.ghost)');
+  const orig = btn.textContent;
+  btn.textContent = '만드는 중...'; btn.disabled = true;
+  try {
+    if (!window.htmlToImage) {
+      await new Promise((res, rej) => {
+        const sc = document.createElement('script');
+        sc.src = 'https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js';
+        sc.onload = res; sc.onerror = () => rej(new Error('lib'));
+        document.head.appendChild(sc);
+      });
+    }
+    await document.fonts.ready;
+    const blob = await htmlToImage.toBlob(card, { pixelRatio: 2, backgroundColor: '#fdfcf7', skipFonts: true });
+    if (!blob) throw new Error('blob');
+    const r = await saveOrShareImage(blob, '연애학개론_모의고사_성적표.png', '연애학개론 모의고사 성적표');
+    btn.textContent = r === 'cancelled' ? orig : '저장됨 ✓';
+  } catch (e) {
+    console.error(e);
+    alert('이미지 저장에 실패했어요. 스크린샷으로 저장해주세요!');
+    btn.textContent = orig;
+  }
+  setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 1600);
+}
+
+// ====== 히어로 실시간 현황 ======
+function updateHeroProof(total, males, females) {
+  const t = document.getElementById('hpTotal');
+  if (!t) return;
+  t.textContent = total;
+  document.getElementById('hpF').textContent = females;
+  document.getElementById('hpM').textContent = males;
+  const rec = document.getElementById('heroRecruit');
+  const gap = females - males;
+  if (rec && gap >= 8) {
+    rec.innerHTML = '🙋‍♂️ 여학우 <b>' + females + '명</b>이 신청 완료 — 지금은 <b>남학우 모집중</b>이에요!';
+    rec.style.display = '';
+  } else if (rec && -gap >= 8) {
+    rec.innerHTML = '🙋‍♀️ 남학우 <b>' + males + '명</b>이 신청 완료 — 지금은 <b>여학우 모집중</b>이에요!';
+    rec.style.display = '';
+  }
+}
+
+// ====== 인라인 미팅 로비 ======
+async function loadInlineLobby() {
+  const grid = document.getElementById('lobbyGrid');
+  if (!grid) return;
+  let lobbies = [];
+  try {
+    const res = await fetch(COUNTER_APPS_SCRIPT + '?action=lobbyList&t=' + Date.now(), { cache: 'no-store' });
+    const data = await res.json();
+    lobbies = (data.lobbies || []).filter(l => l.status !== 'closed');
+  } catch (e) {
+    grid.innerHTML = '<div class="lobby-empty">분반 정보를 불러오지 못했어요.<br>잠시 후 새로고침 해주세요.</div>';
+    return;
+  }
+  if (!lobbies.length) {
+    grid.innerHTML = '<div class="lobby-empty">🚪 아직 열린 분반이 없어요.<br>새 분반이 열리면 여기에 바로 표시됩니다 ♡</div>';
+    return;
+  }
+  const dots = (taken, cap, cls) => {
+    let h = '';
+    for (let i = 0; i < cap; i++) h += '<span class="lb-dot ' + (i < taken ? 'on ' + cls : '') + '"></span>';
+    return h;
+  };
+  grid.innerHTML = lobbies.map(l => {
+    const left = (l.capM - l.m) + (l.capF - l.f);
+    let cls = 'open', txt = '🟢 모집중';
+    if (l.status === 'confirmed') { cls = 'confirmed'; txt = '✅ 매칭 완료'; }
+    else if (l.status === 'full') { cls = 'full'; txt = '⏳ 운영진 확인중'; }
+    else if (left <= 2) { cls = 'hot'; txt = '🔥 여석 ' + left; }
+    const joinable = l.status === 'open';
+    return '<div class="lb-card ' + l.status + '">' +
+      '<div class="lb-top"><div class="lb-title">' + esc(l.title) + '<span class="lb-type">' + esc(l.type) + '</span></div>' +
+      '<span class="lb-status ' + cls + '">' + txt + '</span></div>' +
+      (l.desc ? '<div class="lb-desc">' + esc(l.desc) + '</div>' : '') +
+      '<div class="lb-seats">' +
+        '<div class="lb-grp"><span class="lb-lbl m">남</span><span class="lb-dots">' + dots(l.m, l.capM, 'm') + '</span><span class="lb-cnt">' + l.m + '/' + l.capM + '</span></div>' +
+        '<div class="lb-grp"><span class="lb-lbl f">여</span><span class="lb-dots">' + dots(l.f, l.capF, 'f') + '</span><span class="lb-cnt">' + l.f + '/' + l.capF + '</span></div>' +
+      '</div>' +
+      (joinable
+        ? '<a class="lb-btn" href="lobby.html">이 분반에 자리 잡기 🚪</a>'
+        : '<span class="lb-btn off">' + (l.status === 'full' ? '정원 마감 — 확인중' : '매칭 완료') + '</span>') +
+      '</div>';
+  }).join('');
+}
+
+startQuiz();
+loadInlineLobby();
+setInterval(loadInlineLobby, 60000);
+
 </script>
 
 </body>
