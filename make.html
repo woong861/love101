@@ -1195,6 +1195,18 @@ function renderLobbyAdmin(lobbies) {
         <span style="color:var(--muted)">${esc(m.school)} · ${esc(m.age)}살 · 📞${esc(m.phone)} · 💰${esc(m.payment)}</span>
         <button onclick="lobbyExcludeAdmin(${m.row}, '${esc(m.name)}')" style="margin-left:auto;border:1px solid #c00;color:#c00;background:#fff;border-radius:5px;font-size:10.5px;padding:1px 7px;cursor:pointer">제외</button>
       </div>`).join('') || '<div style="font-size:11.5px;color:var(--muted);padding:4px">아직 신청자 없음</div>';
+    const wantList = (l.wants || []);
+    const wants = wantList.length
+      ? `<div style="margin-top:8px;background:#fff4f9;border:1px solid #ffd3e6;border-radius:7px;padding:8px">
+          <div style="font-size:11.5px;font-weight:900;color:#c2185b;margin-bottom:5px">🙋 관심 표시 ${wantList.length}명 (남 ${l.iM} · 여 ${l.iF}) — 결제 전, 영업 대상</div>
+          ${wantList.map(w => `
+            <div style="display:flex;align-items:center;gap:6px;padding:4px 7px;background:#fff;border:1px solid #ffd3e6;border-radius:6px;margin-bottom:3px;font-size:11.5px">
+              <span style="font-weight:700">${esc(w.name)}</span>
+              <span style="color:${w.gender === '남자' ? '#1565c0' : '#c2185b'}">${esc(w.gender)}</span>
+              <span style="color:var(--muted)">📞${esc(w.phone)}</span>
+            </div>`).join('')}
+        </div>`
+      : '';
     const confirmUI = l.status === 'confirmed'
       ? `<div style="font-size:11.5px;color:var(--green);margin-top:6px">✅ 발송 완료 — ${esc(l.link || '')}</div>`
       : `<div style="display:flex;gap:6px;margin-top:8px">
@@ -1212,6 +1224,7 @@ function renderLobbyAdmin(lobbies) {
           ${l.status !== 'closed' && l.status !== 'confirmed' ? `<button onclick="lobbyCloseAdmin('${esc(l.id)}', '${esc(l.title)}')" style="margin-left:auto;border:1px solid #999;color:#666;background:#fff;border-radius:5px;font-size:10.5px;padding:1px 7px;cursor:pointer">마감</button>` : ''}
         </div>
         ${members}
+        ${wants}
         ${confirmUI}
       </div>`;
   }).join('');

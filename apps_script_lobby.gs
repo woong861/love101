@@ -16,6 +16,7 @@
 const LOBBY_ADMIN_KEY = 'love101-admin';   // make.html의 관리 키와 동일해야 함 (원하면 바꾸고 make.html도 같이)
 const LOBBY_SHEET_LOBBIES = '로비_분반';
 const LOBBY_SHEET_JOINS = '로비_신청';
+const LOBBY_SHEET_INTEREST = '로비_관심';
 
 // ---------------- 라우터 ----------------
 function lobbyRouter_(e) {
@@ -32,6 +33,7 @@ function lobbyRouter_(e) {
       case 'lobbyList':      out = lobbyList_(false); break;
       case 'lobbyAdminList': out = isAdmin ? lobbyList_(true) : { error: 'auth' }; break;
       case 'lobbyJoin':      out = lobbyJoin_(d); break;
+      case 'lobbyInterest':  out = lobbyInterest_(d); break;
       case 'lobbyCreate':    out = isAdmin ? lobbyCreate_(d) : { error: 'auth' }; break;
       case 'lobbyExclude':   out = isAdmin ? lobbyExclude_(d) : { error: 'auth' }; break;
       case 'lobbyConfirm':   out = isAdmin ? lobbyConfirm_(d) : { error: 'auth' }; break;
@@ -64,6 +66,8 @@ function lobbySheet_(name) {
     sh = ss.insertSheet(name);
     if (name === LOBBY_SHEET_LOBBIES) {
       sh.appendRow(['ID', '제목', '유형', '설명', '정원남', '정원여', '상태', '링크', '생성시각']);
+    } else if (name === LOBBY_SHEET_INTEREST) {
+      sh.appendRow(['시각', '분반ID', '이름', '성별', '연락처', '상태']);
     } else {
       sh.appendRow(['시각', '분반ID', '이름', '성별', '학교', '나이', '전화', '카톡', '인스타', '입금정보', '상태']);
     }
@@ -81,11 +85,22 @@ function lobbyRows_(sh) {
 function lobbyList_(withMembers) {
   var lsh = lobbySheet_(LOBBY_SHEET_LOBBIES);
   var jsh = lobbySheet_(LOBBY_SHEET_JOINS);
+  var ish = lobbySheet_(LOBBY_SHEET_INTEREST);
   var joins = lobbyRows_(jsh);
+  var interests = lobbyRows_(ish);
   var lobbies = lobbyRows_(lsh).map(function (r, i) {
     var id = String(r[0]);
     var members = [];
+    var wants = [];
+    var iM = 0, iF = 0;
     var m = 0, f = 0;
+    interests.forEach(function (t, ti) {
+      if (String(t[1]) !== id || String(t[5]) !== 'active') return;
+      if (String(t[3]) === '남자') iM++; else if (String(t[3]) === '여자') iF++;
+      if (withMembers) {
+        wants.push({ row: ti + 2, name: t[2], gender: t[3], phone: lobbyFixPhone_(t[4]) });
+      }
+    });
     joins.forEach(function (j, ji) {
       if (String(j[1]) !== id) return;
       if (String(j[10]) !== 'active') return;
@@ -100,9 +115,10 @@ function lobbyList_(withMembers) {
     var lobby = {
       id: id, row: i + 2, title: r[1], type: r[2], desc: r[3],
       capM: Number(r[4]) || 0, capF: Number(r[5]) || 0,
-      m: m, f: f, status: String(r[6] || 'open')
+      m: m, f: f, status: String(r[6] || 'open'),
+      iM: iM, iF: iF, iTotal: iM + iF
     };
-    if (withMembers) { lobby.members = members; lobby.link = r[7]; }
+    if (withMembers) { lobby.members = members; lobby.wants = wants; lobby.link = r[7]; }
     return lobby;
   });
   return { lobbies: lobbies };
@@ -143,6 +159,30 @@ function lobbyJoin_(d) {
     if (isMale) m++; else f++;
     if (m >= capM && f >= capF) lsh.getRange(idx + 2, 7).setValue('full');
     return { ok: true, m: m, f: f, capM: capM, capF: capF };
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+// ---------------- 관심 표시 (결제 없이 수요 확인) ----------------
+function lobbyInterest_(d) {
+  if (!d.lobbyId || !d.gender || !d.phone) return { error: 'missing' };
+  var lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    var ish = lobbySheet_(LOBBY_SHEET_INTEREST);
+    var rows = lobbyRows_(ish);
+    var phone = lobbyNormPhone_(d.phone);
+    var iM = 0, iF = 0;
+    for (var i = 0; i < rows.length; i++) {
+      var t = rows[i];
+      if (String(t[1]) !== String(d.lobbyId) || String(t[5]) !== 'active') continue;
+      if (lobbyNormPhone_(t[4]) === phone) return { error: 'dup' };
+      if (String(t[3]) === '남자') iM++; else if (String(t[3]) === '여자') iF++;
+    }
+    ish.appendRow([new Date(), String(d.lobbyId), d.name || '', d.gender, "'" + phone, 'active']);
+    if (d.gender === '남자') iM++; else iF++;
+    return { ok: true, iM: iM, iF: iF, iTotal: iM + iF };
   } finally {
     lock.releaseLock();
   }

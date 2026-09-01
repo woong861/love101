@@ -295,6 +295,44 @@ body::before {
 .gc-btn.ghost { background: #f0f2f8; color: #7a839c; }
 .gc-hint { text-align: center; font-size: 12px; color: var(--muted); margin-top: 12px; line-height: 1.6; }
 
+/* 관심 표시 */
+.lb-want {
+  margin-top: 10px; background: #fff6fa; border: 1px dashed #ffc4e0;
+  border-radius: 9px; padding: 8px 11px; font-size: 12.5px; color: #b0356e;
+}
+.lb-want b { font-weight: 900; color: var(--pink); }
+.lb-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 13px; }
+.lb-actions .lb-btn { margin-top: 0; }
+.lb-btn.ghost {
+  background: #fff; color: var(--navy); border: 1.5px solid var(--navy);
+  box-shadow: none;
+}
+.interest-card {
+  background: var(--card); border-radius: 16px; border-top: 6px solid var(--pink);
+  width: 100%; max-width: 380px; padding: 24px 22px; position: relative;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.35);
+}
+.it-badge {
+  display: inline-block; font-size: 11px; font-weight: 900; color: var(--pink);
+  background: #fff1f7; padding: 5px 12px; border-radius: 100px;
+}
+.it-title { font-size: 20px; font-weight: 900; color: var(--navy); margin-top: 9px; word-break: keep-all; }
+.it-sub { font-size: 12.5px; color: var(--muted); line-height: 1.7; margin: 8px 0 16px; }
+.it-sub b { color: var(--pink); font-weight: 900; }
+.it-submit {
+  width: 100%; border: none; border-radius: 100px; padding: 14px; margin-top: 6px;
+  background: linear-gradient(135deg, var(--pink), #ff4dd2); color: #fff;
+  font-size: 15px; font-weight: 900; font-family: 'Noto Sans KR'; cursor: pointer;
+  box-shadow: 0 6px 16px rgba(255, 93, 158, 0.3);
+}
+.it-submit:disabled { opacity: 0.6; }
+.it-err { text-align: center; font-size: 12.5px; color: var(--red); font-weight: 700; margin-top: 10px; display: none; }
+.it-err.show { display: block; }
+.it-done { text-align: center; padding: 6px 0; }
+.it-done-ico { font-size: 46px; }
+.it-done-title { font-size: 19px; font-weight: 900; color: var(--navy); margin-top: 6px; }
+.it-done-txt { font-size: 13px; color: var(--muted); line-height: 1.7; margin: 10px 0 14px; }
+
 /* ===== 인라인 미팅 로비 ===== */
 .lobby-grid { display: grid; gap: 11px; }
 .lobby-loading, .lobby-empty {
@@ -1179,6 +1217,34 @@ body::before {
   <p class="operator-credit">
     문의 / 신고는 <a href="https://instagram.com/loveuniv101" target="_blank" rel="noopener">@loveuniv101</a> ♡
   </p>
+</div>
+
+<div class="modal-backdrop" id="interestModal">
+  <div class="interest-card">
+    <button class="close-btn" onclick="closeInterest()" aria-label="닫기">×</button>
+    <div class="it-badge">🙋 관심 표시</div>
+    <h2 class="it-title" id="itTitle">분반</h2>
+    <p class="it-sub">지금은 <b>결제 없이 관심만</b> 남기는 단계예요.<br>인원이 모이면 운영진이 문자로 확정 안내를 드립니다 ♡</p>
+    <form id="interestForm">
+      <div class="field"><label>이름</label><input type="text" name="name" required placeholder="이름"></div>
+      <div class="field">
+        <label>성별</label>
+        <div class="radio-group">
+          <label><input type="radio" name="gender" value="남자" required> 남자</label>
+          <label><input type="radio" name="gender" value="여자" required> 여자</label>
+        </div>
+      </div>
+      <div class="field"><label>연락처</label><input type="tel" name="phone" required placeholder="010-0000-0000" inputmode="numeric"></div>
+      <button type="submit" class="it-submit" id="itSubmit">관심 표시하기 🙋</button>
+      <p class="it-err" id="itErr"></p>
+    </form>
+    <div class="it-done" id="itDone" style="display:none">
+      <div class="it-done-ico">🎉</div>
+      <div class="it-done-title">관심 표시 완료!</div>
+      <p class="it-done-txt" id="itDoneTxt"></p>
+      <button class="it-submit" onclick="closeInterest()">확인</button>
+    </div>
+  </div>
 </div>
 
 <div class="modal-backdrop" id="syllabusModal">
@@ -2630,12 +2696,72 @@ async function loadInlineLobby() {
         '<div class="lb-grp"><span class="lb-lbl m">남</span><span class="lb-dots">' + dots(l.m, l.capM, 'm') + '</span><span class="lb-cnt">' + l.m + '/' + l.capM + '</span></div>' +
         '<div class="lb-grp"><span class="lb-lbl f">여</span><span class="lb-dots">' + dots(l.f, l.capF, 'f') + '</span><span class="lb-cnt">' + l.f + '/' + l.capF + '</span></div>' +
       '</div>' +
+      (l.iTotal ? '<div class="lb-want">🙋 <b>' + l.iTotal + '명</b>이 관심 표시했어요 (남 ' + l.iM + ' · 여 ' + l.iF + ')</div>' : '') +
       (joinable
-        ? '<a class="lb-btn" href="lobby.html">이 분반에 자리 잡기 🚪</a>'
+        ? '<div class="lb-actions">' +
+            '<button class="lb-btn ghost" onclick="openInterest(\'' + l.id + '\', \'' + esc(l.title).replace(/'/g, "\\'") + '\')">🙋 관심 있어요</button>' +
+            '<a class="lb-btn" href="lobby.html">자리 잡기 🚪</a>' +
+          '</div>'
         : '<span class="lb-btn off">' + (l.status === 'full' ? '정원 마감 — 확인중' : '매칭 완료') + '</span>') +
       '</div>';
   }).join('');
 }
+
+// ====== 관심 표시 ======
+let interestLobbyId = null;
+function openInterest(id, title) {
+  interestLobbyId = id;
+  document.getElementById('itTitle').textContent = title;
+  document.getElementById('itErr').classList.remove('show');
+  document.getElementById('interestForm').style.display = '';
+  document.getElementById('itDone').style.display = 'none';
+  document.getElementById('interestModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeInterest() {
+  document.getElementById('interestModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.getElementById('interestModal').addEventListener('click', function (e) { if (e.target === this) closeInterest(); });
+
+document.getElementById('interestForm').addEventListener('submit', async function (e) {
+  e.preventDefault();
+  if (!interestLobbyId) return;
+  const btn = document.getElementById('itSubmit');
+  const err = document.getElementById('itErr');
+  err.classList.remove('show');
+  btn.disabled = true; btn.textContent = '등록 중...';
+
+  const fd = new FormData(this);
+  const payload = { lobbyId: interestLobbyId, name: fd.get('name'), gender: fd.get('gender'), phone: fd.get('phone') };
+  const b64 = (() => {
+    const bytes = new TextEncoder().encode(JSON.stringify(payload));
+    let bin = ''; bytes.forEach(x => bin += String.fromCharCode(x));
+    return btoa(bin).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+  })();
+
+  let r;
+  try {
+    const res = await fetch(COUNTER_APPS_SCRIPT + '?action=lobbyInterest&d=' + b64 + '&t=' + Date.now(), { cache: 'no-store' });
+    r = await res.json();
+  } catch (ex) { r = { error: 'network' }; }
+
+  btn.disabled = false; btn.textContent = '관심 표시하기 🙋';
+
+  if (r && r.ok) {
+    this.reset();
+    this.style.display = 'none';
+    document.getElementById('itDoneTxt').innerHTML =
+      '지금까지 <b>' + r.iTotal + '명</b>이 관심을 표시했어요 (남 ' + r.iM + ' · 여 ' + r.iF + ')<br>' +
+      '인원이 모이면 문자로 알려드릴게요!';
+    document.getElementById('itDone').style.display = '';
+    loadInlineLobby();
+    return;
+  }
+  const msg = { dup: '이미 이 분반에 관심을 표시하셨어요 😊', missing: '입력값을 확인해주세요.', network: '네트워크 오류예요. 잠시 후 다시 시도해주세요.' };
+  err.textContent = msg[r && r.error] || ('오류가 발생했어요: ' + (r && r.error));
+  err.classList.add('show');
+});
 
 startQuiz();
 loadInlineLobby();
