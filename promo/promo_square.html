@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>연애학개론 홍보 — 정사각형</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@600;900&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #23408e;
+  --navy-dark: #182e68;
+  --navy-light: #eaf0fb;
+  --pink: #ff5d9e;
+  --gold: #c9962c;
+  --green: #2e9e5b;
+  --text: #23272f;
+  --muted: #767e8c;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1080px; overflow: hidden; }
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  color: var(--text);
+  position: relative;
+  background-color: #e6eafa;
+  background-image:
+    radial-gradient(680px 420px at 2% -6%, rgba(255, 150, 200, 0.55), transparent 60%),
+    radial-gradient(640px 400px at 100% 3%, rgba(132, 150, 255, 0.50), transparent 60%),
+    radial-gradient(720px 440px at 50% 103%, rgba(255, 176, 222, 0.48), transparent 60%);
+}
+/* 모눈종이 결 */
+body::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(35,64,142,0.085) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(35,64,142,0.085) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+/* 하트 워터마크 */
+body::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z' fill='%2323408e'/%3E%3C/svg%3E");
+  background-size: 96px 96px; opacity: 0.045;
+}
+
+.wrap {
+  position: relative; z-index: 2;
+  width: 100%; height: 100%;
+  padding: 56px 68px 150px;
+  display: flex; flex-direction: column; align-items: center;
+}
+
+.bubble {
+  background: linear-gradient(135deg, var(--pink), #ff7cb5);
+  color: #fff; font-size: 30px; font-weight: 900;
+  padding: 16px 40px; border-radius: 100px; position: relative;
+  box-shadow: 0 10px 26px rgba(255, 93, 158, 0.35);
+}
+.bubble::after {
+  content: ''; position: absolute; left: 50%; bottom: -9px;
+  transform: translateX(-50%) rotate(45deg);
+  width: 20px; height: 20px; background: #ff6ba9; border-radius: 3px;
+}
+
+.title {
+  font-family: 'Noto Serif KR', serif; font-weight: 900; color: var(--navy);
+  font-size: 132px; letter-spacing: -5px; line-height: 1.06; margin-top: 34px;
+  display: flex; align-items: center; gap: 12px;
+}
+.title svg { width: 96px; height: 96px; filter: drop-shadow(0 5px 14px rgba(255,77,210,0.45)); }
+
+.sub {
+  font-family: 'Gaegu', cursive; font-weight: 700; color: var(--navy);
+  font-size: 46px; margin-top: 6px; position: relative; padding: 0 6px 8px;
+}
+.sub::after {
+  content: ''; position: absolute; left: 0; right: 26px; bottom: 0; height: 8px;
+  background: linear-gradient(90deg, #ffb3d9, #ff8fc0); border-radius: 100px; opacity: 0.9;
+}
+
+.card {
+  margin-top: 36px; width: 100%;
+  background: #fff; border-radius: 26px;
+  box-shadow: 0 16px 44px rgba(30, 45, 90, 0.14);
+  padding: 34px 40px;
+  display: grid; gap: 20px;
+}
+.row { display: flex; align-items: center; gap: 20px; }
+.row .ico {
+  flex: none; width: 66px; height: 66px; border-radius: 19px;
+  display: flex; align-items: center; justify-content: center; font-size: 34px;
+  background: var(--navy-light);
+}
+.row:nth-child(even) .ico { background: #ffeef6; }
+.row .txt { font-size: 33px; font-weight: 700; color: #2b3140; letter-spacing: -0.6px; }
+.row .txt b { font-weight: 900; color: var(--navy); }
+.row .txt .pk { color: var(--pink); font-weight: 900; }
+
+.deadline {
+  margin-top: 30px;
+  background: var(--navy); color: #fff;
+  font-size: 34px; font-weight: 900; letter-spacing: -0.5px;
+  padding: 20px 46px; border-radius: 100px;
+  box-shadow: 0 10px 26px rgba(35, 64, 142, 0.32);
+}
+.deadline .d { color: #ffd1e8; }
+
+.foot {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(100deg, var(--navy-dark), var(--navy));
+  color: #fff; padding: 26px 0; text-align: center;
+}
+.foot .url { font-size: 44px; font-weight: 900; letter-spacing: 0.5px; }
+.foot .sns { font-size: 26px; color: #cfe0ff; margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bubble">대학생 연애, 이론부터 실전까지! 💗</div>
+
+  <div class="title">연애학개론
+    <svg viewBox="0 0 32 32"><defs><linearGradient id="h" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff9ec9"/><stop offset="1" stop-color="#ff4dd2"/></linearGradient></defs>
+      <path d="M16 28.5C6.8 21.6 2 15.9 2 10.4 2 6.3 5.3 3 9.4 3c2.6 0 5.1 1.3 6.6 3.4C17.5 4.3 20 3 22.6 3 26.7 3 30 6.3 30 10.4c0 5.5-4.8 11.2-14 18.1z" fill="url(#h)"/>
+      <ellipse cx="9.5" cy="9" rx="3" ry="2.2" fill="#fff" opacity="0.65" transform="rotate(-24 9.5 9)"/>
+    </svg>
+  </div>
+  <div class="sub">"연애는, 교양필수니까" ♡</div>
+
+  <div class="card">
+    <div class="row">
+      <span class="ico">🎓</span>
+      <span class="txt"><b>1:1 소개팅</b> · <b>3:3 미팅</b> 동시 모집</span>
+    </div>
+    <div class="row">
+      <span class="ico">💌</span>
+      <span class="txt">운영진이 <b>정성 매칭</b> — 결과는 <b>성적표</b>로 발표</span>
+    </div>
+    <div class="row">
+      <span class="ico">🎁</span>
+      <span class="txt">여학우 <span class="pk">전액 장학금 (0원)</span></span>
+    </div>
+    <div class="row">
+      <span class="ico">✅</span>
+      <span class="txt">매칭 미성사 시 <span class="pk">전액 환불</span></span>
+    </div>
+  </div>
+
+  <div class="deadline">⏰ 수강신청 마감 <span class="d">9/6(일) 자정</span></div>
+</div>
+
+<div class="foot">
+  <div class="url">loveuniv.cloud</div>
+  <div class="sns">문의 · 인스타 @loveuniv101</div>
+</div>
+</body>
+</html>
