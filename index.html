@@ -234,116 +234,58 @@ body::before {
 }
 .sec-sub { font-size: 13px; color: var(--muted); margin-top: 6px; }
 
-/* ===== 인라인 모의고사 ===== */
-.quiz-card {
-  background: var(--card); border: 1px solid rgba(255,255,255,0.9); border-radius: 18px;
-  box-shadow: 0 12px 34px rgba(30, 45, 90, 0.12); padding: 22px 20px;
+/* ===== 모의고사 진입 카드 (별도 페이지) ===== */
+.exam-entry {
+  display: flex; align-items: center; gap: 18px; text-decoration: none;
+  margin-top: 46px; padding: 24px 26px; border-radius: 20px;
+  background: linear-gradient(125deg, #21377d 0%, #2c4a9e 52%, #4a3a96 100%);
+  box-shadow: 0 14px 34px rgba(30, 45, 90, 0.26);
+  position: relative; overflow: hidden;
+  transition: transform 0.16s, box-shadow 0.16s;
 }
-.q-top { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
-.q-progress { flex: 1; height: 8px; background: #e6ebf7; border-radius: 100px; overflow: hidden; }
-.q-bar {
-  height: 100%; width: 0%; border-radius: 100px;
-  background: linear-gradient(90deg, var(--navy), var(--pink)); transition: width 0.35s ease;
+.exam-entry::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z' fill='%23ffffff'/%3E%3C/svg%3E");
+  background-size: 46px 46px; opacity: 0.07;
 }
-.q-step { font-size: 12px; font-weight: 900; color: var(--navy); white-space: nowrap; }
-.q-body { animation: qIn 0.32s cubic-bezier(0.22, 1, 0.36, 1); }
-@keyframes qIn { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: none; } }
-.q-text {
-  font-size: 17.5px; font-weight: 900; line-height: 1.5; word-break: keep-all; color: #232a38;
+.exam-entry:hover { transform: translateY(-3px); box-shadow: 0 18px 40px rgba(30, 45, 90, 0.32); }
+.exam-entry:active { transform: scale(0.99); }
+.exam-entry .ee-left { flex: 1; position: relative; z-index: 1; min-width: 0; }
+.exam-entry .ee-eyebrow {
+  font-size: 11px; font-weight: 800; letter-spacing: 1.5px;
+  color: #ffd1e8; text-transform: uppercase;
 }
-.q-opts { display: grid; gap: 9px; margin-top: 16px; }
-.q-opt {
-  text-align: left; border: 1.5px solid var(--line); border-radius: 12px; background: #fbfcfe;
-  padding: 14px 15px; font-size: 14.5px; font-family: 'Noto Sans KR'; cursor: pointer;
-  line-height: 1.5; word-break: keep-all; transition: all 0.14s; display: flex; gap: 10px; align-items: flex-start;
+.exam-entry .ee-title {
+  font-family: 'Noto Serif KR', serif; font-weight: 900; color: #fff;
+  font-size: 24px; line-height: 1.25; margin-top: 7px; word-break: keep-all;
 }
-.q-opt .n {
-  flex: none; width: 21px; height: 21px; border-radius: 7px; background: var(--navy-light);
-  color: var(--navy); font-size: 11.5px; font-weight: 900;
-  display: flex; align-items: center; justify-content: center; margin-top: 1px;
-}
-.q-opt:hover { border-color: var(--navy); background: var(--navy-light); transform: translateY(-1px); }
-.q-opt:hover .n { background: var(--navy); color: #fff; }
-.q-opt:active { transform: scale(0.985); }
-
-.grade-wrap { animation: gIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
-@keyframes gIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: none; } }
-.grade-card {
-  background: #fdfcf7; border-radius: 16px; border-top: 7px solid var(--navy);
-  box-shadow: 0 14px 38px rgba(20, 35, 80, 0.16); padding: 24px 22px; text-align: center;
-}
-.gc-univ {
-  font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 11.5px;
-  color: var(--navy); letter-spacing: 2px;
-}
-.gc-table { width: 100%; border-collapse: collapse; font-size: 12px; margin: 13px 0 4px; }
-.gc-table th, .gc-table td { border: 1px solid var(--line); padding: 6px 8px; }
-.gc-table th { background: var(--navy-light); color: var(--navy); font-weight: 700; }
-.gc-grade {
-  font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 68px; line-height: 1.1; margin-top: 10px;
-}
-.gc-grade.gp { color: var(--green); }
-.gc-grade.gm { color: var(--gold); }
-.gc-grade.gc2 { color: #e07b2a; }
-.gc-grade.gf { color: var(--red); }
-.gc-title { font-size: 18px; font-weight: 900; margin-top: 4px; }
-.gc-comment {
-  font-family: 'Gaegu', cursive; font-size: 16.5px; color: #555; line-height: 1.6;
-  background: #f2f5fb; border-radius: 11px; padding: 13px 15px; margin-top: 13px; word-break: keep-all;
-}
-.gc-sign { margin-top: 12px; font-family: 'Gaegu', cursive; font-size: 14px; color: var(--pink); }
-.gc-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
-.gc-btn {
-  border: none; border-radius: 100px; padding: 13px; font-size: 13.5px; font-weight: 900;
-  font-family: 'Noto Sans KR'; cursor: pointer; background: #e6eaf4; color: #46506a;
-  transition: transform 0.12s;
-}
-.gc-btn:active { transform: scale(0.97); }
-.gc-btn.primary {
-  grid-column: 1 / -1;
-  background: linear-gradient(135deg, var(--navy), #3557b8); color: #fff; font-size: 15px; padding: 15px;
-  box-shadow: 0 8px 20px rgba(35, 64, 142, 0.3);
-}
-.gc-btn.ghost { background: #f0f2f8; color: #7a839c; }
-.gc-hint { text-align: center; font-size: 12px; color: var(--muted); margin-top: 12px; line-height: 1.6; }
-
-/* 관심 표시 */
-.lb-want {
-  margin-top: 10px; background: #fff6fa; border: 1px dashed #ffc4e0;
-  border-radius: 9px; padding: 8px 11px; font-size: 12.5px; color: #b0356e;
-}
-.lb-want b { font-weight: 900; color: var(--pink); }
-.lb-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 13px; }
-.lb-actions .lb-btn { margin-top: 0; }
-.lb-btn.ghost {
-  background: #fff; color: var(--navy); border: 1.5px solid var(--navy);
-  box-shadow: none;
-}
-.interest-card {
-  background: var(--card); border-radius: 16px; border-top: 6px solid var(--pink);
-  width: 100%; max-width: 380px; padding: 24px 22px; position: relative;
-  box-shadow: 0 24px 70px rgba(0,0,0,0.35);
-}
-.it-badge {
-  display: inline-block; font-size: 11px; font-weight: 900; color: var(--pink);
-  background: #fff1f7; padding: 5px 12px; border-radius: 100px;
-}
-.it-title { font-size: 20px; font-weight: 900; color: var(--navy); margin-top: 9px; word-break: keep-all; }
-.it-sub { font-size: 12.5px; color: var(--muted); line-height: 1.7; margin: 8px 0 16px; }
-.it-sub b { color: var(--pink); font-weight: 900; }
-.it-submit {
-  width: 100%; border: none; border-radius: 100px; padding: 14px; margin-top: 6px;
+.exam-entry .ee-desc { font-size: 13.5px; color: #cfdcff; margin-top: 7px; word-break: keep-all; }
+.exam-entry .ee-btn {
+  display: inline-block; margin-top: 15px; padding: 10px 22px; border-radius: 100px;
   background: linear-gradient(135deg, var(--pink), #ff4dd2); color: #fff;
-  font-size: 15px; font-weight: 900; font-family: 'Noto Sans KR'; cursor: pointer;
-  box-shadow: 0 6px 16px rgba(255, 93, 158, 0.3);
+  font-size: 14px; font-weight: 900;
+  box-shadow: 0 5px 15px rgba(255, 77, 210, 0.4);
 }
-.it-submit:disabled { opacity: 0.6; }
-.it-err { text-align: center; font-size: 12.5px; color: var(--red); font-weight: 700; margin-top: 10px; display: none; }
-.it-err.show { display: block; }
-.it-done { text-align: center; padding: 6px 0; }
-.it-done-ico { font-size: 46px; }
-.it-done-title { font-size: 19px; font-weight: 900; color: var(--navy); margin-top: 6px; }
-.it-done-txt { font-size: 13px; color: var(--muted); line-height: 1.7; margin: 10px 0 14px; }
+.exam-entry .ee-right { flex: none; position: relative; z-index: 1; }
+.exam-entry .ee-paper {
+  width: 108px; padding: 13px 10px; border-radius: 10px; text-align: center;
+  background: #fdfcf7; box-shadow: 0 10px 24px rgba(0,0,0,0.28);
+  transform: rotate(5deg);
+}
+.exam-entry .ee-p-top {
+  font-size: 7.5px; font-weight: 800; letter-spacing: 0.6px; color: #8d94a5;
+}
+.exam-entry .ee-p-grade {
+  font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 46px;
+  color: var(--pink); line-height: 1.05; margin: 4px 0 2px;
+}
+.exam-entry .ee-p-sign { font-family: 'Gaegu', cursive; font-size: 13px; color: #6b7385; }
+@media (max-width: 560px) {
+  .exam-entry { padding: 20px 18px; gap: 12px; }
+  .exam-entry .ee-title { font-size: 20px; }
+  .exam-entry .ee-paper { width: 84px; padding: 10px 8px; }
+  .exam-entry .ee-p-grade { font-size: 36px; }
+}
 
 /* ===== 인라인 미팅 로비 ===== */
 .lobby-grid { display: grid; gap: 11px; }
@@ -1147,45 +1089,22 @@ body::before {
     </div>
   </div>
 
-  <!-- ===== 인라인 모의고사 ===== -->
-  <section class="sec" id="examSec">
-    <div class="sec-head">
-      <div class="sec-eyebrow">LOVE100 · 사전 진단</div>
-      <h2 class="sec-title">📝 연애학개론 모의고사</h2>
-      <p class="sec-sub">5문항 30초 · 지금 바로 내 연애 학점 확인</p>
+  <!-- ===== 모의고사 진입 (별도 페이지) ===== -->
+  <a class="exam-entry" href="exam.html">
+    <div class="ee-left">
+      <div class="ee-eyebrow">LOVE100 · 사전 진단</div>
+      <div class="ee-title">📝 연애학개론 모의고사</div>
+      <div class="ee-desc">5문항 30초 · 내 연애 학점은 A+? 재수강?</div>
+      <span class="ee-btn">시험 보러가기 →</span>
     </div>
-
-    <div class="quiz-card" id="quizCard">
-      <div class="q-top">
-        <div class="q-progress"><div class="q-bar" id="qBar"></div></div>
-        <span class="q-step" id="qStep">1 / 5</span>
-      </div>
-      <div class="q-body" id="qBody">
-        <div class="q-text" id="qText"></div>
-        <div class="q-opts" id="qOpts"></div>
+    <div class="ee-right" aria-hidden="true">
+      <div class="ee-paper">
+        <div class="ee-p-top">LOVE UNIVERSITY</div>
+        <div class="ee-p-grade">A+</div>
+        <div class="ee-p-sign">Prof. 큐피드</div>
       </div>
     </div>
-
-    <div class="grade-wrap" id="gradeWrap" style="display:none">
-      <div class="grade-card" id="gradeCard">
-        <div class="gc-univ">LOVE UNIVERSITY · 모의고사 성적표</div>
-        <table class="gc-table">
-          <tr><th>학수번호</th><th>교과목명</th><th>이수구분</th></tr>
-          <tr><td>LOVE100</td><td>연애학개론 모의고사</td><td>교양필수</td></tr>
-        </table>
-        <div class="gc-grade" id="gcGrade">A+</div>
-        <div class="gc-title" id="gcTitle"></div>
-        <div class="gc-comment" id="gcComment"></div>
-        <div class="gc-sign">— 담당교수 Prof. 큐피드 —</div>
-      </div>
-      <div class="gc-actions">
-        <button class="gc-btn primary" onclick="openForm(null)">🎓 이 학점으로 수강신청</button>
-        <button class="gc-btn" onclick="saveQuizCard()">📸 성적표 저장</button>
-        <button class="gc-btn ghost" onclick="startQuiz()">다시 풀기</button>
-      </div>
-      <p class="gc-hint">성적표 인증하고 <b>@loveuniv101</b> DM 보내면 추첨 커피쿠폰 ☕</p>
-    </div>
-  </section>
+  </a>
 
   <div class="prompt">📖 개설강좌 확인하고 신청서 작성!</div>
 
@@ -2610,103 +2529,6 @@ async function saveShareCard() {
 }
 
 
-// ====== 인라인 모의고사 ======
-const QZ = [
-  { q: '썸 타는 상대한테 카톡이 왔다. 나의 답장은?', o: [
-    ['3초컷 바로 답장 — 밀당? 그게 뭔데', 2],
-    ['30분 뒤에 쿨한 척 답장', 1],
-    ['읽고 나중에 답해야지… (3일 뒤 발견)', 0] ] },
-  { q: '첫 데이트 장소를 정해야 한다면?', o: [
-    ['상대 취향 미리 조사해서 풀코스 준비', 2],
-    ['실패 없는 유명 맛집 예약', 1],
-    ['"아무데나 좋아~" (진심 100%)', 0] ] },
-  { q: '상대방이 "나 오늘 좀 힘들었어…"라고 하면?', o: [
-    ['"무슨 일 있었어? 다 얘기해봐" 하고 들어준다', 2],
-    ['"헐 힘내!! 맛있는 거 먹자" 응원 폭격', 1],
-    ['원인 분석 + 해결책 3가지를 제시한다', 0] ] },
-  { q: '기념일을 챙기는 나의 방식은?', o: [
-    ['미리 선물 + 이벤트까지 완벽 준비', 2],
-    ['당일 아침에 축하 메시지는 보냄', 1],
-    ['기념일이… 언제였더라?', 0] ] },
-  { q: '소개팅 자리, 내가 제일 신경 쓰는 것은?', o: [
-    ['대화 리드하면서 상대 얘기 경청하기', 2],
-    ['첫인상! 깔끔한 옷차림과 향수', 1],
-    ['일단 나간 것에 의의를 둔다', 0] ] }
-];
-const QZ_GRADES = [
-  { min: 8, g: 'A+', c: 'gp', t: '연애 천재형 인재', m: '이론 만점. 더 배울 게 없어요. 이제 실전(수강신청)만 남았습니다 — 이런 분이 안 만나고 있는 게 학과의 손실이에요.' },
-  { min: 5, g: 'B+', c: 'gm', t: '이론파 모범생', m: '이론은 탄탄한데 실습 학점이 비어있네요. 실습 파트너는 저희가 구해드립니다. 수강신청 고고 ♡' },
-  { min: 3, g: 'C+', c: 'gc2', t: '출석만 하는 타입', m: '출석은 하는데 과제 제출을 안 하는 스타일. 혼자는 어려우니 조별과제(2:2 미팅)부터 시작해보는 걸 추천해요.' },
-  { min: 0, g: 'F',  c: 'gf', t: '재수강 대상자', m: '괜찮아요, 연애학개론은 재수강 환영입니다. 담당교수(운영진)가 1:1 과외로 처음부터 알려드릴게요. 일단 수강신청부터.' }
-];
-let qzIdx = 0, qzScore = 0;
-
-function startQuiz() {
-  qzIdx = 0; qzScore = 0;
-  document.getElementById('gradeWrap').style.display = 'none';
-  document.getElementById('quizCard').style.display = '';
-  renderQ();
-}
-function renderQ() {
-  const item = QZ[qzIdx];
-  document.getElementById('qStep').textContent = (qzIdx + 1) + ' / ' + QZ.length;
-  document.getElementById('qBar').style.width = (qzIdx / QZ.length * 100) + '%';
-  document.getElementById('qText').textContent = item.q;
-  const wrap = document.getElementById('qOpts');
-  wrap.innerHTML = '';
-  item.o.forEach(([label, score], i) => {
-    const b = document.createElement('button');
-    b.className = 'q-opt';
-    b.innerHTML = '<span class="n">' + (i + 1) + '</span><span>' + esc(label) + '</span>';
-    b.onclick = () => answerQ(score);
-    wrap.appendChild(b);
-  });
-  const body = document.getElementById('qBody');
-  body.style.animation = 'none'; void body.offsetWidth; body.style.animation = '';
-}
-function answerQ(score) {
-  qzScore += score;
-  qzIdx++;
-  if (qzIdx < QZ.length) renderQ();
-  else showQuizResult();
-}
-function showQuizResult() {
-  const g = QZ_GRADES.find(x => qzScore >= x.min);
-  document.getElementById('quizCard').style.display = 'none';
-  const el = document.getElementById('gcGrade');
-  el.textContent = g.g;
-  el.className = 'gc-grade ' + g.c;
-  document.getElementById('gcTitle').textContent = '「' + g.t + '」';
-  document.getElementById('gcComment').textContent = g.m;
-  document.getElementById('gradeWrap').style.display = '';
-}
-async function saveQuizCard() {
-  const card = document.getElementById('gradeCard');
-  const btn = document.querySelector('.gc-btn:not(.primary):not(.ghost)');
-  const orig = btn.textContent;
-  btn.textContent = '만드는 중...'; btn.disabled = true;
-  try {
-    if (!window.htmlToImage) {
-      await new Promise((res, rej) => {
-        const sc = document.createElement('script');
-        sc.src = 'https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.min.js';
-        sc.onload = res; sc.onerror = () => rej(new Error('lib'));
-        document.head.appendChild(sc);
-      });
-    }
-    await document.fonts.ready;
-    const blob = await htmlToImage.toBlob(card, { pixelRatio: 2, backgroundColor: '#fdfcf7', skipFonts: true });
-    if (!blob) throw new Error('blob');
-    const r = await saveOrShareImage(blob, '연애학개론_모의고사_성적표.png', '연애학개론 모의고사 성적표');
-    btn.textContent = r === 'cancelled' ? orig : '저장됨 ✓';
-  } catch (e) {
-    console.error(e);
-    alert('이미지 저장에 실패했어요. 스크린샷으로 저장해주세요!');
-    btn.textContent = orig;
-  }
-  setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 1600);
-}
-
 // ====== 히어로 실시간 현황 ======
 function updateHeroProof(total, apps) {
   const t = document.getElementById('hpTotal');
@@ -2833,7 +2655,6 @@ document.getElementById('interestForm').addEventListener('submit', async functio
   err.classList.add('show');
 });
 
-startQuiz();
 loadInlineLobby();
 setInterval(loadInlineLobby, 60000);
 
