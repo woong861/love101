@@ -615,12 +615,51 @@ body::before {
 .tt-block .b-name { font-size: 10.5px; font-weight: 700; opacity: 0.85; line-height: 1.2; margin-top: 1px; }
 .tt-block .b-seat { font-size: 9px; font-weight: 900; opacity: 0.9; }
 .tt-empty {
-  height: 100%; border: 1.5px dashed #dfe5f2; border-radius: 8px; background: #fbfcfe;
+  height: 100%; border: 1.8px dashed #ffa8d0; border-radius: 8px; background: #fff6fa;
   display: flex; align-items: center; justify-content: center; text-align: center;
-  font-size: 9.5px; color: #b9c2d6; cursor: pointer; padding: 4px; line-height: 1.35;
-  transition: all 0.14s;
+  font-size: 9.5px; font-weight: 800; color: var(--pink); cursor: pointer;
+  padding: 4px; line-height: 1.35; transition: all 0.14s;
+  animation: ttEmptyBreathe 2.6s ease-in-out infinite;
 }
-.tt-empty:hover { border-color: var(--pink); color: var(--pink); background: #fff6fa; }
+.tt-empty:hover {
+  border-color: var(--pink); background: #ffe9f3; transform: translateY(-2px);
+  box-shadow: 0 5px 14px rgba(255, 93, 158, 0.22);
+}
+.tt-empty:active { transform: scale(0.97); }
+@keyframes ttEmptyBreathe {
+  0%, 100% { border-color: #ffc9e0; }
+  50% { border-color: #ff5d9e; }
+}
+
+/* 시간표 사용법 안내 */
+.tt-guide {
+  display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+  margin: 12px 0 0;
+}
+.tt-guide .g {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #fff; border: 1px solid #e3e8f5; border-radius: 100px;
+  padding: 7px 14px; font-size: 12px; font-weight: 700; color: #4a5468;
+}
+.tt-guide .g .sw {
+  width: 15px; height: 15px; border-radius: 4px; flex: none;
+}
+.tt-guide .g .sw.empty { border: 1.8px dashed #ff5d9e; background: #fff6fa; }
+.tt-guide .g .sw.filled { background: #e7eefc; border-left: 3px solid rgba(0,0,0,0.16); }
+.tt-guide .g b { color: var(--pink); font-weight: 900; }
+
+/* 시간표 아래 최종 CTA */
+.tt-cta {
+  display: block; width: 100%; max-width: 420px; margin: 18px auto 0;
+  border: none; border-radius: 100px; padding: 16px;
+  background: linear-gradient(135deg, var(--pink), #ff4dd2); color: #fff;
+  font-size: 16px; font-weight: 900; font-family: 'Noto Sans KR', sans-serif;
+  cursor: pointer; box-shadow: 0 8px 20px rgba(255, 93, 158, 0.35);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.tt-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 26px rgba(255, 93, 158, 0.42); }
+.tt-cta:active { transform: scale(0.98); }
+.tt-cta-sub { text-align: center; font-size: 12px; color: var(--muted); margin-top: 9px; }
 .tt-legend {
   display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap;
   font-size: 11px; color: var(--muted); margin-top: 10px;
@@ -766,8 +805,6 @@ body::before {
 .char-counter { float: right; font-weight: 400; font-size: 11px; color: var(--muted); }
 .char-counter.warn { color: var(--red); }
 
-.referrer-field { background: #fff6fa; border: 1.5px dashed #ffb3d9; border-radius: 10px; padding: 12px; }
-.referrer-field label { color: var(--pink); }
 
 /* 장바구니 옵션 */
 .card-options-field label { color: var(--navy); }
@@ -1087,13 +1124,19 @@ body::before {
 
   <div class="wall-head">
     <span>📅 2026-2학기 시간표</span>
-    <span class="small">빈 칸을 눌러 연애학개론을 넣어보세요</span>
+    <span class="small">분홍색 빈 칸을 누르면 신청서가 열려요</span>
   </div>
   <div class="tt-scroll">
     <div class="timetable" id="timetable"></div>
   </div>
 
-  <p class="footer-note">어떤 분반을 골라도 같은 수강신청서로 연결돼요 ♡</p>
+  <div class="tt-guide">
+    <span class="g"><span class="sw empty"></span> 분홍 빈 칸 = <b>수강신청서 작성</b></span>
+    <span class="g"><span class="sw filled"></span> 색깔 칸 = 강의계획서 보기</span>
+  </div>
+
+  <button type="button" class="tt-cta" onclick="openForm(this)">✏️ 수강신청서 작성하기</button>
+  <p class="tt-cta-sub">어떤 분반을 골라도 같은 수강신청서로 연결돼요 ♡</p>
 
   <!-- ===== 인라인 미팅 로비 ===== -->
   <section class="sec" id="lobbySec">
@@ -1306,11 +1349,6 @@ body::before {
         <label>인스타 ID</label>
         <input type="text" name="instagram" required placeholder="@를 빼고 적어줘">
         <p class="hint">* 비공개 계정이면 운영진 팔로우 요청 수락해줘 ♡</p>
-      </div>
-      <div class="field referrer-field">
-        <label>🎓 장학 코드 (선택)</label>
-        <input type="text" name="referrer" placeholder="예: LV-A3K9" style="text-transform:uppercase;">
-        <p class="hint hint-bonus">장학 코드 입력 시 <strong>수강료 3,000원 감면</strong> ♡</p>
       </div>
       <div class="field">
         <label>전화번호</label>
@@ -1731,8 +1769,8 @@ const TT_COLORS = [
   ['#fff2e0', '#a3661a'], ['#efeafb', '#5b3fa8'], ['#e4f2f7', '#1f6b85']
 ];
 
-// 빈 칸에 넣을 문구 (수강신청 유도)
-const TT_EMPTY_HINTS = ['+ 연애학개론\n넣기', '공강', '+ 신청', '공강'];
+// 빈 칸 문구 — 전부 동일하게 "여기 누르면 신청서"임을 명시
+const TT_EMPTY_HINT = '✏️ 여기 눌러\n수강신청';
 
 function renderTimetable() {
   const tt = document.getElementById('timetable');
@@ -1759,8 +1797,7 @@ function renderTimetable() {
           '<div class="b-seat">여석 ' + c.seats + '</div>' +
           '</div></div>';
       } else {
-        const hint = TT_EMPTY_HINTS[(pi + di) % TT_EMPTY_HINTS.length];
-        html += '<div class="tt-cell"><div class="tt-empty" onclick="openForm(this)">' + hint.replace(/\n/g, '<br>') + '</div></div>';
+        html += '<div class="tt-cell"><div class="tt-empty" onclick="openForm(this)">' + TT_EMPTY_HINT.replace(/\n/g, '<br>') + '</div></div>';
       }
     });
   });
