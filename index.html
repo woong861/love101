@@ -180,9 +180,18 @@ body::before {
 /* OPEN 필 */
 .p-open {
   display: inline-block; background: var(--navy); color: #fff;
-  font-size: 14px; font-weight: 900; letter-spacing: 0.5px;
-  padding: 10px 26px; border-radius: 100px; margin-top: 20px;
+  font-size: 15px; font-weight: 900; letter-spacing: 0.5px;
+  padding: 13px 32px; border-radius: 100px; margin-top: 20px;
   box-shadow: 0 6px 16px rgba(35, 64, 142, 0.3);
+  border: none; cursor: pointer; font-family: 'Noto Sans KR', sans-serif;
+  transition: transform 0.15s, box-shadow 0.15s;
+  animation: openPulse 2.4s ease-in-out infinite;
+}
+.p-open:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(35, 64, 142, 0.38); }
+.p-open:active { transform: scale(0.97); }
+@keyframes openPulse {
+  0%, 100% { box-shadow: 0 6px 16px rgba(35, 64, 142, 0.3); }
+  50% { box-shadow: 0 6px 16px rgba(35, 64, 142, 0.3), 0 0 0 9px rgba(35, 64, 142, 0.07); }
 }
 
 /* 히어로 실시간 현황 (사회적 증거) */
@@ -201,12 +210,6 @@ body::before {
 .hp-num.m { color: #1565c0; }
 .hp-lbl { font-size: 11.5px; color: var(--muted); margin-top: 3px; font-weight: 700; }
 .hp-div { width: 1px; background: #eaeef8; margin: 4px 0; }
-.hero-recruit {
-  margin-top: 10px; background: linear-gradient(100deg, #fff1f7, #ffe6f1);
-  border: 1.5px solid #ffb3d9; color: #b0356e;
-  border-radius: 12px; padding: 11px 14px; font-size: 13.5px; font-weight: 700;
-}
-.hero-recruit b { font-weight: 900; color: var(--pink); }
 
 /* ===== 공용 섹션 헤더 (퀄리티 업) ===== */
 .sec { margin-top: 46px; }
@@ -539,17 +542,6 @@ body::before {
   background: var(--card); border: 1px solid var(--line); border-radius: 12px;
   box-shadow: var(--shadow); margin-top: 16px; overflow: hidden;
 }
-.sb-gender { padding: 16px 16px 6px; }
-.sb-gender-labels {
-  display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 700; margin-bottom: 6px;
-}
-.sb-gender-labels .m { color: #1565c0; }
-.sb-gender-labels .f { color: #c2185b; }
-.sb-gender-bar {
-  display: flex; height: 14px; border-radius: 100px; overflow: hidden; background: #eee;
-}
-.sb-gender-bar .m { background: linear-gradient(90deg, #64a5f0, #1565c0); }
-.sb-gender-bar .f { background: linear-gradient(90deg, #f48cb1, #c2185b); }
 .sb-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 10px; }
 .sb-table th {
   background: var(--navy-light); color: var(--navy); font-weight: 700;
@@ -980,12 +972,11 @@ body::before {
       <div class="hero-proof" id="heroProof">
         <div class="hp-item"><div class="hp-num" id="hpTotal">―</div><div class="hp-lbl">누적 신청</div></div>
         <div class="hp-div"></div>
-        <div class="hp-item"><div class="hp-num f" id="hpF">―</div><div class="hp-lbl">여학우</div></div>
+        <div class="hp-item"><div class="hp-num f" id="hpSchool">―</div><div class="hp-lbl">참여 대학</div></div>
         <div class="hp-div"></div>
-        <div class="hp-item"><div class="hp-num m" id="hpM">―</div><div class="hp-lbl">남학우</div></div>
+        <div class="hp-item"><div class="hp-num m" id="hpLobby">―</div><div class="hp-lbl">개설 분반</div></div>
       </div>
-      <div class="hero-recruit" id="heroRecruit" style="display:none"></div>
-      <div><span class="p-open">수강신청 OPEN!</span></div>
+      <div><button type="button" class="p-open" onclick="openForm(this)">수강신청 하러가기 →</button></div>
       <svg class="campus" viewBox="0 -14 220 162" aria-hidden="true">
         <g fill="none" stroke="rgba(35,64,142,0.45)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <!-- 깃대 + 하트 깃발 -->
@@ -1092,18 +1083,6 @@ body::before {
     </div>
   </section>
 
-  <!-- ===== 인라인 미팅 로비 ===== -->
-  <section class="sec" id="lobbySec">
-    <div class="sec-head">
-      <div class="sec-eyebrow">BETA · 실시간</div>
-      <h2 class="sec-title">🚪 미팅 로비 — 분반 자리 잡기</h2>
-      <p class="sec-sub">열려 있는 분반에 먼저 자리를 잡으세요 · 여석 실시간</p>
-    </div>
-    <div class="lobby-grid" id="lobbyGrid">
-      <div class="lobby-loading">분반을 불러오는 중...</div>
-    </div>
-  </section>
-
   <div class="prompt">📖 개설강좌 확인하고 신청서 작성!</div>
 
   <div class="wall-head">
@@ -1116,20 +1095,22 @@ body::before {
 
   <p class="footer-note">어떤 분반을 골라도 같은 수강신청서로 연결돼요 ♡</p>
 
+  <!-- ===== 인라인 미팅 로비 ===== -->
+  <section class="sec" id="lobbySec">
+    <div class="sec-head">
+      <div class="sec-eyebrow">BETA · 실시간</div>
+      <h2 class="sec-title">🚪 미팅 로비 — 분반 자리 잡기</h2>
+      <p class="sec-sub">열려 있는 분반에 먼저 자리를 잡으세요 · 여석 실시간</p>
+    </div>
+    <div class="lobby-grid" id="lobbyGrid">
+      <div class="lobby-loading">분반을 불러오는 중...</div>
+    </div>
+  </section>
+
   <section class="status-board" id="statusBoard" style="display:none">
     <h2 class="sb-title">📊 실시간 수강신청 현황</h2>
     <p class="sb-sub">지금 이 순간 신청 현황 — 정원 임박 학교를 확인하세요</p>
     <div class="sb-card">
-      <div class="sb-gender">
-        <div class="sb-gender-labels">
-          <span class="m" id="sbMaleLabel">남학우 ―</span>
-          <span class="f" id="sbFemaleLabel">여학우 ―</span>
-        </div>
-        <div class="sb-gender-bar">
-          <div class="m" id="sbMaleBar" style="width:50%"></div>
-          <div class="f" id="sbFemaleBar" style="width:50%"></div>
-        </div>
-      </div>
       <table class="sb-table">
         <thead>
           <tr><th>순위</th><th>학교</th><th>상태</th><th>신청</th></tr>
@@ -2215,15 +2196,8 @@ async function updateLiveCounter() {
     _liveCacheCount = total;
     _liveCacheAt = Date.now();
 
-    if (split) {
-      const gap = males - females;
-      const need = gap > 8 ? '여학우' : (gap < -8 ? '남학우' : null);
-      split.textContent = need
-        ? `남 ${males} · 여 ${females} — ${need} 추가 모집 ♡`
-        : `남 ${males} · 여 ${females}`;
-      split.classList.toggle('recruit', !!need);
-    }
-    updateHeroProof(total, males, females);
+    if (split) split.textContent = '';
+    updateHeroProof(total, apps);
     renderStatusBoard(apps, males, females);
     return;
   } catch (e) {
@@ -2237,11 +2211,7 @@ async function updateLiveCounter() {
   const elapsedHours = (new Date() - COUNTER_LAUNCH) / 3600000;
   const count = Math.max(COUNTER_BASE, Math.floor(COUNTER_BASE + elapsedHours * COUNTER_PER_HOUR));
   el.textContent = count;
-  if (split) {
-    const males = Math.floor(count * 0.55);
-    const females = count - males;
-    split.textContent = `남 ${males} · 여 ${females}`;
-  }
+  if (split) split.textContent = '';
 }
 updateLiveCounter();
 setInterval(updateLiveCounter, 60000);
@@ -2250,16 +2220,6 @@ setInterval(updateLiveCounter, 60000);
 function renderStatusBoard(apps, males, females) {
   const board = document.getElementById('statusBoard');
   if (!board || !apps || apps.length < 10) return;
-
-  const total = males + females;
-  if (total > 0) {
-    const mp = Math.round(males / total * 100);
-    const fp = 100 - mp;
-    document.getElementById('sbMaleLabel').textContent = `남학우 ${males}명 (${mp}%)`;
-    document.getElementById('sbFemaleLabel').textContent = `여학우 ${females}명 (${fp}%)`;
-    document.getElementById('sbMaleBar').style.width = mp + '%';
-    document.getElementById('sbFemaleBar').style.width = fp + '%';
-  }
 
   // 학교별 집계 TOP 8
   const counts = {};
@@ -2642,21 +2602,24 @@ async function saveQuizCard() {
 }
 
 // ====== 히어로 실시간 현황 ======
-function updateHeroProof(total, males, females) {
+function updateHeroProof(total, apps) {
   const t = document.getElementById('hpTotal');
   if (!t) return;
   t.textContent = total;
-  document.getElementById('hpF').textContent = females;
-  document.getElementById('hpM').textContent = males;
-  const rec = document.getElementById('heroRecruit');
-  const gap = females - males;
-  if (rec && gap >= 8) {
-    rec.innerHTML = '🙋‍♂️ 여학우 <b>' + females + '명</b>이 신청 완료 — 지금은 <b>남학우 모집중</b>이에요!';
-    rec.style.display = '';
-  } else if (rec && -gap >= 8) {
-    rec.innerHTML = '🙋‍♀️ 남학우 <b>' + males + '명</b>이 신청 완료 — 지금은 <b>여학우 모집중</b>이에요!';
-    rec.style.display = '';
-  }
+  // 참여 대학 수 (실제 신청서의 학교명 기준, 중복 제거)
+  const schools = new Set();
+  (apps || []).forEach(a => {
+    const s = _shortenSchool(a.school || '');
+    if (s && s.length <= 12) schools.add(s);
+  });
+  const sEl = document.getElementById('hpSchool');
+  if (sEl && schools.size) sEl.textContent = schools.size;
+}
+
+// 개설 분반 수 (로비 로드 후 채움)
+function updateHeroLobbyCount(n) {
+  const el = document.getElementById('hpLobby');
+  if (el) el.textContent = n;
 }
 
 // ====== 인라인 미팅 로비 ======
@@ -2672,6 +2635,7 @@ async function loadInlineLobby() {
     grid.innerHTML = '<div class="lobby-empty">분반 정보를 불러오지 못했어요.<br>잠시 후 새로고침 해주세요.</div>';
     return;
   }
+  updateHeroLobbyCount(lobbies.length);
   if (!lobbies.length) {
     grid.innerHTML = '<div class="lobby-empty">🚪 아직 열린 분반이 없어요.<br>새 분반이 열리면 여기에 바로 표시됩니다 ♡</div>';
     return;
