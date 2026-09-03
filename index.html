@@ -802,6 +802,8 @@ body::before {
 .hint { font-size: 11.5px; color: var(--muted); margin-top: 6px; line-height: 1.5; }
 .hint-warn { color: #a3661a; background: #fff8e6; border-radius: 7px; padding: 7px 9px; }
 .hint-bonus { color: var(--pink); }
+.referrer-field { background: #fff6fa; border: 1.5px dashed #ffb3d9; border-radius: 10px; padding: 12px; }
+.referrer-field label { color: var(--pink); }
 .char-counter { float: right; font-weight: 400; font-size: 11px; color: var(--muted); }
 .char-counter.warn { color: var(--red); }
 
@@ -1350,6 +1352,11 @@ body::before {
         <input type="text" name="instagram" required placeholder="@를 빼고 적어줘">
         <p class="hint">* 비공개 계정이면 운영진 팔로우 요청 수락해줘 ♡</p>
       </div>
+      <div class="field referrer-field">
+        <label>🎓 추천인 이름 (선택)</label>
+        <input type="text" name="referrer" placeholder="나를 초대한 친구 이름">
+        <p class="hint hint-bonus">친구 이름 적으면 <strong>수강료 3,000원 감면</strong> ♡</p>
+      </div>
       <div class="field">
         <label>전화번호</label>
         <input type="tel" name="phone" required placeholder="010-0000-0000" inputmode="numeric">
@@ -1531,12 +1538,12 @@ body::before {
     <div class="referral-box">
       <div class="referral-box-title">☕ 친구 초대 = 커피쿠폰 증정!</div>
       <div class="referral-box-desc">
-        에타에 코드 올려서 <b>친구</b>가 수강신청하면<br>
+        친구가 수강신청할 때 <b>추천인 이름</b>에 아래 이름을 적으면<br>
         친구는 <strong>-3,000원 감면</strong>, 나는 <strong>커피쿠폰 증정</strong> ♡
       </div>
-      <div class="referral-code-display empty" id="referralCodeDisplay">↓ 코드 받기 버튼을 눌러줘 ↓</div>
-      <button class="referral-btn" id="referralBtn" onclick="generateReferralCode()">✨ 장학 코드 받기</button>
-      <p class="referral-copy-msg" id="referralCopyMsg">코드 복사됨! ✓</p>
+      <div class="referral-code-display empty" id="referralCodeDisplay">―</div>
+      <button class="referral-btn" id="referralBtn" onclick="copyReferrerName()">📋 내 이름 복사하기</button>
+      <p class="referral-copy-msg" id="referralCopyMsg">복사됨! ✓</p>
     </div>
     <div class="share-actions">
       <button class="save-btn" onclick="saveShareCard()">📸 이미지 저장</button>
@@ -1847,29 +1854,32 @@ function closeSuccess() {
   resetReferralCode();
 }
 
-// ====== 장학(추천인) 코드 생성기 ======
-function generateReferralCode() {
-  const chars = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
-  let code = '';
-  for (let i = 0; i < 4; i++) {
-    code += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  const full = 'LV-' + code;
+// ====== 추천인(초대) — 신청자 본인 이름을 친구에게 공유 ======
+let _referrerName = '';
+
+// 신청 완료 시 호출: 완료 화면에 본인 이름을 표시
+function setReferrerName(name) {
+  _referrerName = (name || '').trim();
   const display = document.getElementById('referralCodeDisplay');
-  display.textContent = full;
-  display.classList.remove('empty');
-  const btn = document.getElementById('referralBtn');
-  btn.textContent = '📋 코드 복사하기';
-  btn.onclick = function() { copyReferralCode(full); };
+  if (!display) return;
+  if (_referrerName) {
+    display.textContent = _referrerName;
+    display.classList.remove('empty');
+  } else {
+    display.textContent = '―';
+    display.classList.add('empty');
+  }
 }
 
-function copyReferralCode(code) {
+function copyReferrerName() {
+  if (!_referrerName) return;
   const showMsg = () => {
     const msg = document.getElementById('referralCopyMsg');
-    msg.textContent = '코드 복사됨! 친구에게 공유해줘 ♡';
+    msg.textContent = '복사됨! 친구에게 공유해줘 ♡';
     msg.classList.add('show');
     setTimeout(() => msg.classList.remove('show'), 2200);
   };
+  const code = _referrerName;
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(code).then(showMsg).catch(() => fallbackCopy(code, showMsg));
   } else {
@@ -1890,13 +1900,6 @@ function fallbackCopy(code, onDone) {
 }
 
 function resetReferralCode() {
-  const display = document.getElementById('referralCodeDisplay');
-  if (!display) return;
-  display.textContent = '↓ 코드 받기 버튼을 눌러줘 ↓';
-  display.classList.add('empty');
-  const btn = document.getElementById('referralBtn');
-  btn.textContent = '✨ 장학 코드 받기';
-  btn.onclick = generateReferralCode;
   const msg = document.getElementById('referralCopyMsg');
   if (msg) msg.classList.remove('show');
 }
@@ -1973,6 +1976,7 @@ document.getElementById('applyForm').addEventListener('submit', function(e) {
     runQueueTheater(() => {
       document.getElementById('shareUserName').textContent = userName;
       document.getElementById('shareUserMeta').textContent = userMeta;
+      setReferrerName(userName);
       document.getElementById('successModal').classList.add('active');
       document.body.style.overflow = 'hidden';
       this.reset();
