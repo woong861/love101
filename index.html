@@ -134,7 +134,12 @@ body::before {
   box-shadow: 0 10px 34px rgba(35, 64, 142, 0.13); overflow: hidden; margin-bottom: 22px;
 }
 .hero-head {
-  background: linear-gradient(180deg, #ffffff 0%, #f4f6ff 100%);
+  background-color: #fbfcff;
+  background-image:
+    radial-gradient(520px 300px at 8% -12%, rgba(255, 168, 208, 0.30), transparent 62%),
+    radial-gradient(480px 280px at 96% 4%, rgba(150, 168, 255, 0.30), transparent 62%),
+    radial-gradient(620px 340px at 50% 108%, rgba(255, 196, 230, 0.34), transparent 64%),
+    linear-gradient(180deg, #ffffff 0%, #f2f5ff 100%);
   color: var(--text); padding: 30px 22px 26px; position: relative;
   text-align: center;
 }
@@ -197,19 +202,23 @@ body::before {
 /* 히어로 실시간 현황 (사회적 증거) */
 .hero-proof {
   display: flex; align-items: stretch; justify-content: center; gap: 4px;
-  margin-top: 20px; background: #fff; border: 1px solid #e3e8f5;
-  border-radius: 16px; padding: 14px 10px;
-  box-shadow: 0 8px 22px rgba(30, 45, 90, 0.09);
+  margin-top: 20px; border-radius: 18px; padding: 16px 10px;
+  background: linear-gradient(150deg, #ffffff 0%, #fffafd 55%, #fbfaff 100%);
+  border: 1.5px solid #f4d9ea; position: relative;
+  box-shadow: 0 10px 28px rgba(30, 45, 90, 0.12), inset 0 1px 0 #fff;
 }
 .hp-item { flex: 1; text-align: center; }
 .hp-num {
-  font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 26px;
+  font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 28px;
   color: var(--navy); line-height: 1.1; font-variant-numeric: tabular-nums;
 }
 .hp-num.f { color: #c2185b; }
-.hp-num.m { color: #1565c0; }
-.hp-lbl { font-size: 11.5px; color: var(--muted); margin-top: 3px; font-weight: 700; }
-.hp-div { width: 1px; background: #eaeef8; margin: 4px 0; }
+.hp-num.m { color: #6b3fd4; }
+.hp-lbl { font-size: 11.5px; color: var(--muted); margin-top: 4px; font-weight: 700; }
+.hp-div {
+  width: 1px; margin: 6px 0;
+  background: linear-gradient(180deg, transparent, #e0dcf0 35%, #e0dcf0 65%, transparent);
+}
 
 /* ===== 공용 섹션 헤더 (퀄리티 업) ===== */
 .sec { margin-top: 46px; }
@@ -389,13 +398,25 @@ body::before {
 }
 .p-strip .hearts { color: #ffb3d9; }
 
-/* 캠퍼스 음각 라인 일러스트 (배경 장식) */
-.campus {
-  position: absolute; right: 14px; top: 118px;
-  width: 175px; height: auto; z-index: 0; opacity: 0.55;
+/* 캠퍼스 메인 일러스트 (히어로 하단 와이드) */
+.campus-scene {
+  display: block; width: 100%; max-width: 560px; height: auto;
+  margin: 26px auto -8px; position: relative; z-index: 1;
+}
+.campus-scene .cs-balloon { animation: csFloat 5s ease-in-out infinite; transform-origin: center; }
+.campus-scene .cs-balloon.b2 { animation-duration: 6.2s; animation-delay: -1.4s; }
+.campus-scene .cs-balloon.b3 { animation-duration: 4.4s; animation-delay: -2.6s; }
+@keyframes csFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+.campus-scene .cs-spark { animation: csTwinkle 3.4s ease-in-out infinite; }
+@keyframes csTwinkle {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
 }
 @media (max-width: 640px) {
-  .campus { width: 110px; right: 6px; top: 140px; opacity: 0.3; }
+  .campus-scene { margin-top: 18px; }
 }
 .hero-head .course-tags { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-top: 14px; }
 .tag {
@@ -1016,8 +1037,52 @@ body::before {
         <div class="hp-item"><div class="hp-num m" id="hpLobby">―</div><div class="hp-lbl">개설 분반</div></div>
       </div>
       <div><button type="button" class="p-open" onclick="openForm(this)">수강신청 하러가기 →</button></div>
-      <svg class="campus" viewBox="0 -14 220 162" aria-hidden="true">
-        <g fill="none" stroke="rgba(35,64,142,0.45)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg class="campus-scene" viewBox="0 0 640 206" aria-hidden="true">
+        <!-- 하트 풍선 (컬러 포인트) -->
+        <g class="cs-balloon b1">
+          <path d="M0 0 q0 -3 3 -3" fill="none"/>
+          <line x1="120" y1="52" x2="122" y2="96" stroke="rgba(255,93,158,0.5)" stroke-width="1.4"/>
+          <path d="M120 52c-7-5.4-11.6-9.6-11.6-14.6a6.1 6.1 0 0 1 11.6-2.5 6.1 6.1 0 0 1 11.6 2.5c0 5-4.6 9.2-11.6 14.6z" fill="#ffb3d9"/>
+        </g>
+        <g class="cs-balloon b2">
+          <line x1="516" y1="66" x2="513" y2="108" stroke="rgba(255,93,158,0.5)" stroke-width="1.4"/>
+          <path d="M516 66c-8.4-6.5-14-11.6-14-17.6a7.4 7.4 0 0 1 14-3 7.4 7.4 0 0 1 14 3c0 6-5.6 11.1-14 17.6z" fill="#ff8fc0"/>
+        </g>
+        <g class="cs-balloon b3">
+          <line x1="560" y1="40" x2="558" y2="74" stroke="rgba(255,93,158,0.45)" stroke-width="1.2"/>
+          <path d="M560 40c-5.6-4.3-9.3-7.7-9.3-11.7a4.9 4.9 0 0 1 9.3-2 4.9 4.9 0 0 1 9.3 2c0 4-3.7 7.4-9.3 11.7z" fill="#ffc9e0"/>
+        </g>
+
+        <!-- 반짝임 -->
+        <g class="cs-spark" fill="#ffd166">
+          <path d="M78 34l2.4 6 6 2.4-6 2.4-2.4 6-2.4-6-6-2.4 6-2.4z"/>
+          <path d="M596 96l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" opacity="0.85"/>
+          <path d="M300 18l1.8 4.6 4.6 1.8-4.6 1.8-1.8 4.6-1.8-4.6-4.6-1.8 4.6-1.8z" opacity="0.75"/>
+        </g>
+
+        <!-- 지면 -->
+        <line x1="16" y1="196" x2="624" y2="196" stroke="rgba(35,64,142,0.28)" stroke-width="2" stroke-linecap="round"/>
+
+        <!-- 좌측 나무 2그루 -->
+        <g fill="none" stroke="rgba(35,64,142,0.34)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M62 196v-38"/>
+          <path d="M62 158a26 26 0 1 1 0.1 0z"/>
+          <path d="M62 176l-11-10M62 168l10-9"/>
+          <path d="M148 196v-28"/>
+          <path d="M148 168a19 19 0 1 1 0.1 0z"/>
+          <path d="M148 182l-8-7"/>
+        </g>
+
+        <!-- 우측 가로등 + 벤치 -->
+        <g fill="none" stroke="rgba(35,64,142,0.34)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M572 196v-72"/>
+          <path d="M566 124h12l-2-9h-8z"/>
+          <path d="M560 196h-52M512 196v-14h44v14M512 182v-8h44v8"/>
+          <path d="M516 196v6M552 196v6"/>
+        </g>
+
+        <!-- 중앙 캠퍼스 (음각 라인) -->
+        <g transform="translate(210, 48)" fill="none" stroke="rgba(35,64,142,0.45)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <!-- 깃대 + 하트 깃발 -->
           <line x1="110" y1="6" x2="110" y2="-7"/>
           <path d="M112 -5.2 C 112 -8, 116.5 -8, 116.5 -4.9 C 116.5 -2.6, 113.3 -0.8, 112 0.3 C 110.7 -0.8, 107.5 -2.6, 107.5 -4.9 C 107.5 -8, 112 -8, 112 -5.2 z"/>

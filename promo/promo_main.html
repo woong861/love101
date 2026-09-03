@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>연애학개론 — 메인 이미지</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Noto+Serif+KR:wght@600;900&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #23408e;
+  --navy-dark: #182e68;
+  --navy-light: #eaf0fb;
+  --pink: #ff5d9e;
+  --text: #23272f;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1350px; overflow: hidden; }
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  color: var(--text);
+  position: relative;
+  background-color: #eef1fc;
+  background-image:
+    radial-gradient(660px 430px at 0% -6%, rgba(255, 150, 200, 0.58), transparent 62%),
+    radial-gradient(640px 420px at 100% 2%, rgba(140, 158, 255, 0.52), transparent 62%),
+    radial-gradient(760px 480px at 50% 104%, rgba(255, 176, 222, 0.52), transparent 64%);
+}
+/* 모눈종이 결 */
+body::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(35,64,142,0.075) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(35,64,142,0.075) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+/* 하트 워터마크 */
+body::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11z' fill='%2323408e'/%3E%3C/svg%3E");
+  background-size: 104px 104px; opacity: 0.04;
+}
+
+.wrap {
+  position: relative; z-index: 2; width: 100%; height: 100%;
+  padding: 62px 70px 132px;
+  display: flex; flex-direction: column; align-items: center;
+}
+
+.bubble {
+  background: linear-gradient(135deg, var(--pink), #ff7cb5);
+  color: #fff; font-size: 31px; font-weight: 900;
+  padding: 17px 42px; border-radius: 100px; position: relative;
+  box-shadow: 0 10px 26px rgba(255, 93, 158, 0.35);
+}
+.bubble::after {
+  content: ''; position: absolute; left: 50%; bottom: -9px;
+  transform: translateX(-50%) rotate(45deg);
+  width: 20px; height: 20px; background: #ff6ba9; border-radius: 3px;
+}
+
+.title {
+  font-family: 'Noto Serif KR', 'Noto Sans KR', serif; font-weight: 900; color: var(--navy);
+  font-size: 118px; letter-spacing: -5px; line-height: 1.1; margin-top: 30px;
+  display: flex; align-items: center; gap: 12px;
+  white-space: nowrap;
+}
+.title svg { width: 88px; height: 88px; flex: none; filter: drop-shadow(0 5px 14px rgba(255,77,210,0.45)); }
+
+.sub {
+  font-family: 'Gaegu', 'Noto Sans KR', cursive; font-weight: 700; color: var(--navy);
+  font-size: 44px; margin-top: 8px; position: relative; padding: 0 6px 8px;
+  white-space: nowrap;
+}
+.sub::after {
+  content: ''; position: absolute; left: 0; right: 26px; bottom: 0; height: 8px;
+  background: linear-gradient(90deg, #ffb3d9, #ff8fc0); border-radius: 100px; opacity: 0.9;
+}
+
+/* 실제 수치 스트립 */
+.proof {
+  display: flex; align-items: stretch; justify-content: center;
+  width: 100%; margin-top: 34px; border-radius: 24px; padding: 24px 16px;
+  background: linear-gradient(150deg, #ffffff 0%, #fffafd 55%, #fbfaff 100%);
+  border: 2px solid #f4d9ea;
+  box-shadow: 0 12px 32px rgba(30, 45, 90, 0.13);
+}
+.proof .it { flex: 1; text-align: center; }
+.proof .n {
+  font-family: 'Noto Serif KR', serif; font-weight: 900; font-size: 60px;
+  color: var(--navy); line-height: 1.05;
+}
+.proof .it:nth-child(3) .n { color: #c2185b; }
+.proof .it:nth-child(5) .n { color: #6b3fd4; }
+.proof .l { font-size: 22px; color: #767e8c; font-weight: 700; margin-top: 8px; }
+.proof .dv {
+  width: 2px; margin: 8px 0;
+  background: linear-gradient(180deg, transparent, #e6e1f2 35%, #e6e1f2 65%, transparent);
+}
+
+/* 캠퍼스 일러스트 */
+.scene { width: 100%; margin-top: 20px; }
+.scene svg { display: block; width: 100%; height: auto; }
+
+/* 핵심 정보 */
+.rows { width: 100%; margin-top: 14px; display: grid; gap: 17px; }
+.row { display: flex; align-items: center; gap: 20px; }
+.row .ico {
+  flex: none; width: 62px; height: 62px; border-radius: 18px;
+  display: flex; align-items: center; justify-content: center; font-size: 32px;
+  background: rgba(255,255,255,0.92); box-shadow: 0 4px 12px rgba(30,45,90,0.10);
+}
+.row .txt { font-size: 32px; font-weight: 700; color: #2b3140; letter-spacing: -0.6px; }
+.row .txt b { font-weight: 900; color: var(--navy); }
+.row .txt .pk { color: var(--pink); font-weight: 900; }
+
+.deadline {
+  margin-top: 30px; background: var(--navy); color: #fff;
+  font-size: 34px; font-weight: 900; letter-spacing: -0.5px;
+  padding: 20px 48px; border-radius: 100px;
+  box-shadow: 0 10px 26px rgba(35, 64, 142, 0.32);
+}
+.deadline .d { color: #ffd1e8; }
+
+.foot {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(100deg, var(--navy-dark), var(--navy));
+  color: #fff; padding: 24px 0; text-align: center;
+}
+.foot .url { font-size: 46px; font-weight: 900; letter-spacing: 0.5px; }
+.foot .sns { font-size: 26px; color: #cfe0ff; margin-top: 4px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bubble">대학생 연애, 이론부터 실전까지! 💗</div>
+
+  <div class="title">연애학개론
+    <svg viewBox="0 0 32 32"><defs><linearGradient id="h" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff9ec9"/><stop offset="1" stop-color="#ff4dd2"/></linearGradient></defs>
+      <path d="M16 28.5C6.8 21.6 2 15.9 2 10.4 2 6.3 5.3 3 9.4 3c2.6 0 5.1 1.3 6.6 3.4C17.5 4.3 20 3 22.6 3 26.7 3 30 6.3 30 10.4c0 5.5-4.8 11.2-14 18.1z" fill="url(#h)"/>
+      <ellipse cx="9.5" cy="9" rx="3" ry="2.2" fill="#fff" opacity="0.65" transform="rotate(-24 9.5 9)"/>
+    </svg>
+  </div>
+  <div class="sub">"연애는, 교양필수니까" ♡</div>
+
+  <div class="proof">
+    <div class="it"><div class="n">59</div><div class="l">누적 신청</div></div>
+    <div class="dv"></div>
+    <div class="it"><div class="n">37</div><div class="l">참여 대학</div></div>
+    <div class="dv"></div>
+    <div class="it"><div class="n">7</div><div class="l">개설 분반</div></div>
+  </div>
+
+  <div class="scene">
+    <svg viewBox="0 0 640 206" aria-hidden="true">
+      <!-- 하트 풍선 -->
+      <line x1="120" y1="52" x2="122" y2="96" stroke="rgba(255,93,158,0.5)" stroke-width="1.4"/>
+      <path d="M120 52c-7-5.4-11.6-9.6-11.6-14.6a6.1 6.1 0 0 1 11.6-2.5 6.1 6.1 0 0 1 11.6 2.5c0 5-4.6 9.2-11.6 14.6z" fill="#ffb3d9"/>
+      <line x1="516" y1="66" x2="513" y2="108" stroke="rgba(255,93,158,0.5)" stroke-width="1.4"/>
+      <path d="M516 66c-8.4-6.5-14-11.6-14-17.6a7.4 7.4 0 0 1 14-3 7.4 7.4 0 0 1 14 3c0 6-5.6 11.1-14 17.6z" fill="#ff8fc0"/>
+      <line x1="560" y1="40" x2="558" y2="74" stroke="rgba(255,93,158,0.45)" stroke-width="1.2"/>
+      <path d="M560 40c-5.6-4.3-9.3-7.7-9.3-11.7a4.9 4.9 0 0 1 9.3-2 4.9 4.9 0 0 1 9.3 2c0 4-3.7 7.4-9.3 11.7z" fill="#ffc9e0"/>
+
+      <!-- 반짝임 -->
+      <g fill="#ffd166">
+        <path d="M78 34l2.4 6 6 2.4-6 2.4-2.4 6-2.4-6-6-2.4 6-2.4z"/>
+        <path d="M596 96l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" opacity="0.85"/>
+        <path d="M300 18l1.8 4.6 4.6 1.8-4.6 1.8-1.8 4.6-1.8-4.6-4.6-1.8 4.6-1.8z" opacity="0.75"/>
+      </g>
+
+      <line x1="16" y1="196" x2="624" y2="196" stroke="rgba(35,64,142,0.28)" stroke-width="2" stroke-linecap="round"/>
+
+      <!-- 나무 -->
+      <g fill="none" stroke="rgba(35,64,142,0.34)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M62 196v-38"/>
+        <path d="M62 158a26 26 0 1 1 0.1 0z"/>
+        <path d="M62 176l-11-10M62 168l10-9"/>
+        <path d="M148 196v-28"/>
+        <path d="M148 168a19 19 0 1 1 0.1 0z"/>
+        <path d="M148 182l-8-7"/>
+      </g>
+
+      <!-- 가로등 + 벤치 -->
+      <g fill="none" stroke="rgba(35,64,142,0.34)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M572 196v-72"/>
+        <path d="M566 124h12l-2-9h-8z"/>
+        <path d="M560 196h-52M512 196v-14h44v14M512 182v-8h44v8"/>
+        <path d="M516 196v6M552 196v6"/>
+      </g>
+
+      <!-- 캠퍼스 (음각 라인) -->
+      <g transform="translate(210, 48)" fill="none" stroke="rgba(35,64,142,0.45)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="110" y1="6" x2="110" y2="-7"/>
+        <path d="M112 -5.2 C 112 -8, 116.5 -8, 116.5 -4.9 C 116.5 -2.6, 113.3 -0.8, 112 0.3 C 110.7 -0.8, 107.5 -2.6, 107.5 -4.9 C 107.5 -8, 112 -8, 112 -5.2 z"/>
+        <polygon points="94,26 126,26 110,6"/>
+        <path d="M96 26 v46 M124 26 v46"/>
+        <circle cx="110" cy="42" r="7"/>
+        <path d="M110 42 v-4.5 M110 42 l3.5 2"/>
+        <polygon points="74,72 146,72 110,46"/>
+        <path d="M110 66c-4.2-3.2-7-5.8-7-8.8a3.7 3.7 0 0 1 7-1.5 3.7 3.7 0 0 1 7 1.5c0 3-2.8 5.6-7 8.8z"/>
+        <line x1="72" y1="78" x2="148" y2="78"/>
+        <path d="M82 78 v52 M96 78 v52 M124 78 v52 M138 78 v52"/>
+        <path d="M103 130 v-15 a7 7 0 0 1 14 0 v15"/>
+        <path d="M84 130 H24 V82 H84 M136 130 h60 V82 h-60"/>
+        <line x1="20" y1="82" x2="88" y2="82"/>
+        <line x1="132" y1="82" x2="200" y2="82"/>
+        <g stroke-width="1.6" opacity="0.85">
+          <rect x="33" y="92" width="10" height="13" rx="1"/>
+          <rect x="50" y="92" width="10" height="13" rx="1"/>
+          <rect x="67" y="92" width="10" height="13" rx="1"/>
+          <rect x="33" y="113" width="10" height="13" rx="1"/>
+          <rect x="50" y="113" width="10" height="13" rx="1"/>
+          <rect x="67" y="113" width="10" height="13" rx="1"/>
+          <rect x="143" y="92" width="10" height="13" rx="1"/>
+          <rect x="160" y="92" width="10" height="13" rx="1"/>
+          <rect x="177" y="92" width="10" height="13" rx="1"/>
+          <rect x="143" y="113" width="10" height="13" rx="1"/>
+          <rect x="160" y="113" width="10" height="13" rx="1"/>
+          <rect x="177" y="113" width="10" height="13" rx="1"/>
+        </g>
+        <line x1="66" y1="136" x2="154" y2="136"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="rows">
+    <div class="row">
+      <span class="ico">🎓</span>
+      <span class="txt"><b>1:1 소개팅</b> · <b>3:3 미팅</b> 동시 모집</span>
+    </div>
+    <div class="row">
+      <span class="ico">🎁</span>
+      <span class="txt">여학우 <span class="pk">전액 장학금 (0원)</span> · 미성사 시 <span class="pk">전액 환불</span></span>
+    </div>
+  </div>
+
+  <div class="deadline">⏰ 수강신청 마감 <span class="d">9/6(일) 자정</span></div>
+</div>
+
+<div class="foot">
+  <div class="url">loveuniv.cloud</div>
+  <div class="sns">문의 · 인스타 @loveuniv101</div>
+</div>
+</body>
+</html>
